@@ -1,0 +1,25 @@
+{
+  "name": "roam-client",
+  "version": "1.0.0",
+  "description": "Utilities and UI components to help developers write their own Roam extensions.",
+  "main": "index.ts",
+  "scripts": {
+    "test": "jest"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/dvargas92495/roam-client.git"
+  },
+  "keywords": [
+    "Roam"
+  ],
+  "author": "dvargas92495 <dvargas92495@gmail.com>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/dvargas92495/roam-client/issues"
+  },
+  "homepage": "https://github.com/dvargas92495/roam-client#readme",
+  "devDependencies": {
+    "jest": "^26.4.2"
+  }
+}
