@@ -20,14 +20,10 @@ export const genericError = (e: Partial<AxiosError & RoamError>) => {
         : JSON.stringify(e.response.data)
       : e.message) ||
     e.raw ||
-    "";
-  if (message) {
-    asyncType(
-      `Error: ${
-        message.length > 50 ? `${message.substring(0, 50)}...` : message
-      }`
-    );
-  } else {
-    console.error(e);
-  }
+    "Unknown Error Occurred";
+  asyncType(
+    `Error: ${
+      message.length > 50 ? `${message.substring(0, 50)}...` : message
+    }`
+  );
 };

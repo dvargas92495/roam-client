@@ -30,3 +30,9 @@ test("Test generic error with RoamError", () => {
   genericError(roamError);
   expect(textarea).toHaveValue("Error: Example Error");
 });
+
+test("Test generic error with Nothing", () => {
+  const textarea = getFocusedTextArea();
+  genericError({});
+  expect(textarea).toHaveValue("Error: Unknown Error Occurred");
+});
