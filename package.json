@@ -1,12 +1,12 @@
 {
   "name": "roam-client",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "description": "Utilities and UI components to help developers write their own Roam extensions.",
   "main": "lib/index.js",
   "types": "lib/index.d.ts",
   "scripts": {
     "build": "tsc",
-    "format": "prettier --write \"src/**/*.ts\" \"src/**/*.js\"",
+    "format": "prettier --write \"src/**/*.ts\"",
     "lint": "tslint -p tsconfig.json",
     "prepare": "npm run build",
     "prepublishOnly": "npm test && npm run lint",
