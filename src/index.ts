@@ -1,4 +1,4 @@
-import { waitFor } from "@testing-library/dom";
+import { fireEvent, waitFor } from "@testing-library/dom";
 import userEvent from "@testing-library/user-event";
 import { AxiosError } from "axios";
 import parse from "date-fns/parse";
@@ -92,6 +92,23 @@ export const getConfigFromPage = (inputPage?: string) => {
   return getAttrConfigFromQuery(
     `[:find (pull ?e [*]) :where [?e :node/title "${page}"] ]`
   );
+};
+
+export const newBlockEnter = async () => {
+  if (!document.activeElement) {
+    return;
+  }
+
+  // Need to switch to fireEvent because user-event enters a newline when hitting enter in a text area
+  // https://github.com/testing-library/user-event/blob/master/src/type.js#L505
+  const enterObj = {
+    key: "Enter",
+    keyCode: 13,
+    which: 13,
+  };
+  await fireEvent.keyDown(document.activeElement, enterObj);
+  await fireEvent.keyUp(document.activeElement, enterObj);
+  await waitForString("");
 };
 
 export const parseRoamDate = (s: string) =>
