@@ -132,9 +132,9 @@ export const pushBullets = async (
     });
     const blockIndex =
       parent.children?.findIndex((c) => c.id === block.id) || 0;
-    for (const index in bullets) {
+    for (let index = 0; index < bullets.length; index++) {
       const bullet = bullets[index];
-      if (index === "0") {
+      if (index === 0) {
         await window.roamDatomicAlphaAPI({
           action: "update-block",
           block: {
@@ -150,18 +150,18 @@ export const pushBullets = async (
           },
           location: {
             "parent-uid": parentUid,
-            order: blockIndex + parseInt(index) + 1,
+            order: blockIndex + index + 1,
           },
         });
       }
     }
   } else {
-    for (const index in bullets) {
+    for (let index = 0; index < bullets.length; index++) {
       const bullet = bullets[index];
       await asyncType(bullet);
       await waitForString(bullet);
 
-      if (parseInt(index) < bullets.length - 1) {
+      if (index < bullets.length - 1) {
         await newBlockEnter();
       }
     }
@@ -178,8 +178,8 @@ const waitForString = (text: string) =>
         );
       }
 
-      let expectedTextWithoutPeriod = text.replace(/\./g, "").toUpperCase();
-      let actualTextWithoutPeriod = textArea.value
+      const expectedTextWithoutPeriod = text.replace(/\./g, "").toUpperCase();
+      const actualTextWithoutPeriod = textArea.value
         .replace(/\./g, "")
         .toUpperCase();
 
