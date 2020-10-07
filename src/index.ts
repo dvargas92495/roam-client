@@ -82,6 +82,18 @@ export const getAttrConfigFromQuery = (query: string) => {
   return Object.fromEntries(entries);
 };
 
+export const getConfigFromPage = (inputPage?: string) => {
+  const page =
+    inputPage ||
+    document.getElementsByClassName("rm-title-display")[0]?.textContent;
+  if (!page) {
+    return {};
+  }
+  return getAttrConfigFromQuery(
+    `[:find (pull ?e [*]) :where [?e :node/title "${page}"] ]`
+  );
+};
+
 export const parseRoamDate = (s: string) =>
   parse(s, "MMMM do, yyyy", new Date());
 
