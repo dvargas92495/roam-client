@@ -11,6 +11,9 @@ declare global {
       ) => {
         attrs?: { source: string[] }[][];
         string?: string;
+        time?: string;
+        title?: string;
+        uid?: string;
       }[][];
     };
     roamDatomicAlphaAPI: (params: {
