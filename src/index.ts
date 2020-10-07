@@ -11,7 +11,7 @@ declare global {
       ) => {
         attrs?: { source: string[] }[][];
         string?: string;
-        time?: string;
+        time?: number;
         title?: string;
         uid?: string;
         id?: number;
