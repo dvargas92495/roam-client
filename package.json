@@ -44,6 +44,7 @@
   "dependencies": {
     "@testing-library/dom": "^7.24.4",
     "@testing-library/user-event": "^12.1.7",
-    "axios": "^0.20.0"
+    "axios": "^0.20.0",
+    "date-fns": "^2.16.1"
   }
 }

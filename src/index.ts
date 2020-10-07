@@ -1,5 +1,6 @@
 import userEvent from "@testing-library/user-event";
 import { AxiosError } from "axios";
+import parse from "date-fns/parse";
 
 type RoamError = {
   raw: string;
@@ -25,3 +26,6 @@ export const genericError = (e: Partial<AxiosError & RoamError>) => {
     `Error: ${message.length > 50 ? `${message.substring(0, 50)}...` : message}`
   );
 };
+
+export const parseRoamDate = (s: string) =>
+  parse(s, "MMMM do, yyyy", new Date());
