@@ -114,6 +114,60 @@ export const newBlockEnter = async () => {
 export const parseRoamDate = (s: string) =>
   parse(s, "MMMM do, yyyy", new Date());
 
+export const pushBullets = async (
+  bullets: string[],
+  blockUid?: string,
+  parentUid?: string
+) => {
+  if (window.roamDatomicAlphaAPI && blockUid && parentUid) {
+    const parent = await window.roamDatomicAlphaAPI({
+      action: "pull",
+      selector: "[:block/children]",
+      uid: parentUid,
+    });
+    const block = await window.roamDatomicAlphaAPI({
+      action: "pull",
+      selector: "[:db/id]",
+      uid: blockUid,
+    });
+    const blockIndex =
+      parent.children?.findIndex((c) => c.id === block.id) || 0;
+    for (const index in bullets) {
+      const bullet = bullets[index];
+      if (index === "0") {
+        await window.roamDatomicAlphaAPI({
+          action: "update-block",
+          block: {
+            uid: blockUid,
+            string: bullet,
+          },
+        });
+      } else {
+        await window.roamDatomicAlphaAPI({
+          action: "create-block",
+          block: {
+            string: bullet,
+          },
+          location: {
+            "parent-uid": parentUid,
+            order: blockIndex + parseInt(index) + 1,
+          },
+        });
+      }
+    }
+  } else {
+    for (const index in bullets) {
+      const bullet = bullets[index];
+      await asyncType(bullet);
+      await waitForString(bullet);
+
+      if (parseInt(index) < bullets.length - 1) {
+        await newBlockEnter();
+      }
+    }
+  }
+};
+
 const waitForString = (text: string) =>
   waitFor(
     () => {
