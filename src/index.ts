@@ -14,6 +14,7 @@ declare global {
         time?: string;
         title?: string;
         uid?: string;
+        id?: number;
       }[][];
     };
     roamDatomicAlphaAPI: (params: {
