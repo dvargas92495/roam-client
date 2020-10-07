@@ -1,6 +1,5 @@
 import { asyncType, newBlockEnter, pushBullets } from "../src";
 import { getFocusedTextArea } from "./util";
-import { when } from "jest-when";
 
 const textareaKeyup = (e: KeyboardEvent) => {
   if (e.key === "Enter" && !e.shiftKey) {
