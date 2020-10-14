@@ -1,0 +1,46 @@
+export type ClientParams = {
+  action: "pull" | "q" | "create-block" | "update-block";
+  selector?: string;
+  uid?: string;
+  query?: string;
+  inputs?: any;
+  location?: {
+    "parent-uid": string;
+    order: number;
+  };
+  block?: {
+    string: string;
+    uid?: string;
+    open?: boolean;
+  };
+};
+
+export class RoamClient {
+  protected post(body: ClientParams) {
+    throw new Error("Not Implemented");
+  }
+
+  public createBlock({
+    parentUid,
+    order,
+    string,
+    uid,
+  }: {
+    parentUid: string;
+    order: number;
+    string: string;
+    uid?: string;
+  }) {
+    return this.post({
+      location: {
+        "parent-uid": parentUid,
+        order,
+      },
+      block: {
+        string,
+        uid,
+      },
+      action: "create-block",
+    });
+  }
+}

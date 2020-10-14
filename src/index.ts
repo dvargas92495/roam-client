@@ -3,6 +3,7 @@ import { fireEvent, waitFor } from "@testing-library/dom";
 import userEvent from "@testing-library/user-event";
 import { AxiosError } from "axios";
 import parse from "date-fns/parse";
+import { ClientParams } from "./client";
 dotenv.config();
 export { default as RestClient } from "./rest-client";
 
@@ -20,22 +21,9 @@ declare global {
         id?: number;
       }[][];
     };
-    roamDatomicAlphaAPI: (params: {
-      action: "pull" | "q" | "create-block" | "update-block";
-      selector?: string;
-      uid?: string;
-      query?: string;
-      inputs?: any;
-      location?: {
-        "parent-uid": string;
-        order: number;
-      };
-      block?: {
-        string: string;
-        uid?: string;
-        open?: boolean;
-      };
-    }) => Promise<{
+    roamDatomicAlphaAPI: (
+      params: ClientParams
+    ) => Promise<{
       children?: { id: number }[];
       id?: number;
       string?: string;

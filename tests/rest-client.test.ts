@@ -1,4 +1,5 @@
 import { RestClient } from "../src";
+import axios from "axios";
 
 test("Could successfully instantiate client", () => {
   const client = new RestClient({
@@ -41,4 +42,41 @@ test("Instantiate with just graph name", () => {
   });
   expect(client).toBeDefined();
   process.env = { ...env };
+});
+
+test("Create Block with Rest Client", async () => {
+  const client = new RestClient({
+    apiKey: "API_KEY",
+    apiToken: "API_TOKEN",
+    graphName: "MY_GRAPH",
+    contentType: "application/json",
+  });
+  await client.createBlock({
+    parentUid: "parentUid",
+    order: 0,
+    string: "text",
+    uid: "childUid",
+  });
+  expect(axios.post).toBeCalledWith(
+    "https://4c67k7zc26.execute-api.us-west-2.amazonaws.com/v1/alphaAPI",
+    {
+      action: "create-block",
+      "graph-name": "MY_GRAPH",
+      location: {
+        "parent-uid": "parentUid",
+        order: 0,
+      },
+      block: {
+        string: "text",
+        uid: "childUid",
+      },
+    },
+    {
+      headers: {
+        "x-api-key": "API_KEY",
+        "x-api-token": "API_TOKEN",
+        "Content-Type": "application/json",
+      },
+    }
+  );
 });
