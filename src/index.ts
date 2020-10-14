@@ -1,10 +1,8 @@
-import dotenv from "dotenv";
 import { fireEvent, waitFor } from "@testing-library/dom";
 import userEvent from "@testing-library/user-event";
 import { AxiosError } from "axios";
 import parse from "date-fns/parse";
 import { ClientParams } from "./client";
-dotenv.config();
 export { default as RestClient } from "./rest-client";
 
 declare global {
