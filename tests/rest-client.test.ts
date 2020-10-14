@@ -54,7 +54,7 @@ test("Create Block with Rest Client", async () => {
   await client.createBlock({
     parentUid: "parentUid",
     order: 0,
-    string: "text",
+    text: "text",
     uid: "childUid",
   });
   expect(axios.post).toBeCalledWith(

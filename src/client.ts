@@ -23,12 +23,12 @@ export class RoamClient {
   public createBlock({
     parentUid,
     order,
-    string,
+    text,
     uid,
   }: {
     parentUid: string;
     order: number;
-    string: string;
+    text: string;
     uid?: string;
   }) {
     return this.post({
@@ -37,7 +37,7 @@ export class RoamClient {
         order,
       },
       block: {
-        string,
+        string: text,
         uid,
       },
       action: "create-block",
