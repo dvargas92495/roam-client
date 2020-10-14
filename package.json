@@ -31,6 +31,7 @@
   "devDependencies": {
     "@testing-library/jest-dom": "^5.11.4",
     "@types/jest": "^26.0.14",
+    "dotenv": "^8.2.0",
     "jest": "^26.4.2",
     "jest-when": "^2.7.2",
     "prettier": "^2.1.2",
@@ -46,7 +47,6 @@
     "@testing-library/dom": "^7.24.4",
     "@testing-library/user-event": "^12.1.7",
     "axios": "^0.20.0",
-    "date-fns": "^2.16.1",
-    "dotenv": "^8.2.0"
+    "date-fns": "^2.16.1"
   }
 }

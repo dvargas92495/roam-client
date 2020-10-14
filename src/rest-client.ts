@@ -50,7 +50,7 @@ class RestClient extends RoamClient {
           "Content-Type": this.contentType,
         },
       }
-    );
+    ).then(r => r.data);
   }
 }
 
