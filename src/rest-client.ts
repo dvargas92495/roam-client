@@ -37,20 +37,22 @@ class RestClient extends RoamClient {
   }
 
   protected post(body: ClientParams) {
-    return axios.post(
-      "https://4c67k7zc26.execute-api.us-west-2.amazonaws.com/v1/alphaAPI",
-      {
-        ...body,
-        "graph-name": this.graphName,
-      },
-      {
-        headers: {
-          "x-api-key": this.apiKey,
-          "x-api-token": this.apiToken,
-          "Content-Type": this.contentType,
+    return axios
+      .post(
+        "https://4c67k7zc26.execute-api.us-west-2.amazonaws.com/v1/alphaAPI",
+        {
+          ...body,
+          "graph-name": this.graphName,
         },
-      }
-    ).then(r => r.data);
+        {
+          headers: {
+            "x-api-key": this.apiKey,
+            "x-api-token": this.apiToken,
+            "Content-Type": this.contentType,
+          },
+        }
+      )
+      .then((r) => r.data);
   }
 }
 
