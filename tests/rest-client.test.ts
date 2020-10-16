@@ -2,7 +2,7 @@ import { RestClient } from "../src";
 import axios from "axios";
 const mockAxios = axios.post as jest.Mock;
 
-test("Could successfully instantiate client", () => {
+test("Could successfully instantiate rest client", () => {
   const client = new RestClient({
     apiKey: "API_KEY",
     apiToken: "API_TOKEN",

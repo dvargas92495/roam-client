@@ -4,6 +4,7 @@ import { AxiosError } from "axios";
 import { ClientParams } from "./client";
 import { RoamBlock, RoamError } from "./types";
 export { default as RestClient } from "./rest-client";
+export { default as WindowClient } from "./window-client";
 export { parseRoamDate, toRoamDate, toRoamDateUid } from "./date";
 
 declare global {
@@ -20,7 +21,7 @@ declare global {
         id?: number;
       }[][];
     };
-    roamDatomicAlphaAPI: (params: ClientParams) => Promise<RoamBlock>;
+    roamDatomicAlphaAPI: (params: ClientParams) => Promise<RoamBlock & {success?: boolean}>;
   }
 }
 
