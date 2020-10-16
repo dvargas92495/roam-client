@@ -69,9 +69,7 @@ export class RoamClient {
     }).then((r) => r[0] as RoamBasicPage);
   }
 
-  public deleteBlock(block: {
-    uid: string;
-  }) {
+  public deleteBlock(block: { uid: string }) {
     return this.post({
       block,
       action: "delete-block",
@@ -133,6 +131,6 @@ export class RoamClient {
         open,
       },
       action: "update-block",
-    }).then(r => r as boolean);
+    }).then((r) => r as boolean);
   }
 }
