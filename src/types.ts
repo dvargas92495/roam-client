@@ -14,6 +14,7 @@ export type RoamPull = {
   "block/children"?: RoamNode[];
   "block/open"?: boolean;
   "block/order"?: number;
+  "block/string"?: string;
 } & RoamNode;
 
 export type RoamPullResult = RoamPull | null;
@@ -38,11 +39,11 @@ type RoamNode = { "db/id": number };
 
 export type RoamQuery = RoamPull & {
   "block/graph"?: RoamNode;
-  "node/graph+title": PlusType;
-  "block/graph+uid": PlusType;
-  "node/graph": RoamNode;
-  "edit/email": string;
-  "entity/graph": RoamNode;
+  "node/graph+title"?: PlusType;
+  "block/graph+uid"?: PlusType;
+  "node/graph"?: RoamNode;
+  "edit/email"?: string;
+  "entity/graph"?: RoamNode;
 };
 
-export type RoamQueryResult = number | RoamQuery;
+export type RoamQueryResult = number & RoamQuery;
