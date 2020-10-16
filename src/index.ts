@@ -1,9 +1,9 @@
 import { fireEvent, waitFor } from "@testing-library/dom";
 import userEvent from "@testing-library/user-event";
 import { AxiosError } from "axios";
-import parse from "date-fns/parse";
 import { ClientParams } from "./client";
 export { default as RestClient } from "./rest-client";
+export { parseRoamDate, toRoamDate, toRoamDateUid } from "./date";
 
 declare global {
   interface Window {
@@ -103,9 +103,6 @@ export const newBlockEnter = async () => {
   await fireEvent.keyUp(document.activeElement, enterObj);
   await waitForString("");
 };
-
-export const parseRoamDate = (s: string) =>
-  parse(s, "MMMM do, yyyy", new Date());
 
 export const pushBullets = async (
   bullets: string[],
