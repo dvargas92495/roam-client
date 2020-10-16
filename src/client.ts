@@ -13,7 +13,9 @@ export type ClientParams = {
     | "update-block"
     | "create-page"
     | "move-block"
-    | "delete-block";
+    | "delete-block"
+    | "delete-page"
+    | "update-page";
   selector?: string;
   uid?: string;
   query?: string;
@@ -28,7 +30,7 @@ export type ClientParams = {
     open?: boolean;
   };
   page?: {
-    title: string;
+    title?: string;
     uid?: string;
   };
 };
@@ -73,6 +75,13 @@ export class RoamClient {
     return this.post({
       block,
       action: "delete-block",
+    }).then((r) => r as boolean);
+  }
+
+  public deletePage(page: { uid: string }) {
+    return this.post({
+      page,
+      action: "delete-page",
     }).then((r) => r as boolean);
   }
 
@@ -131,6 +140,13 @@ export class RoamClient {
         open,
       },
       action: "update-block",
+    }).then((r) => r as boolean);
+  }
+  
+  public updatePage(page: { title: string; uid: string }) {
+    return this.post({
+      page,
+      action: "update-page",
     }).then((r) => r as boolean);
   }
 }

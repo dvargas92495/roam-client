@@ -151,7 +151,7 @@ test("Update Block with Rest Client", async () => {
       block: {
         uid: "childUid",
         open: true,
-        string: "text"
+        string: "text",
       },
     },
     {
@@ -212,7 +212,7 @@ test("Pull with Rest Client", async () => {
     selector: "[:block/string]",
     uid: "yS-It9SFL",
   });
-  expect(axios.post).toBeCalledWith(
+  expect(mockAxios).toBeCalledWith(
     "https://4c67k7zc26.execute-api.us-west-2.amazonaws.com/v1/alphaAPI",
     {
       action: "pull",
@@ -243,7 +243,7 @@ test("Q with Rest Client", async () => {
     query: "[:find ?e in $ ?title :where [?e :node/title ?title]]",
     inputs: ["title"],
   });
-  expect(axios.post).toBeCalledWith(
+  expect(mockAxios).toBeCalledWith(
     "https://4c67k7zc26.execute-api.us-west-2.amazonaws.com/v1/alphaAPI",
     {
       action: "q",
@@ -278,7 +278,7 @@ test("Create Page with Rest Client", async () => {
     title: "My Page",
     uid: "mpgy3y0p2",
   });
-  expect(axios.post).toBeCalledWith(
+  expect(mockAxios).toBeCalledWith(
     "https://4c67k7zc26.execute-api.us-west-2.amazonaws.com/v1/alphaAPI",
     {
       action: "create-page",
@@ -298,5 +298,75 @@ test("Create Page with Rest Client", async () => {
   );
   expect(response.title).toBe("My Page");
   expect(response.uid).toBe("mpgy3y0p2");
+  jest.clearAllMocks();
+});
+
+test("Update Page with Rest Client", async () => {
+  const client = new RestClient({
+    apiKey: "API_KEY",
+    apiToken: "API_TOKEN",
+    graphName: "MY_GRAPH",
+    contentType: "application/json",
+  });
+  mockAxios.mockResolvedValue({
+    data: { success: true },
+  });
+  const response = await client.updatePage({
+    title: "My New Page",
+    uid: "mpgy3y0p2",
+  });
+  expect(mockAxios).toBeCalledWith(
+    "https://4c67k7zc26.execute-api.us-west-2.amazonaws.com/v1/alphaAPI",
+    {
+      action: "update-page",
+      "graph-name": "MY_GRAPH",
+      page: {
+        title: "My New Page",
+        uid: "mpgy3y0p2",
+      },
+    },
+    {
+      headers: {
+        "x-api-key": "API_KEY",
+        "x-api-token": "API_TOKEN",
+        "Content-Type": "application/json",
+      },
+    }
+  );
+  expect(response).toBe(true);
+  jest.clearAllMocks();
+});
+
+test("Delete Page with Rest Client", async () => {
+  const client = new RestClient({
+    apiKey: "API_KEY",
+    apiToken: "API_TOKEN",
+    graphName: "MY_GRAPH",
+    contentType: "application/json",
+  });
+  mockAxios.mockResolvedValue({
+    data: { success: true },
+  });
+  const response = await client.deletePage({
+    uid: "mpgy3y0p2",
+  });
+  expect(mockAxios).toBeCalledWith(
+    "https://4c67k7zc26.execute-api.us-west-2.amazonaws.com/v1/alphaAPI",
+    {
+      action: "delete-page",
+      "graph-name": "MY_GRAPH",
+      page: {
+        uid: "mpgy3y0p2",
+      },
+    },
+    {
+      headers: {
+        "x-api-key": "API_KEY",
+        "x-api-token": "API_TOKEN",
+        "Content-Type": "application/json",
+      },
+    }
+  );
+  expect(response).toBe(true);
   jest.clearAllMocks();
 });

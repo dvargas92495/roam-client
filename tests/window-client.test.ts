@@ -127,9 +127,7 @@ test("Q with Window Client", async () => {
 
 test("Create Page with Window Client", async () => {
   const client = new WindowClient();
-  mockWindow.mockResolvedValue({
-    success: [{ title: "My Page", uid: "mpgy3y0p2" }],
-  });
+  mockWindow.mockResolvedValue([{ title: "My Page", uid: "mpgy3y0p2" }]);
   const response = await client.createPage({
     title: "My Page",
     uid: "mpgy3y0p2",
@@ -143,5 +141,39 @@ test("Create Page with Window Client", async () => {
   });
   expect(response.title).toBe("My Page");
   expect(response.uid).toBe("mpgy3y0p2");
+  jest.clearAllMocks();
+});
+
+test("Update Page with Window Client", async () => {
+  const client = new WindowClient();
+  mockWindow.mockResolvedValue(true);
+  const response = await client.updatePage({
+    title: "My New Page",
+    uid: "mpgy3y0p2",
+  });
+  expect(mockWindow).toBeCalledWith({
+    action: "update-page",
+    page: {
+      title: "My New Page",
+      uid: "mpgy3y0p2",
+    },
+  });
+  expect(response).toBe(true);
+  jest.clearAllMocks();
+});
+
+test("Delete Page with Window Client", async () => {
+  const client = new WindowClient();
+  mockWindow.mockResolvedValue(true);
+  const response = await client.deletePage({
+    uid: "mpgy3y0p2",
+  });
+  expect(mockWindow).toBeCalledWith({
+    action: "delete-page",
+    page: {
+      uid: "mpgy3y0p2",
+    },
+  });
+  expect(response).toBe(true);
   jest.clearAllMocks();
 });
