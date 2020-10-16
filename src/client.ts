@@ -142,7 +142,7 @@ export class RoamClient {
       action: "update-block",
     }).then((r) => r as boolean);
   }
-  
+
   public updatePage(page: { title: string; uid: string }) {
     return this.post({
       page,
