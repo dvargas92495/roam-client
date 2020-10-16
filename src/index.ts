@@ -2,6 +2,7 @@ import { fireEvent, waitFor } from "@testing-library/dom";
 import userEvent from "@testing-library/user-event";
 import { AxiosError } from "axios";
 import { ClientParams } from "./client";
+import { RoamBlock, RoamError } from "./types";
 export { default as RestClient } from "./rest-client";
 export { parseRoamDate, toRoamDate, toRoamDateUid } from "./date";
 
@@ -21,18 +22,9 @@ declare global {
     };
     roamDatomicAlphaAPI: (
       params: ClientParams
-    ) => Promise<{
-      children?: { id: number }[];
-      id?: number;
-      string?: string;
-    }>;
+    ) => Promise<RoamBlock>;
   }
 }
-
-type RoamError = {
-  raw: string;
-  "status-code": number;
-};
 
 export const asyncType = async (text: string) =>
   document.activeElement &&

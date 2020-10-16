@@ -52,7 +52,7 @@ class RestClient extends RoamClient {
           },
         }
       )
-      .then((r) => r.data);
+      .then((r) => r.data.success);
   }
 }
 

@@ -1,5 +1,7 @@
+import { RoamBasicBlock } from "./types";
+
 export type ClientParams = {
-  action: "pull" | "q" | "create-block" | "update-block";
+  action: "pull" | "q" | "create-block" | "update-block" | "create-page";
   selector?: string;
   uid?: string;
   query?: string;
@@ -16,7 +18,7 @@ export type ClientParams = {
 };
 
 export class RoamClient {
-  protected post(body: ClientParams) {
+  protected post(body: ClientParams): Promise<any[]> {
     throw new Error("Not Implemented");
   }
 
@@ -41,6 +43,13 @@ export class RoamClient {
         uid,
       },
       action: "create-block",
+    }).then((r) => r[0] as RoamBasicBlock);
+  }
+
+  public createPage(params: { title: string; uid?: string }) {
+    return this.post({
+      ...params,
+      action: "create-page",
     });
   }
 
@@ -49,6 +58,6 @@ export class RoamClient {
       action: "q",
       query,
       inputs,
-    });
+    }).then((r) => r as number[][]);
   }
 }
