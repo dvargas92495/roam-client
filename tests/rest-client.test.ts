@@ -95,10 +95,10 @@ test("Move Block with Rest Client", async () => {
     graphName: "MY_GRAPH",
     contentType: "application/json",
   });
-  /*mockAxios.mockResolvedValue({
-    data: { success: [{ string: "text", uid: "childUid" }] },
-  });*/
-  await client.moveBlock({
+  mockAxios.mockResolvedValue({
+    data: { success: true },
+  });
+  const response = await client.moveBlock({
     parentUid: "parentUid",
     order: 0,
     uid: "childUid",
@@ -124,8 +124,45 @@ test("Move Block with Rest Client", async () => {
       },
     }
   );
-  // expect(response.string).toBe("text");
-  // expect(response.uid).toBe("childUid");
+  expect(response).toBe(true);
+  jest.clearAllMocks();
+});
+
+test("Update Block with Rest Client", async () => {
+  const client = new RestClient({
+    apiKey: "API_KEY",
+    apiToken: "API_TOKEN",
+    graphName: "MY_GRAPH",
+    contentType: "application/json",
+  });
+  /*mockAxios.mockResolvedValue({
+    data: { success: true },
+  });*/
+  await client.updateBlock({
+    open: true,
+    text: "text",
+    uid: "childUid",
+  });
+  expect(mockAxios).toBeCalledWith(
+    "https://4c67k7zc26.execute-api.us-west-2.amazonaws.com/v1/alphaAPI",
+    {
+      action: "update-block",
+      "graph-name": "MY_GRAPH",
+      block: {
+        uid: "childUid",
+        open: true,
+        string: "text"
+      },
+    },
+    {
+      headers: {
+        "x-api-key": "API_KEY",
+        "x-api-token": "API_TOKEN",
+        "Content-Type": "application/json",
+      },
+    }
+  );
+  // expect(response).toBe(true);
   jest.clearAllMocks();
 });
 

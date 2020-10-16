@@ -86,7 +86,7 @@ export class RoamClient {
         uid,
       },
       action: "move-block",
-    });
+    }).then((r) => r as boolean);
   }
 
   public pull(params: { selector?: string; uid: string }) {
@@ -105,5 +105,24 @@ export class RoamClient {
     }).then(
       (r) => r.map((res: RoamQueryResult[]) => res[0]) as RoamQueryResult[]
     );
+  }
+
+  public updateBlock({
+    uid,
+    text,
+    open,
+  }: {
+    uid: string;
+    text: string;
+    open: boolean;
+  }) {
+    return this.post({
+      block: {
+        string: text,
+        uid,
+        open,
+      },
+      action: "update-block",
+    });
   }
 }
