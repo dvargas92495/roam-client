@@ -148,8 +148,7 @@ test("Q with Rest Client", async () => {
     }
   );
   expect(response).toHaveLength(1);
-  expect(response[0]).toHaveLength(1);
-  expect(response[0][0]).toBe(1);
+  expect(response[0]).toBe(1);
   jest.clearAllMocks();
 });
 

@@ -1,4 +1,10 @@
-import { RoamBasicBlock, RoamBasicPage } from "./types";
+import {
+  RoamBasicBlock,
+  RoamBasicPage,
+  RoamPull,
+  RoamPullResult,
+  RoamQueryResult,
+} from "./types";
 
 export type ClientParams = {
   action: "pull" | "q" | "create-block" | "update-block" | "create-page";
@@ -22,7 +28,7 @@ export type ClientParams = {
 };
 
 export class RoamClient {
-  protected post(body: ClientParams): Promise<any[]> {
+  protected post(body: ClientParams): Promise<any> {
     throw new Error("Not Implemented");
   }
 
@@ -62,7 +68,7 @@ export class RoamClient {
       selector: params.selector || "[*]",
       uid: params.uid,
       action: "pull",
-    });
+    }).then((r) => r as RoamPullResult);
   }
 
   public q({ query, inputs }: { query: string; inputs?: string[] }) {
@@ -70,6 +76,8 @@ export class RoamClient {
       action: "q",
       query,
       inputs,
-    }).then((r) => r as number[][]);
+    }).then(
+      (r) => r.map((res: RoamQueryResult[]) => res[0]) as RoamQueryResult[]
+    );
   }
 }
