@@ -179,7 +179,9 @@ const waitForString = (text: string) =>
       // relaxing constraint for equality because there is an issue with periods.
       // in some cases, userEvent.type doesn't type the periods.
       if (actualTextWithoutPeriod !== expectedTextWithoutPeriod) {
-        throw new Error(`Typing not complete. Actual: ${actualTextWithoutPeriod} Expected: ${expectedTextWithoutPeriod}`);
+        throw new Error(
+          `Typing not complete. Actual: ${actualTextWithoutPeriod} Expected: ${expectedTextWithoutPeriod}`
+        );
       }
     },
     {
