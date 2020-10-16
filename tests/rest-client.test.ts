@@ -88,6 +88,47 @@ test("Create Block with Rest Client", async () => {
   jest.clearAllMocks();
 });
 
+test("Move Block with Rest Client", async () => {
+  const client = new RestClient({
+    apiKey: "API_KEY",
+    apiToken: "API_TOKEN",
+    graphName: "MY_GRAPH",
+    contentType: "application/json",
+  });
+  /*mockAxios.mockResolvedValue({
+    data: { success: [{ string: "text", uid: "childUid" }] },
+  });*/
+  await client.moveBlock({
+    parentUid: "parentUid",
+    order: 0,
+    uid: "childUid",
+  });
+  expect(mockAxios).toBeCalledWith(
+    "https://4c67k7zc26.execute-api.us-west-2.amazonaws.com/v1/alphaAPI",
+    {
+      action: "move-block",
+      "graph-name": "MY_GRAPH",
+      location: {
+        "parent-uid": "parentUid",
+        order: 0,
+      },
+      block: {
+        uid: "childUid",
+      },
+    },
+    {
+      headers: {
+        "x-api-key": "API_KEY",
+        "x-api-token": "API_TOKEN",
+        "Content-Type": "application/json",
+      },
+    }
+  );
+  // expect(response.string).toBe("text");
+  // expect(response.uid).toBe("childUid");
+  jest.clearAllMocks();
+});
+
 test("Pull with Rest Client", async () => {
   const client = new RestClient({
     apiKey: "API_KEY",

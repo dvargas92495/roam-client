@@ -1,13 +1,18 @@
 import {
   RoamBasicBlock,
   RoamBasicPage,
-  RoamPull,
   RoamPullResult,
   RoamQueryResult,
 } from "./types";
 
 export type ClientParams = {
-  action: "pull" | "q" | "create-block" | "update-block" | "create-page";
+  action:
+    | "pull"
+    | "q"
+    | "create-block"
+    | "update-block"
+    | "create-page"
+    | "move-block";
   selector?: string;
   uid?: string;
   query?: string;
@@ -17,7 +22,7 @@ export type ClientParams = {
     order: number;
   };
   block?: {
-    string: string;
+    string?: string;
     uid?: string;
     open?: boolean;
   };
@@ -61,6 +66,27 @@ export class RoamClient {
       page,
       action: "create-page",
     }).then((r) => r[0] as RoamBasicPage);
+  }
+
+  public moveBlock({
+    parentUid,
+    order,
+    uid,
+  }: {
+    parentUid: string;
+    order: number;
+    uid?: string;
+  }) {
+    return this.post({
+      location: {
+        "parent-uid": parentUid,
+        order,
+      },
+      block: {
+        uid,
+      },
+      action: "move-block",
+    });
   }
 
   public pull(params: { selector?: string; uid: string }) {
