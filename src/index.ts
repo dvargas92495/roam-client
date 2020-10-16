@@ -20,9 +20,7 @@ declare global {
         id?: number;
       }[][];
     };
-    roamDatomicAlphaAPI: (
-      params: ClientParams
-    ) => Promise<RoamBlock>;
+    roamDatomicAlphaAPI: (params: ClientParams) => Promise<RoamBlock>;
   }
 }
 
