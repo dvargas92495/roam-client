@@ -3,6 +3,8 @@ export type RoamBasicBlock = {
   uid: string;
 };
 
+export type RoamBasicPage = { title: string; uid: string };
+
 export type RoamBlock = {
   children?: { id: number }[];
   id?: number;

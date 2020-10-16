@@ -1,4 +1,4 @@
-import { RoamBasicBlock } from "./types";
+import { RoamBasicBlock, RoamBasicPage } from "./types";
 
 export type ClientParams = {
   action: "pull" | "q" | "create-block" | "update-block" | "create-page";
@@ -54,6 +54,14 @@ export class RoamClient {
     return this.post({
       page,
       action: "create-page",
+    }).then((r) => r[0] as RoamBasicPage);
+  }
+
+  public pull(params: { selector?: string; uid: string }) {
+    return this.post({
+      selector: params.selector || "[*]",
+      uid: params.uid,
+      action: "pull",
     });
   }
 
