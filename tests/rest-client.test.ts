@@ -52,7 +52,9 @@ test("Create Block with Rest Client", async () => {
     graphName: "MY_GRAPH",
     contentType: "application/json",
   });
-  mockAxios.mockResolvedValue({data: {success: [{'string': 'text', uid: 'childUid'}]}});
+  mockAxios.mockResolvedValue({
+    data: { success: [{ string: "text", uid: "childUid" }] },
+  });
   const response = await client.createBlock({
     parentUid: "parentUid",
     order: 0,
@@ -93,7 +95,7 @@ test("Create Block with Rest Client", async () => {
     graphName: "MY_GRAPH",
     contentType: "application/json",
   });
-  mockAxios.mockResolvedValue({data: {success: [[1]]}});
+  mockAxios.mockResolvedValue({ data: { success: [[1]] } });
   const response = await client.q({
     query: "[:find ?e in $ ?title :where [?e :node/title ?title]]",
     inputs: ["title"],
@@ -136,8 +138,10 @@ test("Create Page with Rest Client", async () => {
     {
       action: "create-page",
       "graph-name": "MY_GRAPH",
-      title: "My Page",
-      uid: "mpgy3y0p2",
+      page: {
+        title: "My Page",
+        uid: "mpgy3y0p2",
+      },
     },
     {
       headers: {

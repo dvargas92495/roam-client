@@ -15,6 +15,10 @@ export type ClientParams = {
     uid?: string;
     open?: boolean;
   };
+  page?: {
+    title: string;
+    uid?: string;
+  }
 };
 
 export class RoamClient {
@@ -46,9 +50,9 @@ export class RoamClient {
     }).then((r) => r[0] as RoamBasicBlock);
   }
 
-  public createPage(params: { title: string; uid?: string }) {
+  public createPage(page: { title: string; uid?: string }) {
     return this.post({
-      ...params,
+      page,
       action: "create-page",
     });
   }
