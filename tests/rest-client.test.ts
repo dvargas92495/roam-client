@@ -79,4 +79,35 @@ test("Create Block with Rest Client", async () => {
       },
     }
   );
+  jest.clearAllMocks();
+});
+
+test("Create Block with Rest Client", async () => {
+  const client = new RestClient({
+    apiKey: "API_KEY",
+    apiToken: "API_TOKEN",
+    graphName: "MY_GRAPH",
+    contentType: "application/json",
+  });
+  await client.q({
+    query: "[:find ?e in $ ?title :where [?e :node/title ?title]]",
+    inputs: ["title"],
+  });
+  expect(axios.post).toBeCalledWith(
+    "https://4c67k7zc26.execute-api.us-west-2.amazonaws.com/v1/alphaAPI",
+    {
+      action: "q",
+      'graph-name': "MY_GRAPH",
+      query: "[:find ?e in $ ?title :where [?e :node/title ?title]]",
+      inputs: ["title"],
+    },
+    {
+      headers: {
+        "x-api-key": "API_KEY",
+        "x-api-token": "API_TOKEN",
+        "Content-Type": "application/json",
+      },
+    }
+  );
+  jest.clearAllMocks();
 });

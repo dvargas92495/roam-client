@@ -3,7 +3,7 @@ export type ClientParams = {
   selector?: string;
   uid?: string;
   query?: string;
-  inputs?: any;
+  inputs?: string[];
   location?: {
     "parent-uid": string;
     order: number;
@@ -41,6 +41,14 @@ export class RoamClient {
         uid,
       },
       action: "create-block",
+    });
+  }
+
+  public q({ query, inputs }: { query: string; inputs?: string[] }) {
+    return this.post({
+      action: "q",
+      query,
+      inputs,
     });
   }
 }
