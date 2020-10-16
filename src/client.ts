@@ -18,7 +18,7 @@ export type ClientParams = {
   page?: {
     title: string;
     uid?: string;
-  }
+  };
 };
 
 export class RoamClient {
