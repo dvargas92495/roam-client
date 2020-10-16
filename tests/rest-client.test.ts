@@ -135,10 +135,10 @@ test("Update Block with Rest Client", async () => {
     graphName: "MY_GRAPH",
     contentType: "application/json",
   });
-  /*mockAxios.mockResolvedValue({
+  mockAxios.mockResolvedValue({
     data: { success: true },
-  });*/
-  await client.updateBlock({
+  });
+  const response = await client.updateBlock({
     open: true,
     text: "text",
     uid: "childUid",
@@ -162,7 +162,41 @@ test("Update Block with Rest Client", async () => {
       },
     }
   );
-  // expect(response).toBe(true);
+  expect(response).toBe(true);
+  jest.clearAllMocks();
+});
+
+test("Delete Block with Rest Client", async () => {
+  const client = new RestClient({
+    apiKey: "API_KEY",
+    apiToken: "API_TOKEN",
+    graphName: "MY_GRAPH",
+    contentType: "application/json",
+  });
+  mockAxios.mockResolvedValue({
+    data: { success: true },
+  });
+  const response = await client.deleteBlock({
+    uid: "childUid",
+  });
+  expect(mockAxios).toBeCalledWith(
+    "https://4c67k7zc26.execute-api.us-west-2.amazonaws.com/v1/alphaAPI",
+    {
+      action: "delete-block",
+      "graph-name": "MY_GRAPH",
+      block: {
+        uid: "childUid",
+      },
+    },
+    {
+      headers: {
+        "x-api-key": "API_KEY",
+        "x-api-token": "API_TOKEN",
+        "Content-Type": "application/json",
+      },
+    }
+  );
+  expect(response).toBe(true);
   jest.clearAllMocks();
 });
 
