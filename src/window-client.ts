@@ -1,4 +1,5 @@
-import { ClientParams, RoamClient } from "./client";
+import { ClientParams } from "./types";
+import { RoamClient } from "./client";
 
 class WindowClient extends RoamClient {
   constructor() {
