@@ -47,3 +47,33 @@ export type RoamQuery = RoamPull & {
 };
 
 export type RoamQueryResult = number & RoamQuery;
+
+export type ClientParams = {
+  action:
+    | "pull"
+    | "q"
+    | "create-block"
+    | "update-block"
+    | "create-page"
+    | "move-block"
+    | "delete-block"
+    | "delete-page"
+    | "update-page";
+  selector?: string;
+  uid?: string;
+  query?: string;
+  inputs?: string[];
+  location?: {
+    "parent-uid": string;
+    order: number;
+  };
+  block?: {
+    string?: string;
+    uid?: string;
+    open?: boolean;
+  };
+  page?: {
+    title?: string;
+    uid?: string;
+  };
+};

@@ -1,11 +1,11 @@
 import { fireEvent, waitFor } from "@testing-library/dom";
 import userEvent from "@testing-library/user-event";
 import { AxiosError } from "axios";
-import { ClientParams } from "./client";
-import { RoamBlock, RoamError } from "./types";
+import { RoamBlock, RoamError, ClientParams } from "./types";
 export { default as RestClient } from "./rest-client";
 export { default as WindowClient } from "./window-client";
 export { parseRoamDate, toRoamDate, toRoamDateUid } from "./date";
+export { createIconButton } from "./dom";
 
 declare global {
   interface Window {
