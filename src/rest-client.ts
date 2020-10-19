@@ -1,5 +1,6 @@
 import axios from "axios";
-import { ClientParams, RoamClient } from "./client";
+import { ClientParams } from "./types";
+import { RoamClient } from "./client";
 
 type RestClientProps = {
   apiKey?: string;
