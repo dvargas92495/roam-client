@@ -10,4 +10,4 @@ export const clear = async () => {
   const textArea = document.activeElement as HTMLTextAreaElement;
   await userEvent.clear(textArea);
   await waitForString("");
-}
+};
