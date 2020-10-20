@@ -7,12 +7,12 @@ class WindowClient extends RoamClient {
     if (!window) {
       throw new Error("Client could only be used in a Window");
     }
-    if (!window.roamDatomicAlphaAPI) {
-      throw new Error("Client could only be used with new Roam backend");
-    }
   }
 
   protected post(body: ClientParams) {
+    if (!window.roamDatomicAlphaAPI) {
+      throw new Error("Client could only be used with new Roam backend");
+    }
     return window
       .roamDatomicAlphaAPI(body)
       .then((r) => (typeof r.success !== "undefined" ? r.success : r));
