@@ -6,7 +6,12 @@ import { RoamBlock, RoamError, ClientParams } from "./types";
 export { default as RestClient } from "./rest-client";
 export { default as WindowClient } from "./window-client";
 export { parseRoamDate, toRoamDate, toRoamDateUid } from "./date";
-export { createIconButton, getUids, getUidsFromButton } from "./dom";
+export {
+  addButtonListener,
+  createIconButton,
+  getUids,
+  getUidsFromButton,
+} from "./dom";
 export { openBlock } from "./user-event";
 
 declare global {
