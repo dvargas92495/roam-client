@@ -1,4 +1,4 @@
-import { createIconButton, getUids } from "../src";
+import { createIconButton, getUids, getUidsFromButton } from "../src";
 
 test("Icon button is rendered", () => {
   const iconButton = createIconButton("sort");
@@ -32,4 +32,16 @@ test("getUids get parent and block for daily page", () => {
   const { blockUid, parentUid } = getUids(block);
   expect(blockUid).toBe("jklmnopqr");
   expect(parentUid).toBe("10-20-2020");
+});
+
+test("getUidsFromButton get parent and block for normal page", () => {
+  const block = document.createElement("div");
+  block.id =
+    "block-input-abcd1234abcd1234abcd1234abcd-body-outline-abcdefghi-jklmnopqr";
+  const button = document.createElement("button");
+  block.appendChild(button);
+  block.className = "roam-block";
+  const { blockUid, parentUid } = getUidsFromButton(button);
+  expect(blockUid).toBe("jklmnopqr");
+  expect(parentUid).toBe("abcdefghi");
 });

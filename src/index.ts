@@ -1,11 +1,13 @@
 import { fireEvent, waitFor } from "@testing-library/dom";
 import userEvent from "@testing-library/user-event";
 import { AxiosError } from "axios";
+import { waitForString } from "./dom-testing";
 import { RoamBlock, RoamError, ClientParams } from "./types";
 export { default as RestClient } from "./rest-client";
 export { default as WindowClient } from "./window-client";
 export { parseRoamDate, toRoamDate, toRoamDateUid } from "./date";
-export { createIconButton, getUids } from "./dom";
+export { createIconButton, getUids, getUidsFromButton } from "./dom";
+export { openBlock } from "./user-event";
 
 declare global {
   interface Window {
@@ -21,7 +23,7 @@ declare global {
         id?: number;
       }[][];
     };
-    roamDatomicAlphaAPI: (
+    roamDatomicAlphaAPI?: (
       params: ClientParams
     ) => Promise<RoamBlock & { success?: boolean }>;
   }
@@ -150,31 +152,3 @@ export const pushBullets = async (
     }
   }
 };
-
-const waitForString = (text: string) =>
-  waitFor(
-    () => {
-      const textArea = document.activeElement as HTMLTextAreaElement;
-      if (textArea?.value == null) {
-        throw new Error(
-          `Textarea is undefined. Active Element ${textArea.tagName}. Input text ${text}`
-        );
-      }
-
-      const expectedTextWithoutPeriod = text.replace(/\./g, "").toUpperCase();
-      const actualTextWithoutPeriod = textArea.value
-        .replace(/\./g, "")
-        .toUpperCase();
-
-      // relaxing constraint for equality because there is an issue with periods.
-      // in some cases, userEvent.type doesn't type the periods.
-      if (actualTextWithoutPeriod !== expectedTextWithoutPeriod) {
-        throw new Error(
-          `Typing not complete. Actual: ${actualTextWithoutPeriod} Expected: ${expectedTextWithoutPeriod}`
-        );
-      }
-    },
-    {
-      timeout: 5000,
-    }
-  );
