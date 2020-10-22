@@ -17,17 +17,14 @@ export { openBlock } from "./user-event";
 declare global {
   interface Window {
     roamAlphaAPI: {
-      q: (
-        query: string
+      q: (query: string) => RoamBlock[][];
+      pull: (
+        selector: string,
+        id: number
       ) => {
-        attrs?: { source: string[] }[][];
-        string?: string;
-        time?: number;
-        title?: string;
-        uid?: string;
-        id?: number;
-      }[][];
-      pull: (selector: string, id: number) => RoamBlock;
+        ":block/children": { ":db/id": number }[];
+        ":block/string": string;
+      };
     };
     roamDatomicAlphaAPI?: (
       params: ClientParams

@@ -20,6 +20,7 @@ export type RoamPull = {
 export type RoamPullResult = RoamPull | null;
 
 export type RoamBlock = {
+  attrs?: { source: string[] }[][];
   children?: { id: number }[];
   id?: number;
   string?: string;
