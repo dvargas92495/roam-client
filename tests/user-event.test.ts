@@ -10,8 +10,9 @@ test("openBlock textarea renders", async () => {
         textarea.focus();
     }
 
-    await openBlock(div);
+    const openedBlock = await openBlock(div);
     
     expect(textarea).toBeInTheDocument();
     expect(textarea).toHaveFocus();
+    expect(textarea).toBe(openedBlock);
 })

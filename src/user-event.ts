@@ -4,6 +4,7 @@ import { waitForActiveTextarea, waitForString } from "./dom-testing";
 export const openBlock = async (e: Element) => {
   await userEvent.click(e);
   await waitForActiveTextarea();
+  return document.activeElement as HTMLTextAreaElement;
 };
 
 export const clear = async () => {

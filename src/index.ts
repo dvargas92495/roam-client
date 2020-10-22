@@ -27,6 +27,7 @@ declare global {
         uid?: string;
         id?: number;
       }[][];
+      pull: (selector: string, id: number) => RoamBlock;
     };
     roamDatomicAlphaAPI?: (
       params: ClientParams
