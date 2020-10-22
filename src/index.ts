@@ -52,6 +52,12 @@ export const genericError = (e: Partial<AxiosError & RoamError>) => {
   );
 };
 
+const toAttributeValue = (s: string) =>
+  (s.startsWith("{{or: ")
+    ? s.substring("{{or: ".length, s.indexOf("|"))
+    : s
+  ).trim();
+
 export const getAttrConfigFromQuery = (query: string) => {
   const pageResults = window.roamAlphaAPI.q(query);
   if (pageResults.length === 0 || !pageResults[0][0].attrs) {
@@ -68,7 +74,7 @@ export const getAttrConfigFromQuery = (query: string) => {
           `[:find (pull ?e [:block/string]) :where [?e :block/uid "${r}"] ]`
         )[0][0]
         .string?.split("::")
-        .map((s: string) => s.trim()) || [r, "undefined"]
+        .map(toAttributeValue) || [r, "undefined"]
   );
   return Object.fromEntries(entries);
 };
