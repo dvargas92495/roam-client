@@ -53,7 +53,7 @@ export const genericError = (e: Partial<AxiosError & RoamError>) => {
 };
 
 const toAttributeValue = (s: string) =>
-  (s.startsWith("{{or: ")
+  (s.trim().startsWith("{{or: ")
     ? s.substring("{{or: ".length, s.indexOf("|"))
     : s
   ).trim();
