@@ -120,4 +120,18 @@ export class RoamClient {
       action: "update-page",
     }).then((r) => r as boolean);
   }
+
+  public async findOrCreatePage(pageName: string, uid?: string) {
+    const queryResults = await this.q({
+      query: `[:find ?e :where [?e :node/title "${pageName}"]]`,
+    });
+    if (queryResults.length === 0) {
+      const basicPage = await this.createPage({
+        title: pageName,
+        uid,
+      });
+      return basicPage.uid;
+    }
+    return queryResults[0]["block/uid"];
+  }
 }
