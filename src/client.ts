@@ -123,7 +123,7 @@ export class RoamClient {
 
   public async findOrCreatePage(pageName: string, uid?: string) {
     const queryResults = await this.q({
-      query: `[:find ?e :where [?e :node/title "${pageName}"]]`,
+      query: `[:find (pull ?e [:block/uid]) :where [?e :node/title "${pageName}"]]`,
     });
     if (queryResults.length === 0) {
       const basicPage = await this.createPage({
