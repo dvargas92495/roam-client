@@ -35,6 +35,21 @@ export class RoamClient {
     }).then((r) => r[0] as RoamBasicBlock);
   }
 
+  public createAttribute({
+    key,
+    value,
+    parentUid,
+  }: {
+    key: string;
+    value: string;
+    parentUid: string;
+  }) {
+    return this.appendBlock({
+      text: `${key}:: ${value}`,
+      parentUid,
+    });
+  }
+
   public createPage(page: { title: string; uid?: string }) {
     return this.post({
       page,
@@ -133,5 +148,43 @@ export class RoamClient {
       return basicPage.uid;
     }
     return queryResults[0]["block/uid"];
+  }
+
+  public async findOrCreateBlock({
+    text,
+    parentUid,
+  }: {
+    text: string;
+    parentUid: string;
+  }) {
+    const queryResults = await this.q({
+      query: `[:find (pull ?c [:block/uid]) :where [?c :block/string "${text}"] [?p :block/children ?c] [?p :block/uid "${parentUid}"]]`,
+    });
+    if (queryResults.length === 0) {
+      return await this.appendBlock({ text, parentUid });
+    }
+    return queryResults[0]["block/uid"];
+  }
+
+  public async appendBlock({
+    text,
+    parentUid,
+  }: {
+    text: string;
+    parentUid: string;
+  }) {
+    const parents = await this.q({
+      query: `[:find (pull ?p [:block/children]) :where [?p :block/uid "${parentUid}"]]`,
+    });
+    if (parents.length === 0) {
+      throw new Error(`No existing parent of uid ${parentUid}`);
+    }
+    const children = parents[0]["block/children"];
+    const basicPage = await this.createBlock({
+      text,
+      parentUid,
+      order: children?.length || 0,
+    });
+    return basicPage.uid;
   }
 }
