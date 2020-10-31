@@ -4,3 +4,5 @@ export const getFocusedTextArea = () => {
   textarea.focus();
   return textarea;
 };
+
+export const pull = () => ({ ":block/children": [], ":block/string": "" });

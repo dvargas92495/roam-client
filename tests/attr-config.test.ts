@@ -1,4 +1,5 @@
 import { getAttrConfigFromQuery, getConfigFromPage } from "../src";
+import { pull } from "./util";
 
 test("Get config object from query", () => {
   window.roamAlphaAPI = {
@@ -32,6 +33,7 @@ test("Get config object from query", () => {
         return [];
       }
     }),
+    pull,
   };
   const config = getAttrConfigFromQuery("input");
   expect(config).toHaveProperty("Key");
@@ -70,6 +72,7 @@ test("Get Config from Page input", () => {
         return [];
       }
     }),
+    pull,
   };
   const config = getConfigFromPage("input");
   expect(config).toHaveProperty("Key");
@@ -113,6 +116,7 @@ test("Get Config from Page Title", () => {
         return [];
       }
     }),
+    pull,
   };
   const config = getConfigFromPage("input");
   expect(config).toHaveProperty("Key");
