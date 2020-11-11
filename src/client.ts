@@ -105,7 +105,8 @@ export class RoamClient {
       action: "q",
       query,
       inputs,
-    }).then(
+    })
+    .then(
       (r) => r.map((res: RoamQueryResult[]) => res[0]) as RoamQueryResult[]
     );
   }
@@ -166,6 +167,24 @@ export class RoamClient {
     return queryResults[0]["block/uid"];
   }
 
+  public async upsertBlock({
+    uid,
+    text,
+    parentUid,
+  } : {
+    uid: string,
+    text: string,
+    parentUid: string,
+  }) {
+    const queryResults = await this.q({
+      query: `[:find (pull ?b [:block/uid]) :where [?b :block/uid "${uid}"]]`,
+    });
+    if (queryResults.length === 0) {
+      return this.appendBlock({text, parentUid});
+    }
+    return this.updateBlock({ uid, text });
+  }
+
   public async appendBlock({
     text,
     parentUid,
@@ -174,9 +193,9 @@ export class RoamClient {
     parentUid: string;
   }) {
     const parents = await this.q({
-      query: `[:find (pull ?p [:block/children]) :where [?p :block/uid "${parentUid}"]]`,
+      query: `[:find (pull ?p [:block/children, :block/uid]) :where [?p :block/uid "${parentUid}"]]`,
     });
-    if (parents.length === 0) {
+    if (parents.length === 0 || !parents[0]) {
       throw new Error(`No existing parent of uid ${parentUid}`);
     }
     const children = parents[0]["block/children"];

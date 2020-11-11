@@ -1,3 +1,4 @@
+require('dotenv').config();
 const RestClient = require("../lib").RestClient;
 
 const client = new RestClient({
@@ -5,9 +6,19 @@ const client = new RestClient({
 });
 
 client
-  .findOrCreateBlock({
-    text: "testingerYo",
-    parentUid: "10-ab-2020",
-  })
+  .findOrCreatePage("roam/js")
+  .then((parentUid) =>
+    client.findOrCreateBlock({
+      text: "{{[[roam/js]]}}",
+      parentUid,
+    })
+  )
+  .then((parentUid) =>
+    client.upsertBlock({
+      text: "some code",
+      uid: "roamjs-uid",
+      parentUid,
+    })
+  )
   .then((b) => console.log("Done", b))
-  .catch(e => console.error(e.response ? e.response.data.error : e.message));
+  .catch((e) => console.error(e.response ? e.response.data.error : e.message));
