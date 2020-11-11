@@ -105,8 +105,7 @@ export class RoamClient {
       action: "q",
       query,
       inputs,
-    })
-    .then(
+    }).then(
       (r) => r.map((res: RoamQueryResult[]) => res[0]) as RoamQueryResult[]
     );
   }
@@ -171,16 +170,16 @@ export class RoamClient {
     uid,
     text,
     parentUid,
-  } : {
-    uid: string,
-    text: string,
-    parentUid: string,
+  }: {
+    uid: string;
+    text: string;
+    parentUid: string;
   }) {
     const queryResults = await this.q({
       query: `[:find (pull ?b [:block/uid]) :where [?b :block/uid "${uid}"]]`,
     });
     if (queryResults.length === 0) {
-      return this.appendBlock({text, parentUid});
+      return this.appendBlock({ text, parentUid });
     }
     return this.updateBlock({ uid, text });
   }
