@@ -179,7 +179,7 @@ export class RoamClient {
       query: `[:find (pull ?b [:block/uid]) :where [?b :block/uid "${uid}"]]`,
     });
     if (queryResults.length === 0) {
-      return this.appendBlock({ text, parentUid });
+      return this.appendBlock({ text, parentUid }).then(() => true);
     }
     return this.updateBlock({ uid, text });
   }
