@@ -179,7 +179,7 @@ export class RoamClient {
       query: `[:find (pull ?b [:block/uid]) :where [?b :block/uid "${uid}"]]`,
     });
     if (queryResults.length === 0) {
-      return this.appendBlock({ text, parentUid }).then(() => true);
+      return this.appendBlock({ text, parentUid, uid }).then(() => true);
     }
     return this.updateBlock({ uid, text });
   }
@@ -187,9 +187,11 @@ export class RoamClient {
   public async appendBlock({
     text,
     parentUid,
+    uid,
   }: {
     text: string;
     parentUid: string;
+    uid?: string;
   }) {
     const parents = await this.q({
       query: `[:find (pull ?p [:block/children, :block/uid]) :where [?p :block/uid "${parentUid}"]]`,
@@ -202,6 +204,7 @@ export class RoamClient {
       text,
       parentUid,
       order: children?.length || 0,
+      uid,
     });
     return basicPage.uid;
   }
