@@ -22,9 +22,9 @@ declare global {
         selector: string,
         id: number
       ) => {
-        ":block/children": { ":db/id": number }[];
-        ":block/string": string;
-        ":block/order": string;
+        ":block/children"?: { ":db/id": number }[];
+        ":block/string"?: string;
+        ":block/order"?: string;
       };
     };
     roamDatomicAlphaAPI?: (
