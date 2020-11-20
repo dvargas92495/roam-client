@@ -25,6 +25,7 @@ declare global {
         ":block/children"?: { ":db/id": number }[];
         ":block/string"?: string;
         ":block/order"?: number;
+        ":block/uid"?: string;
       };
     };
     roamDatomicAlphaAPI?: (
