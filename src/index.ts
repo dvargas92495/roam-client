@@ -157,7 +157,7 @@ export const pushBullets = async (
       const bullet = bullets[index];
       await userEvent.paste(document.activeElement, bullet, {
         // @ts-ignore - https://github.com/testing-library/user-event/issues/512
-        clipboardData: new DataTransfer(),
+        clipboardData: {},
       });
       await waitForString(bullet);
 
