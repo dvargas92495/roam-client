@@ -40,6 +40,13 @@ export const asyncType = async (text: string) =>
     skipClick: true,
   }));
 
+export const asyncPaste = async (text: string) =>
+  document.activeElement &&
+  (await userEvent.paste(document.activeElement, text, {
+    // @ts-ignore - https://github.com/testing-library/user-event/issues/512
+    clipboardData: new DataTransfer(),
+  }));
+
 export const genericError = (e: Partial<AxiosError & RoamError>) => {
   const message =
     (e.response
@@ -155,10 +162,7 @@ export const pushBullets = async (
   } else if (document.activeElement) {
     for (let index = 0; index < bullets.length; index++) {
       const bullet = bullets[index];
-      await userEvent.paste(document.activeElement, bullet, {
-        // @ts-ignore - https://github.com/testing-library/user-event/issues/512
-        clipboardData: new DataTransfer(),
-      });
+      await asyncPaste(bullet);
       await waitForString(bullet);
 
       if (index < bullets.length - 1) {
