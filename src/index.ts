@@ -103,6 +103,7 @@ export const newBlockEnter = async () => {
   const enterObj = {
     key: "Enter",
     keyCode: 13,
+    code: 13,
     which: 13,
   };
   await fireEvent.keyDown(document.activeElement, enterObj);
@@ -151,10 +152,13 @@ export const pushBullets = async (
         });
       }
     }
-  } else {
+  } else if (document.activeElement) {
     for (let index = 0; index < bullets.length; index++) {
       const bullet = bullets[index];
-      await asyncType(bullet);
+      await userEvent.paste(document.activeElement, bullet, {
+        // @ts-ignore - https://github.com/testing-library/user-event/issues/512
+        clipboardData: new DataTransfer(),
+      });
       await waitForString(bullet);
 
       if (index < bullets.length - 1) {
