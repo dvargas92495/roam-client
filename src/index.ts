@@ -105,7 +105,7 @@ export const newBlockEnter = async () => {
     return;
   }
   const element = document.activeElement as HTMLElement;
-  if (element.tagName !== 'TEXTAREA') {
+  if (element.tagName !== "TEXTAREA") {
     return;
   }
   const textarea = element as HTMLTextAreaElement;
