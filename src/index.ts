@@ -104,6 +104,13 @@ export const newBlockEnter = async () => {
   if (!document.activeElement) {
     return;
   }
+  const element = document.activeElement as HTMLElement;
+  if (element.tagName !== 'TEXTAREA') {
+    return;
+  }
+  const textarea = element as HTMLTextAreaElement;
+  const end = textarea.value.length;
+  textarea.setSelectionRange(end, end);
 
   // Need to switch to fireEvent because user-event enters a newline when hitting enter in a text area
   // https://github.com/testing-library/user-event/blob/master/src/type.js#L505
