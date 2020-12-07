@@ -25,7 +25,11 @@ test("Pressing Enter creates new block", async () => {
   expect(newTextArea).toHaveFocus();
 });
 
+class DataTransferStub {}
+
 test("Push bullets types in current bullet and creates two more", async () => {
+  // @ts-ignore https://github.com/jsdom/jsdom/issues/1568
+  global.DataTransfer = DataTransferStub;
   const textarea = getFocusedTextArea();
   textarea.onkeyup = textareaKeyup;
   await pushBullets(["First block", "Second block", "Third block"]);
