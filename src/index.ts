@@ -123,6 +123,7 @@ export const newBlockEnter = async () => {
   await fireEvent.keyDown(document.activeElement, enterObj);
   await fireEvent.keyUp(document.activeElement, enterObj);
   await waitForString("");
+  return document.activeElement as HTMLTextAreaElement;
 };
 
 export const pushBullets = async (
