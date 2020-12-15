@@ -1,11 +1,16 @@
 import { waitFor } from "@testing-library/dom";
 
 export const waitForActiveTextarea = async () => {
-  await waitFor(() => {
-    if (document.activeElement?.tagName !== "TEXTAREA") {
-      throw new Error("Textarea didn't render");
+  await waitFor(
+    () => {
+      if (document.activeElement?.tagName !== "TEXTAREA") {
+        throw new Error("Textarea didn't render");
+      }
+    },
+    {
+      timeout: 5000,
     }
-  });
+  );
 };
 
 export const waitForString = (text: string) =>
