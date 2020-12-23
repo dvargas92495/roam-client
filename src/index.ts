@@ -45,7 +45,7 @@ const getClipboardData = () => {
   try {
     return new DataTransfer();
   } catch (e) {
-    return {};
+    return "";
   }
 };
 
