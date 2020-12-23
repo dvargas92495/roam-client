@@ -40,21 +40,12 @@ export const asyncType = async (text: string) =>
     skipClick: true,
   }));
 
-const getClipboardData = () => {
-  // Safari doesn't like Data Transfer
-  try {
-    return new DataTransfer();
-  } catch (e) {
-    return "";
-  }
-};
-
 export const asyncPaste = async (text: string) =>
   document.activeElement &&
-  (await userEvent.paste(document.activeElement, text, {
-    // @ts-ignore - https://github.com/testing-library/user-event/issues/512
-    clipboardData: getClipboardData(),
-  }));
+  // Roam's paste assumes clipboardData
+  // which has to be a DataTransfer object in most browsers
+  // but not on Safari. Wow. So let's not bubble the event.
+  (await userEvent.paste(document.activeElement, text, { bubbles: false }));
 
 export const genericError = (e: Partial<AxiosError & RoamError>) => {
   const message =
