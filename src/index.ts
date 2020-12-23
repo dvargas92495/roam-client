@@ -40,11 +40,20 @@ export const asyncType = async (text: string) =>
     skipClick: true,
   }));
 
+const getClipboardData = () => {
+  // Safari doesn't like Data Transfer
+  try {
+    return new DataTransfer();
+  } catch (e) {
+    return {};
+  }
+};
+
 export const asyncPaste = async (text: string) =>
   document.activeElement &&
   (await userEvent.paste(document.activeElement, text, {
     // @ts-ignore - https://github.com/testing-library/user-event/issues/512
-    clipboardData: new DataTransfer(),
+    clipboardData: getClipboardData(),
   }));
 
 export const genericError = (e: Partial<AxiosError & RoamError>) => {
