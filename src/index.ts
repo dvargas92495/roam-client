@@ -26,6 +26,7 @@ declare global {
         ":block/string"?: string;
         ":block/order"?: number;
         ":block/uid"?: string;
+        ":block/heading"?: number;
       };
     };
     roamDatomicAlphaAPI?: (
