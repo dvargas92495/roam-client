@@ -42,12 +42,19 @@ export const asyncType = async (text: string) =>
     skipClick: true,
   }));
 
-export const asyncPaste = async (text: string) =>
-  document.activeElement &&
-  // Roam's paste assumes clipboardData
-  // which has to be a DataTransfer object in most browsers
-  // but not on Safari. Wow. So let's not bubble the event.
-  (await userEvent.paste(document.activeElement, text, { bubbles: false }));
+export const asyncPaste = async (text: string) => {
+  const textarea = document.activeElement as HTMLTextAreaElement;
+  if (textarea) {
+    const start = textarea.selectionStart;
+    const end = textarea.selectionEnd;
+    
+    // Roam's paste assumes clipboardData
+    // which has to be a DataTransfer object in most browsers
+    // but not on Safari. Wow. So let's not bubble the event.
+    await userEvent.paste(textarea, text, { bubbles: false });
+    textarea.setSelectionRange(start + text.length, end + text.length);
+  }
+};
 
 export const genericError = (e: Partial<AxiosError & RoamError>) => {
   const message =
