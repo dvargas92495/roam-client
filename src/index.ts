@@ -47,7 +47,7 @@ export const asyncPaste = async (text: string) => {
   if (textarea) {
     const start = textarea.selectionStart;
     const end = textarea.selectionEnd;
-    
+
     // Roam's paste assumes clipboardData
     // which has to be a DataTransfer object in most browsers
     // but not on Safari. Wow. So let's not bubble the event.
