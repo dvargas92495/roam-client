@@ -2,7 +2,7 @@ import userEvent from "@testing-library/user-event";
 import { waitForActiveTextarea, waitForString } from "./dom-testing";
 
 export const openBlock = async (e: Element) => {
-  await userEvent.click(e);
+  await userEvent.click(e, { bubbles: true });
   await waitForActiveTextarea();
   return document.activeElement as HTMLTextAreaElement;
 };
