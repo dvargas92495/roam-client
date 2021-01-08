@@ -5,6 +5,7 @@ import { waitForString } from "./dom-testing";
 import { RoamBlock, RoamError, ClientParams } from "./types";
 export { default as RestClient } from "./rest-client";
 export { default as WindowClient } from "./window-client";
+export { getLinkedPageReferences } from "./alpha-api";
 export { parseRoamDate, toRoamDate, toRoamDateUid } from "./date";
 export {
   addButtonListener,
