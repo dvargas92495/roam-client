@@ -29,6 +29,7 @@ declare global {
         ":block/uid"?: string;
         ":block/heading"?: number;
         ":block/open"?: boolean;
+        ":block/view-type"?: 'bullet' | 'document' | 'numbered'
       };
     };
     roamDatomicAlphaAPI?: (
