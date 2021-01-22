@@ -17,5 +17,7 @@ export const getLinkedPageReferences = (t: string): RoamBlock[] => {
       )}"]]`
     )
     .filter((block) => block.length);
-  return parentBlocks.map((b) => findParentBlock(b[0])) as RoamBlock[];
+  return parentBlocks.map((b) =>
+    findParentBlock(b[0] as RoamBlock)
+  ) as RoamBlock[];
 };

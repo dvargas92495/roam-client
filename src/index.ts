@@ -19,7 +19,7 @@ export { openBlock } from "./user-event";
 declare global {
   interface Window {
     roamAlphaAPI: {
-      q: (query: string) => RoamBlock[][];
+      q: (query: string) => (RoamBlock | string)[][];
       pull: (
         selector: string,
         id: number
@@ -88,20 +88,20 @@ const toAttributeValue = (s: string) =>
 
 export const getAttrConfigFromQuery = (query: string) => {
   const pageResults = window.roamAlphaAPI.q(query);
-  if (pageResults.length === 0 || !pageResults[0][0].attrs) {
+  const resultAsBlock = pageResults[0][0] as RoamBlock;
+  if (pageResults.length === 0 || !resultAsBlock.attrs) {
     return {};
   }
 
-  const configurationAttrRefs = pageResults[0][0].attrs.map(
+  const configurationAttrRefs = resultAsBlock.attrs.map(
     (a: any) => a[2].source[1]
   );
   const entries = configurationAttrRefs.map(
     (r: string) =>
-      window.roamAlphaAPI
-        .q(
-          `[:find (pull ?e [:block/string]) :where [?e :block/uid "${r}"] ]`
-        )[0][0]
-        .string?.split("::")
+      (window.roamAlphaAPI.q(
+        `[:find (pull ?e [:block/string]) :where [?e :block/uid "${r}"] ]`
+      )[0][0] as RoamBlock).string
+        ?.split("::")
         .map(toAttributeValue) || [r, "undefined"]
   );
   return Object.fromEntries(entries);
