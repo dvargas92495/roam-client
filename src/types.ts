@@ -64,6 +64,9 @@ export type ClientParams = {
   uid?: string;
   query?: string;
   inputs?: string[];
+} & ActionParams;
+
+type ActionParams = {
   location?: {
     "parent-uid": string;
     order: number;
@@ -78,3 +81,5 @@ export type ClientParams = {
     uid?: string;
   };
 };
+
+export type WriteAction = (a: ActionParams) => boolean;

@@ -1,8 +1,8 @@
-import { fireEvent, waitFor } from "@testing-library/dom";
+import { fireEvent } from "@testing-library/dom";
 import userEvent from "@testing-library/user-event";
 import { AxiosError } from "axios";
 import { waitForString } from "./dom-testing";
-import { RoamBlock, RoamError, ClientParams } from "./types";
+import { RoamBlock, RoamError, ClientParams, WriteAction } from "./types";
 export { default as RestClient } from "./rest-client";
 export { default as WindowClient } from "./window-client";
 export { getLinkedPageReferences } from "./alpha-api";
@@ -31,6 +31,13 @@ declare global {
         ":block/open"?: boolean;
         ":children/view-type"?: ":bullet" | ":document" | ":numbered";
       };
+      createBlock: WriteAction,
+      updateBlock: WriteAction,
+      createPage: WriteAction, 
+      moveBlock: WriteAction, 
+      deleteBlock: WriteAction, 
+      updatePage: WriteAction, 
+      deletePage: WriteAction,
     };
     roamDatomicAlphaAPI?: (
       params: ClientParams
