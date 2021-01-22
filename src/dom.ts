@@ -102,9 +102,9 @@ export const createIconButton = (icon: string) => {
   return popoverButton;
 };
 
-export const getUids = (block: HTMLDivElement | HTMLTextAreaElement) => {
-  const blockUid = block.id.substring(block.id.length - 9, block.id.length);
-  const restOfHTMLId = block.id.substring(0, block.id.length - 9);
+export const getUidsFromId = (id: string) => {
+  const blockUid = id.substring(id.length - 9, id.length);
+  const restOfHTMLId = id.substring(0, id.length - 9);
   const potentialDateUid = restOfHTMLId.substring(
     restOfHTMLId.length - 11,
     restOfHTMLId.length - 1
@@ -116,6 +116,10 @@ export const getUids = (block: HTMLDivElement | HTMLTextAreaElement) => {
     blockUid,
     parentUid,
   };
+};
+
+export const getUids = (block: HTMLDivElement | HTMLTextAreaElement) => {
+  return getUidsFromId(block.id);
 };
 
 export const getUidsFromButton = (button: HTMLButtonElement) => {
