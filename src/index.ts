@@ -31,13 +31,13 @@ declare global {
         ":block/open"?: boolean;
         ":children/view-type"?: ":bullet" | ":document" | ":numbered";
       };
-      createBlock: WriteAction,
-      updateBlock: WriteAction,
-      createPage: WriteAction, 
-      moveBlock: WriteAction, 
-      deleteBlock: WriteAction, 
-      updatePage: WriteAction, 
-      deletePage: WriteAction,
+      createBlock: WriteAction;
+      updateBlock: WriteAction;
+      createPage: WriteAction;
+      moveBlock: WriteAction;
+      deleteBlock: WriteAction;
+      updatePage: WriteAction;
+      deletePage: WriteAction;
     };
     roamDatomicAlphaAPI?: (
       params: ClientParams
