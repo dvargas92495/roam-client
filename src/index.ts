@@ -12,6 +12,7 @@ export {
   createIconButton,
   getUids,
   getUidsFromButton,
+  getUidsFromId,
 } from "./dom";
 export { openBlock } from "./user-event";
 
