@@ -1,8 +1,9 @@
 import { getAttrConfigFromQuery, getConfigFromPage } from "../src";
-import { pull } from "./util";
+import { alphaRest } from "./util";
 
 test("Get config object from query", () => {
   window.roamAlphaAPI = {
+    ...alphaRest,
     q: jest.fn((s: string) => {
       if (s === "input") {
         return [
@@ -33,7 +34,6 @@ test("Get config object from query", () => {
         return [];
       }
     }),
-    pull,
   };
   const config = getAttrConfigFromQuery("input");
   expect(config).toHaveProperty("Key");
@@ -42,6 +42,7 @@ test("Get config object from query", () => {
 
 test("Get Config from Page input", () => {
   window.roamAlphaAPI = {
+    ...alphaRest,
     q: jest.fn((s: string) => {
       if (s === '[:find (pull ?e [*]) :where [?e :node/title "input"] ]') {
         return [
@@ -72,7 +73,6 @@ test("Get Config from Page input", () => {
         return [];
       }
     }),
-    pull,
   };
   const config = getConfigFromPage("input");
   expect(config).toHaveProperty("Key");
@@ -86,6 +86,7 @@ test("Get Config from Page Title", () => {
   document.body.appendChild(header);
 
   window.roamAlphaAPI = {
+    ...alphaRest,
     q: jest.fn((s: string) => {
       if (s === '[:find (pull ?e [*]) :where [?e :node/title "input"] ]') {
         return [
@@ -116,7 +117,6 @@ test("Get Config from Page Title", () => {
         return [];
       }
     }),
-    pull,
   };
   const config = getConfigFromPage("input");
   expect(config).toHaveProperty("Key");

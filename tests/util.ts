@@ -5,4 +5,15 @@ export const getFocusedTextArea = () => {
   return textarea;
 };
 
-export const pull = () => ({ ":block/children": [], ":block/string": "", ":block/order": 0 });
+const pull = () => ({ ":block/children": [], ":block/string": "", ":block/order": 0 });
+const defaultWrite = () => true;
+export const alphaRest = {
+  pull,
+  createBlock: defaultWrite,
+  updateBlock: defaultWrite,
+  moveBlock: defaultWrite,
+  deleteBlock: defaultWrite,
+  createPage: defaultWrite,
+  updatePage: defaultWrite,
+  deletePage: defaultWrite,
+}
