@@ -54,10 +54,14 @@ export const genericError = (e: Partial<AxiosError & RoamError>) => {
       : e.message) ||
     e.raw ||
     "Unknown Error Occurred";
-  window.roamAlphaAPI.updateBlock({block: {
-    uid: getActiveUids().blockUid,
-    string: `Error: ${message.length > 50 ? `${message.substring(0, 50)}...` : message}`
-  }});
+  window.roamAlphaAPI.updateBlock({
+    block: {
+      uid: getActiveUids().blockUid,
+      string: `Error: ${
+        message.length > 50 ? `${message.substring(0, 50)}...` : message
+      }`,
+    },
+  });
 };
 
 const toAttributeValue = (s: string) =>

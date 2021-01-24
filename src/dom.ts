@@ -53,7 +53,7 @@ const clickEventListener = (
     const target = htmlTarget as HTMLButtonElement;
     const buttonConfig = getButtonConfig(target, targetCommand);
     const { blockUid, parentUid } = getUidsFromButton(target);
-    window.roamAlphaAPI.updateBlock({block: {uid:blockUid, string: ''}});
+    window.roamAlphaAPI.updateBlock({ block: { uid: blockUid, string: "" } });
     callback(buttonConfig, blockUid, parentUid);
   }
 };
@@ -106,7 +106,8 @@ export const getUids = (block: HTMLDivElement | HTMLTextAreaElement) => {
   return getUidsFromId(block.id);
 };
 
-export const getActiveUids = () => getUids(document.activeElement as HTMLTextAreaElement);
+export const getActiveUids = () =>
+  getUids(document.activeElement as HTMLTextAreaElement);
 
 export const getUidsFromButton = (button: HTMLButtonElement) => {
   const block = button.closest(".roam-block") as HTMLDivElement;
