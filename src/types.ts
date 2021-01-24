@@ -27,6 +27,7 @@ export type RoamBlock = {
   title?: string;
   time?: number;
   uid?: string;
+  order?: number;
 };
 
 export type RoamError = {

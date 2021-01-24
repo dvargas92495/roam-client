@@ -14,6 +14,7 @@ export {
   getUidsFromButton,
   getUidsFromId,
 } from "./dom";
+export { RoamBlock };
 
 declare global {
   interface Window {
@@ -64,8 +65,8 @@ export const getAttrConfigFromQuery = (query: string) => {
   const entries = configurationAttrRefs.map(
     (r: string) =>
       (window.roamAlphaAPI.q(
-        `[:find (pull ?e [:block/string]) :where [?e :block/uid "${r}"] ]`
-      )[0][0] as RoamBlock).string
+        `[:find ?s :where [?e :block/string ?s] [?e :block/uid "${r}"] ]`
+      )[0][0] as string)
         ?.split("::")
         .map(toAttributeValue) || [r, "undefined"]
   );
