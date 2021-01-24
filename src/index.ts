@@ -1,7 +1,7 @@
 import { AxiosError } from "axios";
-import { getActiveUids } from "./dom";
 import { getOrderByBlockUid } from "./queries";
 import { RoamBlock, RoamError, ClientParams, WriteAction } from "./types";
+import { updateActiveBlock as _updateActiveBlock } from "./writes";
 export { default as RestClient } from "./rest-client";
 export { default as WindowClient } from "./window-client";
 export { getLinkedPageReferences } from "./queries";
@@ -14,6 +14,7 @@ export {
   getUidsFromButton,
   getUidsFromId,
 } from "./dom";
+export const updateActiveBlock = _updateActiveBlock;
 
 declare global {
   interface Window {
@@ -54,14 +55,9 @@ export const genericError = (e: Partial<AxiosError & RoamError>) => {
       : e.message) ||
     e.raw ||
     "Unknown Error Occurred";
-  window.roamAlphaAPI.updateBlock({
-    block: {
-      uid: getActiveUids().blockUid,
-      string: `Error: ${
-        message.length > 50 ? `${message.substring(0, 50)}...` : message
-      }`,
-    },
-  });
+  updateActiveBlock(
+    `Error: ${message.length > 50 ? `${message.substring(0, 50)}...` : message}`
+  );
 };
 
 const toAttributeValue = (s: string) =>
