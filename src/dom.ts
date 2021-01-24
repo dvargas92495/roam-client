@@ -1,3 +1,7 @@
+import { AxiosError } from "axios";
+import { RoamError } from "./types";
+import { updateActiveBlock } from "./writes";
+
 /**
  * TODO: Replace this paradigm with an attr config instead.
  */
@@ -112,4 +116,18 @@ export const getActiveUids = () =>
 export const getUidsFromButton = (button: HTMLButtonElement) => {
   const block = button.closest(".roam-block") as HTMLDivElement;
   return getUids(block);
+};
+
+export const genericError = (e: Partial<AxiosError & RoamError>) => {
+  const message =
+    (e.response
+      ? typeof e.response.data === "string"
+        ? e.response.data
+        : JSON.stringify(e.response.data)
+      : e.message) ||
+    e.raw ||
+    "Unknown Error Occurred";
+  updateActiveBlock(
+    `Error: ${message.length > 50 ? `${message.substring(0, 50)}...` : message}`
+  );
 };

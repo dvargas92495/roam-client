@@ -1,7 +1,6 @@
-import { AxiosError } from "axios";
 import { getOrderByBlockUid } from "./queries";
-import { RoamBlock, RoamError, ClientParams, WriteAction } from "./types";
-import { updateActiveBlock as _updateActiveBlock } from "./writes";
+import { RoamBlock, ClientParams, WriteAction } from "./types";
+export { updateActiveBlock, clearBlockById } from "./writes";
 export { default as RestClient } from "./rest-client";
 export { default as WindowClient } from "./window-client";
 export { getLinkedPageReferences } from "./queries";
@@ -9,12 +8,12 @@ export { parseRoamDate, toRoamDate, toRoamDateUid } from "./date";
 export {
   addButtonListener,
   createIconButton,
+  genericError,
   getActiveUids,
   getUids,
   getUidsFromButton,
   getUidsFromId,
 } from "./dom";
-export const updateActiveBlock = _updateActiveBlock;
 
 declare global {
   interface Window {
@@ -45,20 +44,6 @@ declare global {
     ) => Promise<RoamBlock & { success?: boolean }>;
   }
 }
-
-export const genericError = (e: Partial<AxiosError & RoamError>) => {
-  const message =
-    (e.response
-      ? typeof e.response.data === "string"
-        ? e.response.data
-        : JSON.stringify(e.response.data)
-      : e.message) ||
-    e.raw ||
-    "Unknown Error Occurred";
-  updateActiveBlock(
-    `Error: ${message.length > 50 ? `${message.substring(0, 50)}...` : message}`
-  );
-};
 
 const toAttributeValue = (s: string) =>
   (s.trim().startsWith("{{or: ")
