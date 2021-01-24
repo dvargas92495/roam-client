@@ -21,15 +21,9 @@ test("Get config object from query", () => {
         ];
       } else if (
         s ===
-        `[:find (pull ?e [:block/string]) :where [?e :block/uid "abcdefghi"] ]`
+        `[:find ?s :where [?e :block/string ?s] [?e :block/uid "abcdefghi"] ]`
       ) {
-        return [
-          [
-            {
-              string: "Key::Value",
-            },
-          ],
-        ];
+        return [["Key::Value"]];
       } else {
         return [];
       }
@@ -60,15 +54,9 @@ test("Get Config from Page input", () => {
         ];
       } else if (
         s ===
-        `[:find (pull ?e [:block/string]) :where [?e :block/uid "abcdefghi"] ]`
+        `[:find ?s :where [?e :block/string ?s] [?e :block/uid "abcdefghi"] ]`
       ) {
-        return [
-          [
-            {
-              string: "Key::Value",
-            },
-          ],
-        ];
+        return [["Key::Value"]];
       } else {
         return [];
       }
@@ -104,15 +92,9 @@ test("Get Config from Page Title", () => {
         ];
       } else if (
         s ===
-        `[:find (pull ?e [:block/string]) :where [?e :block/uid "abcdefghi"] ]`
+        `[:find ?s :where [?e :block/string ?s] [?e :block/uid "abcdefghi"] ]`
       ) {
-        return [
-          [
-            {
-              string: "Key::Value",
-            },
-          ],
-        ];
+        return [["Key::Value"]];
       } else {
         return [];
       }
