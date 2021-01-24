@@ -21,3 +21,8 @@ export const getLinkedPageReferences = (t: string): RoamBlock[] => {
     findParentBlock(b[0] as RoamBlock)
   ) as RoamBlock[];
 };
+
+export const getOrderByBlockUid = (blockUid: string) =>
+  window.roamAlphaAPI.q(
+    `[:find ?o :where [?r :block/order ?o] [?r :block/uid "${blockUid}"]]`
+  )?.[0]?.[0] as number;

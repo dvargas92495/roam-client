@@ -1,6 +1,3 @@
-import { clear, openBlock } from "./user-event";
-import WindowClient from "./window-client";
-
 /**
  * TODO: Replace this paradigm with an attr config instead.
  */
@@ -55,22 +52,9 @@ const clickEventListener = (
   ) {
     const target = htmlTarget as HTMLButtonElement;
     const buttonConfig = getButtonConfig(target, targetCommand);
-
-    if (window.roamDatomicAlphaAPI) {
-      target.innerText = "Loading...";
-      target.disabled = true;
-
-      const { blockUid, parentUid } = getUidsFromButton(target);
-      new WindowClient()
-        .updateBlock({ uid: blockUid })
-        .then(() => callback(buttonConfig, blockUid, parentUid));
-    } else {
-      const divContainer = target.closest(".roam-block") as HTMLDivElement;
-      await openBlock(divContainer);
-      await clear();
-
-      callback(buttonConfig);
-    }
+    const { blockUid, parentUid } = getUidsFromButton(target);
+    window.roamAlphaAPI.updateBlock({block: {uid:blockUid, string: ''}});
+    callback(buttonConfig, blockUid, parentUid);
   }
 };
 
@@ -121,6 +105,8 @@ export const getUidsFromId = (id: string) => {
 export const getUids = (block: HTMLDivElement | HTMLTextAreaElement) => {
   return getUidsFromId(block.id);
 };
+
+export const getActiveUids = () => getUids(document.activeElement as HTMLTextAreaElement);
 
 export const getUidsFromButton = (button: HTMLButtonElement) => {
   const block = button.closest(".roam-block") as HTMLDivElement;

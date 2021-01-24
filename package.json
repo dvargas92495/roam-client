@@ -30,7 +30,9 @@
   },
   "homepage": "https://github.com/dvargas92495/roam-client#readme",
   "devDependencies": {
+    "@testing-library/dom": "^7.29.4",
     "@testing-library/jest-dom": "^5.11.4",
+    "@testing-library/user-event": "^12.6.2",
     "@types/jest": "^26.0.14",
     "dotenv": "^8.2.0",
     "jest": "^26.4.2",
@@ -45,9 +47,7 @@
     "lib/**/*"
   ],
   "dependencies": {
-    "@testing-library/dom": "^7.24.4",
-    "@testing-library/user-event": "^12.1.7",
-    "axios": "^0.20.0",
+    "axios": "^0.21.1",
     "date-fns": "^2.16.1"
   }
 }

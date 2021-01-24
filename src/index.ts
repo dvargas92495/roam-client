@@ -1,25 +1,24 @@
-import { fireEvent } from "@testing-library/dom";
-import userEvent from "@testing-library/user-event";
 import { AxiosError } from "axios";
-import { waitForString } from "./dom-testing";
+import { getActiveUids } from "./dom";
+import { getOrderByBlockUid } from "./queries";
 import { RoamBlock, RoamError, ClientParams, WriteAction } from "./types";
 export { default as RestClient } from "./rest-client";
 export { default as WindowClient } from "./window-client";
-export { getLinkedPageReferences } from "./alpha-api";
+export { getLinkedPageReferences } from "./queries";
 export { parseRoamDate, toRoamDate, toRoamDateUid } from "./date";
 export {
   addButtonListener,
   createIconButton,
+  getActiveUids,
   getUids,
   getUidsFromButton,
   getUidsFromId,
 } from "./dom";
-export { openBlock } from "./user-event";
 
 declare global {
   interface Window {
     roamAlphaAPI: {
-      q: (query: string) => (RoamBlock | string)[][];
+      q: (query: string) => (RoamBlock | string | number)[][];
       pull: (
         selector: string,
         id: number
@@ -46,26 +45,6 @@ declare global {
   }
 }
 
-export const asyncType = async (text: string) =>
-  document.activeElement &&
-  (await userEvent.type(document.activeElement, text, {
-    skipClick: true,
-  }));
-
-export const asyncPaste = async (text: string) => {
-  const textarea = document.activeElement as HTMLTextAreaElement;
-  if (textarea) {
-    const start = textarea.selectionStart;
-    const end = textarea.selectionEnd;
-
-    // Roam's paste assumes clipboardData
-    // which has to be a DataTransfer object in most browsers
-    // but not on Safari. Wow. So let's not bubble the event.
-    await userEvent.paste(textarea, text, { bubbles: false });
-    textarea.setSelectionRange(start + text.length, end + text.length);
-  }
-};
-
 export const genericError = (e: Partial<AxiosError & RoamError>) => {
   const message =
     (e.response
@@ -75,9 +54,10 @@ export const genericError = (e: Partial<AxiosError & RoamError>) => {
       : e.message) ||
     e.raw ||
     "Unknown Error Occurred";
-  asyncType(
-    `Error: ${message.length > 50 ? `${message.substring(0, 50)}...` : message}`
-  );
+  window.roamAlphaAPI.updateBlock({block: {
+    uid: getActiveUids().blockUid,
+    string: `Error: ${message.length > 50 ? `${message.substring(0, 50)}...` : message}`
+  }});
 };
 
 const toAttributeValue = (s: string) =>
@@ -119,82 +99,31 @@ export const getConfigFromPage = (inputPage?: string) => {
   );
 };
 
-export const newBlockEnter = async () => {
-  if (!document.activeElement) {
-    return;
-  }
-  const element = document.activeElement as HTMLElement;
-  if (element.tagName !== "TEXTAREA") {
-    return;
-  }
-  const textarea = element as HTMLTextAreaElement;
-  const end = textarea.value.length;
-  textarea.setSelectionRange(end, end);
-
-  // Need to switch to fireEvent because user-event enters a newline when hitting enter in a text area
-  // https://github.com/testing-library/user-event/blob/master/src/type.js#L505
-  const enterObj = {
-    key: "Enter",
-    keyCode: 13,
-    code: 13,
-    which: 13,
-  };
-  await fireEvent.keyDown(document.activeElement, enterObj);
-  await fireEvent.keyUp(document.activeElement, enterObj);
-  await waitForString("");
-  return document.activeElement as HTMLTextAreaElement;
-};
-
-export const pushBullets = async (
+export const pushBullets = (
   bullets: string[],
-  blockUid?: string,
-  parentUid?: string
+  blockUid: string,
+  parentUid: string
 ) => {
-  if (window.roamDatomicAlphaAPI && blockUid && parentUid) {
-    const parent = await window.roamDatomicAlphaAPI({
-      action: "pull",
-      selector: "[:block/children]",
-      uid: parentUid,
-    });
-    const block = await window.roamDatomicAlphaAPI({
-      action: "pull",
-      selector: "[:db/id]",
-      uid: blockUid,
-    });
-    const blockIndex =
-      parent.children?.findIndex((c) => c.id === block.id) || 0;
-    for (let index = 0; index < bullets.length; index++) {
-      const bullet = bullets[index];
-      if (index === 0) {
-        await window.roamDatomicAlphaAPI({
-          action: "update-block",
-          block: {
-            uid: blockUid,
-            string: bullet,
-          },
-        });
-      } else {
-        await window.roamDatomicAlphaAPI({
-          action: "create-block",
-          block: {
-            string: bullet,
-          },
-          location: {
-            "parent-uid": parentUid,
-            order: blockIndex + index + 1,
-          },
-        });
-      }
-    }
-  } else if (document.activeElement) {
-    for (let index = 0; index < bullets.length; index++) {
-      const bullet = bullets[index];
-      await asyncPaste(bullet);
-      await waitForString(bullet);
-
-      if (index < bullets.length - 1) {
-        await newBlockEnter();
-      }
+  const blockIndex = getOrderByBlockUid(blockUid);
+  for (let index = 0; index < bullets.length; index++) {
+    const bullet = bullets[index];
+    if (index === 0) {
+      window.roamAlphaAPI.updateBlock({
+        block: {
+          uid: blockUid,
+          string: bullet,
+        },
+      });
+    } else {
+      window.roamAlphaAPI.createBlock({
+        block: {
+          string: bullet,
+        },
+        location: {
+          "parent-uid": parentUid,
+          order: blockIndex + index + 1,
+        },
+      });
     }
   }
 };
