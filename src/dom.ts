@@ -40,9 +40,8 @@ const getButtonConfig = (target: HTMLButtonElement, targetCommand: string) => {
 const clickEventListener = (
   targetCommand: string,
   callback: (
-    buttonConfig?: { [key: string]: string },
-    blockUid?: string,
-    parentUid?: string
+    buttonConfig: { [key: string]: string },
+    blockUid: string,
   ) => void
 ) => async (e: MouseEvent) => {
   const htmlTarget = e.target as HTMLElement;
@@ -56,18 +55,17 @@ const clickEventListener = (
   ) {
     const target = htmlTarget as HTMLButtonElement;
     const buttonConfig = getButtonConfig(target, targetCommand);
-    const { blockUid, parentUid } = getUidsFromButton(target);
+    const { blockUid } = getUidsFromButton(target);
     window.roamAlphaAPI.updateBlock({ block: { uid: blockUid, string: "" } });
-    callback(buttonConfig, blockUid, parentUid);
+    callback(buttonConfig, blockUid);
   }
 };
 
 export const addButtonListener = (
   targetCommand: string,
   callback: (
-    buttonConfig?: { [key: string]: string },
-    blockUid?: string,
-    parentUid?: string
+    buttonConfig: { [key: string]: string },
+    blockUid: string
   ) => void
 ) =>
   document.addEventListener(

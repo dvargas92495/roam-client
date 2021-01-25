@@ -26,3 +26,8 @@ export const getOrderByBlockUid = (blockUid: string) =>
   window.roamAlphaAPI.q(
     `[:find ?o :where [?r :block/order ?o] [?r :block/uid "${blockUid}"]]`
   )?.[0]?.[0] as number;
+
+export const getParentUidByBlockUid = (blockUid: string): string =>
+  window.roamAlphaAPI.q(
+    `[:find ?u :where [?p :block/uid ?u] [?p :block/children ?e] [?e :block/uid "${blockUid}"]]`
+  )?.[0]?.[0] as string;
