@@ -39,10 +39,7 @@ const getButtonConfig = (target: HTMLButtonElement, targetCommand: string) => {
 
 const clickEventListener = (
   targetCommand: string,
-  callback: (
-    buttonConfig: { [key: string]: string },
-    blockUid: string,
-  ) => void
+  callback: (buttonConfig: { [key: string]: string }, blockUid: string) => void
 ) => async (e: MouseEvent) => {
   const htmlTarget = e.target as HTMLElement;
   if (
@@ -63,10 +60,7 @@ const clickEventListener = (
 
 export const addButtonListener = (
   targetCommand: string,
-  callback: (
-    buttonConfig: { [key: string]: string },
-    blockUid: string
-  ) => void
+  callback: (buttonConfig: { [key: string]: string }, blockUid: string) => void
 ) =>
   document.addEventListener(
     "click",
