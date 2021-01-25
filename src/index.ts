@@ -1,4 +1,4 @@
-import { getOrderByBlockUid } from "./queries";
+import { getOrderByBlockUid, getParentUidByBlockUid } from "./queries";
 import { RoamBlock, ClientParams, WriteAction } from "./types";
 export { updateActiveBlock, clearBlockById, clearBlockByUid } from "./writes";
 export { default as RestClient } from "./rest-client";
@@ -14,7 +14,7 @@ export {
   getUidsFromButton,
   getUidsFromId,
 } from "./dom";
-export { RoamBlock, getOrderByBlockUid };
+export { RoamBlock, getOrderByBlockUid, getParentUidByBlockUid };
 
 declare global {
   interface Window {
