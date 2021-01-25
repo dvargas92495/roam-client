@@ -15,3 +15,11 @@ export const clearBlockById = (id: string) =>
       string: "",
     },
   });
+
+export const clearBlockByUid = (uid: string) =>
+  window.roamAlphaAPI.updateBlock({
+    block: {
+      uid,
+      string: "",
+    },
+  });

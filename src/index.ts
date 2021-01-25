@@ -1,6 +1,6 @@
 import { getOrderByBlockUid } from "./queries";
 import { RoamBlock, ClientParams, WriteAction } from "./types";
-export { updateActiveBlock, clearBlockById } from "./writes";
+export { updateActiveBlock, clearBlockById, clearBlockByUid } from "./writes";
 export { default as RestClient } from "./rest-client";
 export { default as WindowClient } from "./window-client";
 export { getLinkedPageReferences } from "./queries";
@@ -14,7 +14,7 @@ export {
   getUidsFromButton,
   getUidsFromId,
 } from "./dom";
-export { RoamBlock };
+export { RoamBlock, getOrderByBlockUid };
 
 declare global {
   interface Window {
@@ -54,8 +54,11 @@ const toAttributeValue = (s: string) =>
 
 export const getAttrConfigFromQuery = (query: string) => {
   const pageResults = window.roamAlphaAPI.q(query);
+  if (pageResults.length === 0) {
+    return {};
+  }
   const resultAsBlock = pageResults[0][0] as RoamBlock;
-  if (pageResults.length === 0 || !resultAsBlock.attrs) {
+  if (!resultAsBlock.attrs) {
     return {};
   }
 
@@ -107,7 +110,7 @@ export const pushBullets = (
         },
         location: {
           "parent-uid": parentUid,
-          order: blockIndex + index + 1,
+          order: blockIndex + index,
         },
       });
     }
