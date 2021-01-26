@@ -30,7 +30,7 @@ export type RoamBlock = {
   time?: number;
   uid?: string;
   order?: number;
-  "view-type": ViewType;
+  "view-type"?: ViewType;
 };
 
 export type RoamError = {
