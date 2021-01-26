@@ -19,6 +19,8 @@ export type RoamPull = {
 
 export type RoamPullResult = RoamPull | null;
 
+export type ViewType = 'document' | 'bullet' | 'numbered';
+
 export type RoamBlock = {
   attrs?: { source: string[] }[][];
   children?: { id: number }[];
@@ -28,6 +30,7 @@ export type RoamBlock = {
   time?: number;
   uid?: string;
   order?: number;
+  'view-type': ViewType;
 };
 
 export type RoamError = {

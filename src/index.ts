@@ -1,5 +1,5 @@
 import { getOrderByBlockUid, getParentUidByBlockUid } from "./queries";
-import { RoamBlock, ClientParams, WriteAction } from "./types";
+import { RoamBlock, ClientParams, WriteAction, ViewType } from "./types";
 export { updateActiveBlock, clearBlockById, clearBlockByUid } from "./writes";
 export { default as RestClient } from "./rest-client";
 export { default as WindowClient } from "./window-client";
@@ -14,7 +14,7 @@ export {
   getUidsFromButton,
   getUidsFromId,
 } from "./dom";
-export { RoamBlock, getOrderByBlockUid, getParentUidByBlockUid };
+export { RoamBlock, ViewType, getOrderByBlockUid, getParentUidByBlockUid };
 
 declare global {
   interface Window {
@@ -30,7 +30,7 @@ declare global {
         ":block/uid"?: string;
         ":block/heading"?: number;
         ":block/open"?: boolean;
-        ":children/view-type"?: ":bullet" | ":document" | ":numbered";
+        ":children/view-type"?: `:${ViewType}`;
       };
       createBlock: WriteAction;
       updateBlock: WriteAction;
