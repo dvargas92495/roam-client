@@ -19,7 +19,7 @@ export { RoamBlock, ViewType, getOrderByBlockUid, getParentUidByBlockUid };
 declare global {
   interface Window {
     roamAlphaAPI: {
-      q: (query: string) => (RoamBlock | string | number)[][];
+      q: (query: string) => any[][];
       pull: (
         selector: string,
         id: number

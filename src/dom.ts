@@ -107,7 +107,7 @@ export const getActiveUids = () =>
 
 export const getUidsFromButton = (button: HTMLButtonElement) => {
   const block = button.closest(".roam-block") as HTMLDivElement;
-  return getUids(block);
+  return block ? getUids(block) : { blockUid: "", parentUid: "" };
 };
 
 export const genericError = (e: Partial<AxiosError & RoamError>) => {
