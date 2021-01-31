@@ -49,9 +49,9 @@ const getTreeByBlockId = (blockId: number): TreeNode => {
   );
   const children = block[":block/children"] || [];
   return {
-    text: block[":block/string"] || '',
+    text: block[":block/string"] || "",
     order: block[":block/order"] || 0,
-    uid: block[":block/uid"] || '',
+    uid: block[":block/uid"] || "",
     children: children
       .map((c) => getTreeByBlockId(c[":db/id"]))
       .sort((a, b) => a.order - b.order),
@@ -70,7 +70,7 @@ export const getTreeByBlockUid = (
   const children = block.children || [];
   const viewType = block["view-type"] || "bullet";
   return {
-    text: block.string || '',
+    text: block.string || "",
     children: children
       .map((c) => getTreeByBlockId(c.id))
       .sort((a, b) => a.order - b.order)
