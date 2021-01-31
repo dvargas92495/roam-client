@@ -9,6 +9,7 @@ export {
   getTreeByBlockUid,
   getTreeByPageName,
   fixViewType,
+  TreeNode,
 } from "./queries";
 export { parseRoamDate, toRoamDate, toRoamDateUid } from "./date";
 export {
