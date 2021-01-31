@@ -3,7 +3,7 @@ import { RoamBlock, ClientParams, WriteAction, ViewType } from "./types";
 export { updateActiveBlock, clearBlockById, clearBlockByUid } from "./writes";
 export { default as RestClient } from "./rest-client";
 export { default as WindowClient } from "./window-client";
-export { getLinkedPageReferences } from "./queries";
+export { getLinkedPageReferences, getParentUidByBlockUid, getTreeByBlockUid, getTreeByPageName, fixViewType } from "./queries";
 export { parseRoamDate, toRoamDate, toRoamDateUid } from "./date";
 export {
   addButtonListener,
@@ -14,7 +14,7 @@ export {
   getUidsFromButton,
   getUidsFromId,
 } from "./dom";
-export { RoamBlock, ViewType, getOrderByBlockUid, getParentUidByBlockUid };
+export { RoamBlock, ViewType, getOrderByBlockUid };
 
 declare global {
   interface Window {
