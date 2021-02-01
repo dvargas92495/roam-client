@@ -4,6 +4,7 @@ export { updateActiveBlock, clearBlockById, clearBlockByUid } from "./writes";
 export { default as RestClient } from "./rest-client";
 export { default as WindowClient } from "./window-client";
 export {
+  getEditedUserEmailByBlockUid,
   getLinkedPageReferences,
   getParentUidByBlockUid,
   getTreeByBlockUid,

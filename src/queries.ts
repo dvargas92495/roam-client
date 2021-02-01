@@ -107,3 +107,8 @@ export const fixViewType = ({
   c.children.forEach((cc) => fixViewType({ c: cc, v: c.viewType }));
   return c;
 };
+
+export const getEditedUserEmailByBlockUid = (blockUid: string) =>
+  window.roamAlphaAPI.q(
+    '[:find ?e :where [?u :user/email ?e] [?b :edit/user ?u] [?b :block/uid "04Wc1ndHO"]]'
+  )?.[0]?.[0] || "";
