@@ -7,6 +7,7 @@ export {
   getEditedUserEmailByBlockUid,
   getLinkedPageReferences,
   getParentUidByBlockUid,
+  getTextByBlockUid,
   getTreeByBlockUid,
   getTreeByPageName,
   fixViewType,

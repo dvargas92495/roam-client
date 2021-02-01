@@ -110,5 +110,10 @@ export const fixViewType = ({
 
 export const getEditedUserEmailByBlockUid = (blockUid: string) =>
   window.roamAlphaAPI.q(
-    '[:find ?e :where [?u :user/email ?e] [?b :edit/user ?u] [?b :block/uid "04Wc1ndHO"]]'
+    `[:find ?e :where [?u :user/email ?e] [?b :edit/user ?u] [?b :block/uid "${blockUid}"]]`
+  )?.[0]?.[0] || "";
+
+export const getTextByBlockUid = (uid: string): string =>
+  window.roamAlphaAPI.q(
+    `[:find ?s :where [?e :block/string ?s] [?e :block/uid "${uid}"]]`
   )?.[0]?.[0] || "";
