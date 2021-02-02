@@ -8,6 +8,7 @@ export {
   getLinkedPageReferences,
   getPageTitleByBlockUid,
   getParentTextByBlockUid,
+  getParentTextByBlockUidAndTag,
   getParentUidByBlockUid,
   getTextByBlockUid,
   getTreeByBlockUid,

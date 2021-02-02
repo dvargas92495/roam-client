@@ -151,3 +151,14 @@ export const getParentTextByBlockUid = (blockUid: string): string =>
   window.roamAlphaAPI.q(
     `[:find ?s :where [?p :block/string ?s] [?p :block/children ?e] [?e :block/uid "${blockUid}"]]`
   )?.[0]?.[0] || "";
+
+export const getParentTextByBlockUidAndTag = ({
+  blockUid,
+  tag,
+}: {
+  blockUid: string;
+  tag: string;
+}) =>
+  window.roamAlphaAPI.q(
+    `[:find ?s :where [?p :block/string ?s] [?p :block/refs ?t] [?t :node/title "${tag}"] [?b :block/parents ?p] [?b :block/uid "${blockUid}"]]`
+  )?.[0]?.[0] || "";
