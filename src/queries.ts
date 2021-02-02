@@ -71,11 +71,11 @@ const getTreeByBlockId = (blockId: number): TreeNode => {
     viewType: block[":children/view-type"]?.substring(1) as ViewType,
     props: {
       imageResize: Object.fromEntries(
-        Object.keys(props[":image/resize"] || {}).map((p) => [
+        Object.keys(props[":image-size"] || {}).map((p) => [
           p,
           {
-            height: props[":image/resize"][p][":height"],
-            width: props[":image/resize"][p][":width"],
+            height: props[":image-size"][p][":height"],
+            width: props[":image-size"][p][":width"],
           },
         ])
       ),
