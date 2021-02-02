@@ -42,14 +42,23 @@ export type TreeNode = {
   heading: number;
   open: boolean;
   viewType: ViewType;
+  props: {
+    imageResize: {
+      [link: string]: {
+        height: number;
+        width: number;
+      };
+    };
+  };
 };
 
 const getTreeByBlockId = (blockId: number): TreeNode => {
   const block = window.roamAlphaAPI.pull(
-    "[:block/children, :block/string, :block/order, :block/uid, :block/heading, :block/open, :children/view-type]",
+    "[:block/children, :block/string, :block/order, :block/uid, :block/heading, :block/open, :children/view-type, :block/props]",
     blockId
   );
   const children = block[":block/children"] || [];
+  const props = block[":block/props"] || {};
   return {
     text: block[":block/string"] || "",
     order: block[":block/order"] || 0,
@@ -60,6 +69,17 @@ const getTreeByBlockId = (blockId: number): TreeNode => {
     heading: block[":block/heading"] || 0,
     open: block[":block/open"] || true,
     viewType: block[":children/view-type"]?.substring(1) as ViewType,
+    props: {
+      imageResize: Object.fromEntries(
+        Object.keys(props[":image/resize"] || {}).map((p) => [
+          p,
+          {
+            height: props[":image/resize"][p][":height"],
+            width: props[":image/resize"][p][":width"],
+          },
+        ])
+      ),
+    },
   };
 };
 

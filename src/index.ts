@@ -42,6 +42,7 @@ declare global {
         ":block/heading"?: number;
         ":block/open"?: boolean;
         ":children/view-type"?: `:${ViewType}`;
+        ":block/props"?: any;
       };
       createBlock: WriteAction;
       updateBlock: WriteAction;
