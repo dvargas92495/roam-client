@@ -6,6 +6,8 @@ export { default as WindowClient } from "./window-client";
 export {
   getEditedUserEmailByBlockUid,
   getLinkedPageReferences,
+  getPageTitleByBlockUid,
+  getParentTextByBlockUid,
   getParentUidByBlockUid,
   getTextByBlockUid,
   getTreeByBlockUid,

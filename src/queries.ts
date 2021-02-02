@@ -1,5 +1,7 @@
 import { RoamBlock, ViewType } from "./types";
 
+const normalizePageTitle = (title: string) => title.replace(/"/g, '\\"');
+
 export const getLinkedPageReferences = (t: string): RoamBlock[] => {
   const findParentBlock: (b: RoamBlock) => RoamBlock = (b: RoamBlock) =>
     b.title
@@ -80,14 +82,16 @@ export const getTreeByBlockUid = (
 
 export const getTreeByPageName = (name: string): TreeNode[] => {
   const result = window.roamAlphaAPI.q(
-    `[:find (pull ?e [:block/children :children/view-type]) :where [?e :node/title "${name}"]]`
+    `[:find (pull ?e [:block/children :children/view-type]) :where [?e :node/title "${normalizePageTitle(
+      name
+    )}"]]`
   );
   if (!result.length) {
     return [];
   }
   const block = result[0][0] as RoamBlock;
-  const children = block.children || [];
-  const viewType = block["view-type"] || "bullet";
+  const children = block?.children || [];
+  const viewType = block?.["view-type"] || "bullet";
   return children
     .map((c) => getTreeByBlockId(c.id))
     .sort((a, b) => a.order - b.order)
@@ -116,4 +120,14 @@ export const getEditedUserEmailByBlockUid = (blockUid: string) =>
 export const getTextByBlockUid = (uid: string): string =>
   window.roamAlphaAPI.q(
     `[:find ?s :where [?e :block/string ?s] [?e :block/uid "${uid}"]]`
+  )?.[0]?.[0] || "";
+
+export const getPageTitleByBlockUid = (blockUid: string): string =>
+  window.roamAlphaAPI.q(
+    `[:find ?t :where [?p :node/title ?t] [?e :block/page ?p] [?e :block/uid "${blockUid}"]]`
+  )?.[0]?.[0] || "";
+
+export const getParentTextByBlockUid = (blockUid: string): string =>
+  window.roamAlphaAPI.q(
+    `[:find ?s :where [?p :block/string ?s] [?p :block/children ?e] [?e :block/uid "${blockUid}"]]`
   )?.[0]?.[0] || "";
