@@ -87,3 +87,10 @@ type ActionParams = {
 };
 
 export type WriteAction = (a: ActionParams) => boolean;
+
+export type UserSettings = {
+  "global-filters": {
+    includes: string[];
+    removes: string[];
+  };
+};
