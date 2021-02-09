@@ -29,6 +29,7 @@ export {
   getUidsFromId,
 } from "./dom";
 export { RoamBlock, ViewType, getOrderByBlockUid };
+import randomstring from "randomstring";
 
 declare global {
   interface Window {
@@ -131,3 +132,11 @@ export const pushBullets = (
     }
   }
 };
+
+const NUM = "1234567890-_";
+const ALPHA = "qwertyuiopasdfghjklzxcvbnm";
+export const generateBlockUid = () =>
+  randomstring.generate({
+    length: 9,
+    charset: `${ALPHA}${ALPHA.toUpperCase()}${NUM}`,
+  });
