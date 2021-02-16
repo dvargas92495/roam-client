@@ -4,7 +4,9 @@ export { updateActiveBlock, clearBlockById, clearBlockByUid } from "./writes";
 export { default as RestClient } from "./rest-client";
 export { default as WindowClient } from "./window-client";
 export {
+  getCreateTimeByBlockUid,
   getDisplayNameByEmail,
+  getEditTimeByBlockUid,
   getEditedUserEmailByBlockUid,
   getLinkedPageReferences,
   getPageTitleByBlockUid,

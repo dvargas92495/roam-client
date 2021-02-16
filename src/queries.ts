@@ -177,3 +177,13 @@ export const getDisplayNameByEmail = (email: string) =>
   (window.roamAlphaAPI.q(
     `[:find ?name :where[?e :user/display-name ?name] [?e :user/email "${email}"]]`
   )?.[0]?.[0] as string) || "";
+
+export const getCreateTimeByBlockUid = (uid: string): number =>
+  window.roamAlphaAPI.q(
+    `[:find ?t :where [?e :create/time ?t] [?e :block/uid "${uid}"]]`
+  )?.[0]?.[0] as number;
+
+export const getEditTimeByBlockUid = (uid: string): number =>
+  window.roamAlphaAPI.q(
+    `[:find ?t :where [?e :edit/time ?t] [?e :block/uid "${uid}"]]`
+  )?.[0]?.[0] as number;
