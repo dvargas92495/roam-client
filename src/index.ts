@@ -37,7 +37,7 @@ export {
   getUidsFromButton,
   getUidsFromId,
 } from "./dom";
-export { RoamBlock, ViewType, getOrderByBlockUid };
+export { RoamBlock, ViewType, getOrderByBlockUid, TextNode };
 import randomstring from "randomstring";
 
 declare global {
