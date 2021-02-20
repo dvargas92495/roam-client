@@ -1,5 +1,11 @@
-import { getOrderByBlockUid, getParentUidByBlockUid } from "./queries";
-import { RoamBlock, ClientParams, WriteAction, ViewType } from "./types";
+import { getOrderByBlockUid } from "./queries";
+import {
+  RoamBlock,
+  ClientParams,
+  TextNode,
+  WriteAction,
+  ViewType,
+} from "./types";
 export { updateActiveBlock, clearBlockById, clearBlockByUid } from "./writes";
 export { default as RestClient } from "./rest-client";
 export { default as WindowClient } from "./window-client";

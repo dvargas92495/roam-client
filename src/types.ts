@@ -38,6 +38,11 @@ export type RoamError = {
   "status-code": number;
 };
 
+export type TextNode = {
+  text: string;
+  children: TextNode[];
+};
+
 type PlusType = [number, string];
 
 type RoamNode = { "db/id": number };
