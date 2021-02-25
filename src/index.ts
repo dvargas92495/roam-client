@@ -17,6 +17,7 @@ export {
   getLinkedPageReferences,
   getPageTitleByBlockUid,
   getPageTitleByPageUid,
+  getPageTitleReferencesByPageTitle,
   getParentTextByBlockUid,
   getParentTextByBlockUidAndTag,
   getParentUidByBlockUid,

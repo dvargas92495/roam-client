@@ -24,6 +24,15 @@ export const getLinkedPageReferences = (t: string): RoamBlock[] => {
   ) as RoamBlock[];
 };
 
+export const getPageTitleReferencesByPageTitle = (title: string) =>
+  window.roamAlphaAPI
+    .q(
+      `[:find ?t :where [?b :node/title ?t] [?b :block/children ?c] [?c :block/refs ?r] [?r :node/title "${normalizePageTitle(
+        title
+      )}"]]`
+    )
+    .map((p) => p[0] as string);
+
 export const getOrderByBlockUid = (blockUid: string) =>
   window.roamAlphaAPI.q(
     `[:find ?o :where [?r :block/order ?o] [?r :block/uid "${blockUid}"]]`
