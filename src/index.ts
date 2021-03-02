@@ -94,7 +94,7 @@ declare global {
         undo: () => void;
         user: {
           upsert: () => void;
-        }
+        };
       };
     };
     roamDatomicAlphaAPI?: (
