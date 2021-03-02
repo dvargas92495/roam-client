@@ -39,25 +39,23 @@ export {
   getUidsFromId,
 } from "./dom";
 export { RoamBlock, ViewType, getOrderByBlockUid, TextNode };
-import randomstring from "randomstring";
+
+type PullBlock = {
+  ":block/children"?: { ":db/id": number }[];
+  ":block/string"?: string;
+  ":block/order"?: number;
+  ":block/uid"?: string;
+  ":block/heading"?: number;
+  ":block/open"?: boolean;
+  ":children/view-type"?: `:${ViewType}`;
+  ":block/props"?: any;
+};
 
 declare global {
   interface Window {
     roamAlphaAPI: {
       q: (query: string) => any[][];
-      pull: (
-        selector: string,
-        id: number
-      ) => {
-        ":block/children"?: { ":db/id": number }[];
-        ":block/string"?: string;
-        ":block/order"?: number;
-        ":block/uid"?: string;
-        ":block/heading"?: number;
-        ":block/open"?: boolean;
-        ":children/view-type"?: `:${ViewType}`;
-        ":block/props"?: any;
-      };
+      pull: (selector: string, id: number) => PullBlock;
       createBlock: WriteAction;
       updateBlock: WriteAction;
       createPage: WriteAction;
@@ -65,6 +63,39 @@ declare global {
       deleteBlock: WriteAction;
       updatePage: WriteAction;
       deletePage: WriteAction;
+      util: {
+        generateUID: () => string;
+      };
+      data: {
+        addPullWatch: (
+          pullPattern: string,
+          entityId: string,
+          callback: (before: PullBlock, after: PullBlock) => void
+        ) => boolean;
+        block: {
+          create: WriteAction;
+          update: WriteAction;
+          move: WriteAction;
+          delete: WriteAction;
+        };
+        page: {
+          create: WriteAction;
+          update: WriteAction;
+          delete: WriteAction;
+        };
+        pull: (selector: string, id: number) => PullBlock;
+        q: (query: string) => any[][];
+        removePullWatch: (
+          pullPattern: string,
+          entityId: string,
+          callback: (before: PullBlock, after: PullBlock) => void
+        ) => boolean;
+        redo: () => void;
+        undo: () => void;
+        user: {
+          upsert: () => void;
+        }
+      };
     };
     roamDatomicAlphaAPI?: (
       params: ClientParams
@@ -142,11 +173,3 @@ export const pushBullets = (
     }
   }
 };
-
-const NUM = "1234567890-_";
-const ALPHA = "qwertyuiopasdfghjklzxcvbnm";
-export const generateBlockUid = () =>
-  randomstring.generate({
-    length: 9,
-    charset: `${ALPHA}${ALPHA.toUpperCase()}${NUM}`,
-  });
