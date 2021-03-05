@@ -99,3 +99,19 @@ export type UserSettings = {
     removes: string[];
   };
 };
+
+export type WindowType = "mentions" | "block" | "outline" | "graph";
+
+export type SidebarWindowInput = {
+  "block-uid": string;
+  type: WindowType;
+};
+
+export type SidebarAction = (action: { window: SidebarWindowInput }) => boolean;
+
+export type SidebarWindow = {
+  "collapsed?": boolean;
+  order: number;
+  "pinned?": boolean;
+  "window-id": string;
+} & SidebarWindowInput;

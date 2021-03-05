@@ -5,6 +5,10 @@ import {
   TextNode,
   WriteAction,
   ViewType,
+  WindowType,
+  SidebarWindowInput,
+  SidebarWindow,
+  SidebarAction,
 } from "./types";
 export { updateActiveBlock, clearBlockById, clearBlockByUid } from "./writes";
 export { default as RestClient } from "./rest-client";
@@ -94,6 +98,22 @@ declare global {
         undo: () => void;
         user: {
           upsert: () => void;
+        };
+      };
+      ui: {
+        rightSidebar: {
+          open: () => void;
+          close: () => void;
+          getWindows: () => SidebarWindow[];
+          addWindow: SidebarAction;
+          setWindowOrder: (action: {
+            window: SidebarWindowInput & { order: number };
+          }) => boolean;
+          collapseWindow: SidebarAction;
+          pinWindow: SidebarAction;
+          expandWindow: SidebarAction;
+          removeWindow: SidebarAction;
+          unpinWindow: SidebarAction;
         };
       };
     };
