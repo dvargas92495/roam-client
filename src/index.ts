@@ -10,7 +10,12 @@ import {
   SidebarWindow,
   SidebarAction,
 } from "./types";
-export { updateActiveBlock, clearBlockById, clearBlockByUid } from "./writes";
+export {
+  updateActiveBlock,
+  clearBlockById,
+  clearBlockByUid,
+  createPage,
+} from "./writes";
 export { default as RestClient } from "./rest-client";
 export { default as WindowClient } from "./window-client";
 export {
