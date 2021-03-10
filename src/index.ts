@@ -49,7 +49,7 @@ export {
 } from "./dom";
 export { RoamBlock, ViewType, getOrderByBlockUid, TextNode };
 
-type PullBlock = {
+export type PullBlock = {
   ":block/children"?: { ":db/id": number }[];
   ":block/string"?: string;
   ":block/order"?: number;
