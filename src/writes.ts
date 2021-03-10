@@ -1,4 +1,5 @@
 import { getActiveUids, getUidsFromId } from "./dom";
+import { TextNode } from "./types";
 
 export const updateActiveBlock = (text: string) =>
   window.roamAlphaAPI.updateBlock({
@@ -24,12 +25,7 @@ export const clearBlockByUid = (uid: string) =>
     },
   });
 
-type TextNode = {
-  text: string;
-  children: TextNode[];
-};
-
-const createBlock = ({
+export const createBlock = ({
   node,
   parentUid,
   order,
