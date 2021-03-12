@@ -58,6 +58,12 @@ export type TreeNode = {
         width: number;
       };
     };
+    iframe: {
+      [link: string]: {
+        height: number;
+        width: number;
+      };
+    };
   };
 };
 
@@ -85,6 +91,15 @@ const getTreeByBlockId = (blockId: number): TreeNode => {
           {
             height: props[":image-size"][p][":height"],
             width: props[":image-size"][p][":width"],
+          },
+        ])
+      ),
+      iframe: Object.fromEntries(
+        Object.keys(props[":iframe"] || {}).map((p) => [
+          p,
+          {
+            height: props[":iframe"][p][":height"],
+            width: props[":iframe"][p][":width"],
           },
         ])
       ),

@@ -5,7 +5,6 @@ import {
   TextNode,
   WriteAction,
   ViewType,
-  WindowType,
   SidebarWindowInput,
   SidebarWindow,
   SidebarAction,
