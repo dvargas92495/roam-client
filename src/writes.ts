@@ -42,6 +42,7 @@ export const createBlock = ({
   node.children.forEach((n, o) =>
     createBlock({ node: n, parentUid: uid, order: o })
   );
+  return uid;
 };
 
 export const createPage = ({
@@ -50,8 +51,9 @@ export const createPage = ({
 }: {
   title: string;
   tree: TextNode[];
-}): void => {
+}): string => {
   const uid = window.roamAlphaAPI.util.generateUID();
   window.roamAlphaAPI.createPage({ page: { title, uid } });
   tree.forEach((node, order) => createBlock({ node, parentUid: uid, order }));
+  return uid;
 };
