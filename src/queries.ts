@@ -98,8 +98,8 @@ const getTreeByBlockId = (blockId: number): TreeNode => {
         Object.keys(props[":iframe"] || {}).map((p) => [
           p,
           {
-            height: props[":iframe"][p][":height"],
-            width: props[":iframe"][p][":width"],
+            height: props[":iframe"][p][":size"][":height"],
+            width: props[":iframe"][p][":size"][":width"],
           },
         ])
       ),
