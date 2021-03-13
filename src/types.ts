@@ -17,6 +17,17 @@ export type RoamPull = {
   "block/string"?: string;
 } & RoamNode;
 
+export type PullBlock = {
+  ":block/children"?: { ":db/id": number }[];
+  ":block/string"?: string;
+  ":block/order"?: number;
+  ":block/uid"?: string;
+  ":block/heading"?: number;
+  ":block/open"?: boolean;
+  ":children/view-type"?: `:${ViewType}`;
+  ":block/props"?: any;
+};
+
 export type RoamPullResult = RoamPull | null;
 
 export type ViewType = "document" | "bullet" | "numbered";

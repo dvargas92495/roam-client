@@ -8,6 +8,7 @@ import {
   SidebarWindowInput,
   SidebarWindow,
   SidebarAction,
+  PullBlock,
 } from "./types";
 export {
   updateActiveBlock,
@@ -47,18 +48,7 @@ export {
   getUidsFromButton,
   getUidsFromId,
 } from "./dom";
-export { RoamBlock, ViewType, getOrderByBlockUid, TextNode };
-
-export type PullBlock = {
-  ":block/children"?: { ":db/id": number }[];
-  ":block/string"?: string;
-  ":block/order"?: number;
-  ":block/uid"?: string;
-  ":block/heading"?: number;
-  ":block/open"?: boolean;
-  ":children/view-type"?: `:${ViewType}`;
-  ":block/props"?: any;
-};
+export { RoamBlock, ViewType, getOrderByBlockUid, TextNode, PullBlock };
 
 declare global {
   interface Window {
