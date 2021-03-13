@@ -48,6 +48,7 @@ export {
   getUidsFromButton,
   getUidsFromId,
 } from "./dom";
+export { watchOnce } from "./events";
 export { RoamBlock, ViewType, getOrderByBlockUid, TextNode, PullBlock };
 
 declare global {
