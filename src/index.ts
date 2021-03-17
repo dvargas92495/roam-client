@@ -38,7 +38,7 @@ export {
   fixViewType,
   TreeNode,
 } from "./queries";
-export { parseRoamDate, toRoamDate, toRoamDateUid } from "./date";
+export { parseRoamDate, parseRoamDateUid, toRoamDate, toRoamDateUid } from "./date";
 export {
   addButtonListener,
   createIconButton,
