@@ -1,6 +1,6 @@
 import { RoamBlock, UserSettings, ViewType } from "./types";
 
-const normalizePageTitle = (title: string) => title.replace(/"/g, '\\"');
+const normalizePageTitle = (title: string) => title.replace(/\\/, "\\\\").replace(/"/g, '\\"');
 
 export const getLinkedPageReferences = (t: string): RoamBlock[] => {
   const findParentBlock: (b: RoamBlock) => RoamBlock = (b: RoamBlock) =>
@@ -13,10 +13,7 @@ export const getLinkedPageReferences = (t: string): RoamBlock[] => {
         );
   const parentBlocks = window.roamAlphaAPI
     .q(
-      `[:find (pull ?parentPage [*]) :where [?parentPage :block/children ?referencingBlock] [?referencingBlock :block/refs ?referencedPage] [?referencedPage :node/title "${t.replace(
-        /"/g,
-        '\\"'
-      )}"]]`
+      `[:find (pull ?parentPage [*]) :where [?parentPage :block/children ?referencingBlock] [?referencingBlock :block/refs ?referencedPage] [?referencedPage :node/title "${normalizePageTitle(t)}"]]`
     )
     .filter((block) => block.length);
   return parentBlocks.map((b) =>
