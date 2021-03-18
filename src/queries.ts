@@ -218,8 +218,8 @@ export const getAllPageNames = (): string[] =>
     .map((b) => b[0] as string);
 
 export const getPageViewType = (title: string): ViewType =>
-  window.roamAlphaAPI.q(
+  (window.roamAlphaAPI.q(
     `[:find ?v :where [?e :children/view-type ?v] [?e :node/title "${normalizePageTitle(
       title
     )}"]]`
-  )?.[0]?.[0] as ViewType;
+  )?.[0]?.[0] as ViewType) || "bullet";
