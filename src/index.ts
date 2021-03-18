@@ -20,6 +20,7 @@ export {
 export { default as RestClient } from "./rest-client";
 export { default as WindowClient } from "./window-client";
 export {
+  getAllPageNames,
   getCreateTimeByBlockUid,
   getDisplayNameByEmail,
   getEditTimeByBlockUid,
