@@ -217,7 +217,9 @@ export const getAllPageNames = (): string[] =>
     .q("[:find ?s :where [?e :node/title ?s]]")
     .map((b) => b[0] as string);
 
-export const getPageViewType = (title: string): ViewType => 
+export const getPageViewType = (title: string): ViewType =>
   window.roamAlphaAPI.q(
-    `[:find ?v :where [?e :children/view-type ?v] [?e :node/title "${normalizePageTitle(title)}"]]`
-  )?.[0]?.[0] as ViewType
+    `[:find ?v :where [?e :children/view-type ?v] [?e :node/title "${normalizePageTitle(
+      title
+    )}"]]`
+  )?.[0]?.[0] as ViewType;
