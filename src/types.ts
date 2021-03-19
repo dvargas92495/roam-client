@@ -54,6 +54,11 @@ export type TextNode = {
   children: TextNode[];
 };
 
+export type InputTextNode = {
+  text: string;
+  children?: InputTextNode[];
+};
+
 type PlusType = [number, string];
 
 type RoamNode = { "db/id": number };

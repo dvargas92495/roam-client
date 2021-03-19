@@ -1,5 +1,5 @@
 import { getActiveUids, getUidsFromId } from "./dom";
-import { TextNode } from "./types";
+import { InputTextNode, TextNode } from "./types";
 
 export const updateActiveBlock = (text: string) =>
   window.roamAlphaAPI.updateBlock({
@@ -30,7 +30,7 @@ export const createBlock = ({
   parentUid,
   order,
 }: {
-  node: TextNode;
+  node: InputTextNode;
   parentUid: string;
   order: number;
 }) => {
@@ -39,7 +39,7 @@ export const createBlock = ({
     location: { "parent-uid": parentUid, order },
     block: { uid, string: node.text },
   });
-  node.children.forEach((n, o) =>
+  (node.children || []).forEach((n, o) =>
     createBlock({ node: n, parentUid: uid, order: o })
   );
   return uid;
@@ -50,7 +50,7 @@ export const createPage = ({
   tree,
 }: {
   title: string;
-  tree: TextNode[];
+  tree: InputTextNode[];
 }): string => {
   const uid = window.roamAlphaAPI.util.generateUID();
   window.roamAlphaAPI.createPage({ page: { title, uid } });
