@@ -112,11 +112,11 @@ export const getTreeByBlockUid = (
 ): { text: string; children: TreeNode[] } => {
   const block = window.roamAlphaAPI.q(
     `[:find (pull ?e [:block/children, :block/string :children/view-type]) :where [?e :block/uid "${blockUid}"]]`
-  )[0][0] as RoamBlock;
-  const children = block.children || [];
-  const viewType = block["view-type"] || "bullet";
+  )?.[0]?.[0] as RoamBlock;
+  const children = block?.children || [];
+  const viewType = block?.["view-type"] || "bullet";
   return {
-    text: block.string || "",
+    text: block?.string || "",
     children: children
       .map((c) => getTreeByBlockId(c.id))
       .sort((a, b) => a.order - b.order)
