@@ -99,7 +99,7 @@ export const getUidsFromId = (id: string) => {
 };
 
 export const getUids = (block: HTMLDivElement | HTMLTextAreaElement) => {
-  return getUidsFromId(block.id);
+  return block ? getUidsFromId(block.id) : { blockUid: "", parentUid: "" };
 };
 
 export const getActiveUids = () =>
