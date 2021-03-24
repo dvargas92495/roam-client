@@ -28,11 +28,11 @@ export const clearBlockByUid = (uid: string) =>
 export const createBlock = ({
   node,
   parentUid,
-  order,
+  order = 0,
 }: {
   node: InputTextNode;
   parentUid: string;
-  order: number;
+  order?: number;
 }) => {
   const uid = window.roamAlphaAPI.util.generateUID();
   window.roamAlphaAPI.createBlock({
