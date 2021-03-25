@@ -22,6 +22,7 @@ export { default as WindowClient } from "./window-client";
 export {
   getAllPageNames,
   getBlockUidByTextOnPage,
+  getBlockUidsReferencingPage,
   getCreateTimeByBlockUid,
   getDisplayNameByEmail,
   getEditTimeByBlockUid,
