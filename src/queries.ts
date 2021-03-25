@@ -223,3 +223,21 @@ export const getPageViewType = (title: string): ViewType =>
       title
     )}"]]`
   )?.[0]?.[0] as ViewType) || "bullet";
+
+export const getPageUidByPageTitle = (title: string): string =>
+  (window.roamAlphaAPI.q(
+    `[:find ?u :where [?e :block/uid ?u] [?e :node/title "${normalizePageTitle(
+      title
+    )}"]]`
+  )?.[0]?.[0] as string) || "";
+
+export const getBlockUidByTextOnPage = ({
+  text,
+  title,
+}: {
+  text: string;
+  title: string;
+}): string =>
+  (window.roamAlphaAPI.q(
+    `[:find ?u :where [?b :block/page ?p] [?b :block/uid ?u] [?b :block/string "${text}"] [?p :node/title "${title}"]]`
+  )?.[0]?.[0] as string) || "";

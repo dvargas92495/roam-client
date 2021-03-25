@@ -21,6 +21,7 @@ export { default as RestClient } from "./rest-client";
 export { default as WindowClient } from "./window-client";
 export {
   getAllPageNames,
+  getBlockUidByTextOnPage,
   getCreateTimeByBlockUid,
   getDisplayNameByEmail,
   getEditTimeByBlockUid,
@@ -29,6 +30,7 @@ export {
   getPageTitleByBlockUid,
   getPageTitleByPageUid,
   getPageTitleReferencesByPageTitle,
+  getPageUidByPageTitle,
   getPageViewType,
   getParentTextByBlockUid,
   getParentTextByBlockUidAndTag,
