@@ -262,3 +262,14 @@ export const getPageTitlesReferencingBlockUid = (uid: string): string[] =>
       `[:find ?t :where [?r :block/uid "${uid}"] [?b :block/refs ?r] [?b :block/page ?p] [?p :node/title ?t]]`
     )
     .map((s) => s[0]);
+
+export const getPageTitlesAndBlockUidsReferencingPage = (
+  title: string
+): { title: string; uid: string }[] =>
+  window.roamAlphaAPI
+    .q(
+      `[:find ?rt ?r :where [?pr :node/title ?rt] [?r :block/page ?pr] [?r :block/refs ?p] [?p :node/title "${normalizePageTitle(
+        title
+      )}"]]`
+    )
+    .map(([title, uid]: string[]) => ({ title, uid }));
