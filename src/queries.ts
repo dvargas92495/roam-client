@@ -107,21 +107,11 @@ const getTreeByBlockId = (blockId: number): TreeNode => {
   };
 };
 
-export const getTreeByBlockUid = (
-  blockUid: string
-): { text: string; children: TreeNode[] } => {
-  const block = window.roamAlphaAPI.q(
-    `[:find (pull ?e [:block/children, :block/string :children/view-type]) :where [?e :block/uid "${blockUid}"]]`
-  )?.[0]?.[0] as RoamBlock;
-  const children = block?.children || [];
-  const viewType = block?.["view-type"] || "bullet";
-  return {
-    text: block?.string || "",
-    children: children
-      .map((c) => getTreeByBlockId(c.id))
-      .sort((a, b) => a.order - b.order)
-      .map((c) => fixViewType({ c, v: viewType })),
-  };
+export const getTreeByBlockUid = (blockUid: string): TreeNode => {
+  const blockId = window.roamAlphaAPI.q(
+    `[:find ?e :where [?e :block/uid "${blockUid}"]]`
+  )?.[0]?.[0] as number;
+  return getTreeByBlockId(blockId);
 };
 
 export const getTreeByPageName = (name: string): TreeNode[] => {
