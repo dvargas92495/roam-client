@@ -63,12 +63,13 @@ export {
 } from "./dom";
 export { watchOnce } from "./events";
 export { RoamBlock, ViewType, getOrderByBlockUid, TextNode, PullBlock };
+export { RoamNode } from "./types";
 
 declare global {
   interface Window {
     roamAlphaAPI: {
-      q: (query: string) => any[][];
-      pull: (selector: string, id: number) => PullBlock;
+      q: (query: string, ...params: any[]) => any[][];
+      pull: (selector: string, id: number | string) => PullBlock;
       createBlock: WriteAction;
       updateBlock: WriteAction;
       createPage: WriteAction;
@@ -97,7 +98,7 @@ declare global {
           delete: WriteAction;
         };
         pull: (selector: string, id: number) => PullBlock;
-        q: (query: string) => any[][];
+        q: (query: string, ...params: any[]) => any[][];
         removePullWatch: (
           pullPattern: string,
           entityId: string,
