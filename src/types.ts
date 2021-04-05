@@ -61,7 +61,7 @@ export type InputTextNode = {
 
 type PlusType = [number, string];
 
-type RoamNode = { "db/id": number };
+export type RoamNode = { "db/id": number };
 
 export type RoamQuery = RoamPull & {
   "block/graph"?: RoamNode;
