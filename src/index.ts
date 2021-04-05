@@ -21,6 +21,7 @@ export { default as RestClient } from "./rest-client";
 export { default as WindowClient } from "./window-client";
 export {
   getAllBlockUids,
+  getAllBlockUidsAndTexts,
   getAllPageNames,
   getBlockUidByTextOnPage,
   getBlockUidsReferencingPage,

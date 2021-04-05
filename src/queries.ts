@@ -212,6 +212,11 @@ export const getAllBlockUids = (): string[] =>
     .q(`[:find ?u :where [?e :block/uid ?u] [?e :block/string]]`)
     .map((f) => f[0]);
 
+export const getAllBlockUidsAndTexts = (): { uid: string; text: string }[] =>
+  window.roamAlphaAPI
+    .q(`[:find ?u ?s :where [?e :block/uid ?u] [?e :block/string ?s]]`)
+    .map((f) => ({ uid: f[0] as string, text: f[1] as string }));
+
 export const getPageViewType = (title: string): ViewType =>
   (window.roamAlphaAPI.q(
     `[:find ?v :where [?e :children/view-type ?v] [?e :node/title "${normalizePageTitle(
