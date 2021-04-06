@@ -119,7 +119,9 @@ export const genericError = (e: Partial<AxiosError & RoamError>) => {
       : e.message) ||
     e.raw ||
     "Unknown Error Occurred";
-  updateActiveBlock(
-    `Error: ${message.length > 50 ? `${message.substring(0, 50)}...` : message}`
-  );
+  const errMsg = `Error: ${
+    message.length > 50 ? `${message.substring(0, 50)}...` : message
+  }`;
+  updateActiveBlock(errMsg);
+  return errMsg;
 };
