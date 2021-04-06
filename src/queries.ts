@@ -85,7 +85,7 @@ const getTreeByBlockId = (blockId: number): TreeNode => {
     heading: block[":block/heading"] || 0,
     open: block[":block/open"] || true,
     viewType: block[":children/view-type"]?.substring(1) as ViewType,
-    editTime: new Date(block[':edit/time'] || 0),
+    editTime: new Date(block[":edit/time"] || 0),
     props: {
       imageResize: Object.fromEntries(
         Object.keys(props[":image-size"] || {}).map((p) => [
