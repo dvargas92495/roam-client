@@ -126,7 +126,7 @@ declare global {
           removeWindow: SidebarAction;
           unpinWindow: SidebarAction;
         };
-        commadPalette: {
+        commandPalette: {
           addCommand: (label: string, callback: () => void) => void;
           removeCommand: (label: string) => void;
         };
