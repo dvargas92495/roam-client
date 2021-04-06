@@ -129,7 +129,7 @@ declare global {
         commadPalette: {
           addCommand: (label: string, callback: () => void) => void;
           removeCommand: (label: string) => void;
-        }
+        };
       };
     };
     roamDatomicAlphaAPI?: (
