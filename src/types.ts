@@ -25,6 +25,7 @@ export type PullBlock = {
   ":block/heading"?: number;
   ":block/open"?: boolean;
   ":children/view-type"?: `:${ViewType}`;
+  ":edit/time"?: number;
   ":block/props"?: any;
 };
 

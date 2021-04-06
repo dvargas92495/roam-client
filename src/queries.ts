@@ -51,6 +51,7 @@ export type TreeNode = {
   heading: number;
   open: boolean;
   viewType: ViewType;
+  editTime: Date;
   props: {
     imageResize: {
       [link: string]: {
@@ -69,7 +70,7 @@ export type TreeNode = {
 
 const getTreeByBlockId = (blockId: number): TreeNode => {
   const block = window.roamAlphaAPI.pull(
-    "[:block/children, :block/string, :block/order, :block/uid, :block/heading, :block/open, :children/view-type, :block/props]",
+    "[:block/children, :block/string, :block/order, :block/uid, :block/heading, :block/open, :children/view-type, :block/props, :edit/time]",
     blockId
   );
   const children = block[":block/children"] || [];
@@ -84,6 +85,7 @@ const getTreeByBlockId = (blockId: number): TreeNode => {
     heading: block[":block/heading"] || 0,
     open: block[":block/open"] || true,
     viewType: block[":children/view-type"]?.substring(1) as ViewType,
+    editTime: new Date(block[':edit/time'] || 0),
     props: {
       imageResize: Object.fromEntries(
         Object.keys(props[":image-size"] || {}).map((p) => [
