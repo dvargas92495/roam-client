@@ -57,3 +57,13 @@ export const createPage = ({
   tree.forEach((node, order) => createBlock({ node, parentUid: uid, order }));
   return uid;
 };
+
+export const updateBlock = ({ text, uid }: { text: string; uid: string }) => {
+  window.roamAlphaAPI.updateBlock({ block: { string: text, uid } });
+  return uid;
+};
+
+export const deleteBlock = (uid: string) => {
+  window.roamAlphaAPI.deleteBlock({ block: { uid } });
+  return uid;
+};

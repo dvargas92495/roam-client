@@ -16,6 +16,8 @@ export {
   clearBlockByUid,
   createPage,
   createBlock,
+  updateBlock,
+  deleteBlock,
 } from "./writes";
 export { default as RestClient } from "./rest-client";
 export { default as WindowClient } from "./window-client";
