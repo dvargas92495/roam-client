@@ -270,3 +270,26 @@ export const getPageTitlesAndBlockUidsReferencingPage = (
       )}"]]`
     )
     .map(([title, uid]: string[]) => ({ title, uid }));
+
+export const getBlockUidsByPageTitle = (title: string) =>
+  window.roamAlphaAPI
+    .q(
+      `[:find ?u :where  [?b :block/uid ?u] [?b :block/page ?e] [?e :node/title "${normalizePageTitle(
+        title
+      )}"]]`
+    )
+    .map((b) => b[0] as string);
+
+export const getNthChildUidByBlockUid = ({
+  blockUid,
+  order,
+}: {
+  blockUid: string;
+  order: number;
+}): string =>
+  window.roamAlphaAPI.q(
+    `[:find ?u :where [?c :block/uid ?u] [?c :block/order ${order}] [?p :block/children ?c] [?p :block/uid "${blockUid}"]]`
+  )?.[0]?.[0] as string;
+
+export const getFirstChildUidByBlockUid = (blockUid: string): string =>
+  getNthChildUidByBlockUid({ blockUid, order: 0 });
