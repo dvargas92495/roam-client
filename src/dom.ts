@@ -156,7 +156,10 @@ const getMutatedNodes = ({
 };
 
 export const createObserver = (
-  mutationCallback: (mutationList: MutationRecord[]) => void
+  mutationCallback: (
+    mutationList: MutationRecord[],
+    observer: MutationObserver
+  ) => void
 ): void =>
   createDivObserver(
     mutationCallback,
@@ -168,7 +171,7 @@ export const createOverlayObserver = (
 ): void => createDivObserver(mutationCallback, document.body);
 
 const createDivObserver = (
-  mutationCallback: (mutationList: MutationRecord[]) => void,
+  mutationCallback: MutationCallback,
   mutationTarget: Element
 ) => {
   const observer = new MutationObserver(mutationCallback);
