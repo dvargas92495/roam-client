@@ -117,12 +117,32 @@ export type UserSettings = {
   };
 };
 
-export type WindowType = "mentions" | "block" | "outline" | "graph";
+type SidebarWindowType = (SidebarBlockWindow | SidebarMentionsWindow | SidebarGraphWindow | SidebarOutlineWindow);
 
 export type SidebarWindowInput = {
   "block-uid": string;
-  type: WindowType;
+  type: SidebarWindowType['type'];
 };
+
+type SidebarBlockWindow = {
+  type: 'block';
+  "block-uid": string;
+}
+
+type SidebarOutlineWindow = {
+  type: 'outline';
+  "page-uid": string;
+}
+
+type SidebarMentionsWindow = {
+  type: 'mentions';
+  "mentions-uid": string;
+}
+
+type SidebarGraphWindow = {
+  type: 'graph';
+  "block-uid": string;
+}
 
 export type SidebarAction = (action: { window: SidebarWindowInput }) => boolean;
 
@@ -131,4 +151,4 @@ export type SidebarWindow = {
   order: number;
   "pinned?": boolean;
   "window-id": string;
-} & SidebarWindowInput;
+} & SidebarWindowType;
