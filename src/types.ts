@@ -117,32 +117,36 @@ export type UserSettings = {
   };
 };
 
-type SidebarWindowType = (SidebarBlockWindow | SidebarMentionsWindow | SidebarGraphWindow | SidebarOutlineWindow);
+type SidebarWindowType =
+  | SidebarBlockWindow
+  | SidebarMentionsWindow
+  | SidebarGraphWindow
+  | SidebarOutlineWindow;
 
 export type SidebarWindowInput = {
   "block-uid": string;
-  type: SidebarWindowType['type'];
+  type: SidebarWindowType["type"];
 };
 
 type SidebarBlockWindow = {
-  type: 'block';
+  type: "block";
   "block-uid": string;
-}
+};
 
 type SidebarOutlineWindow = {
-  type: 'outline';
+  type: "outline";
   "page-uid": string;
-}
+};
 
 type SidebarMentionsWindow = {
-  type: 'mentions';
+  type: "mentions";
   "mentions-uid": string;
-}
+};
 
 type SidebarGraphWindow = {
-  type: 'graph';
+  type: "graph";
   "block-uid": string;
-}
+};
 
 export type SidebarAction = (action: { window: SidebarWindowInput }) => boolean;
 
