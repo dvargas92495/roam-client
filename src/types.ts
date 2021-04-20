@@ -145,7 +145,7 @@ type SidebarMentionsWindow = {
 
 type SidebarGraphWindow = {
   type: "graph";
-  "block-uid": string;
+  "page-uid": string;
 };
 
 export type SidebarAction = (action: { window: SidebarWindowInput }) => boolean;
