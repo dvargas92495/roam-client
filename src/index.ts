@@ -203,7 +203,9 @@ export const getAttrConfigFromUid = (uid: string) => {
   const allAttrs = [...(rootAttrs || []), ...(childAttrs || [])];
 
   const entries = allAttrs.map((r) =>
-    [getPageTitleByPageUid(r[1].value[1]) || '', r[2].value || ''].map(toAttributeValue)
+    [getPageTitleByPageUid(r[1].value[1]) || "", r[2].value || ""].map(
+      toAttributeValue
+    )
   );
   return Object.fromEntries(entries);
 };
