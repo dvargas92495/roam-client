@@ -194,9 +194,11 @@ export const getAttrConfigFromUid = (uid: string) => {
   const rootAttrs = window.roamAlphaAPI.q(
     `[:find ?a :where [?b :entity/attrs ?a] [?b :block/uid "${uid}"]]`
   )?.[0]?.[0] as Attrs[];
-  const childAttrs = window.roamAlphaAPI.q(
-    `[:find ?a :where [?c :entity/attrs ?a] [?c :block/parents ?b] [?b :block/uid "${uid}"]]`
-  ).map(attr => attr[0][0] as Attrs);
+  const childAttrs = window.roamAlphaAPI
+    .q(
+      `[:find ?a :where [?c :entity/attrs ?a] [?c :block/parents ?b] [?b :block/uid "${uid}"]]`
+    )
+    .map((attr) => attr[0][0] as Attrs);
   if (!rootAttrs && !childAttrs) {
     return {};
   }
