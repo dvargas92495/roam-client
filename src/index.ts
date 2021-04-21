@@ -184,33 +184,19 @@ export const getAttrConfigFromQuery = (query: string) => {
   return Object.fromEntries(entries);
 };
 
-type Attrs = [
-  { source: string[]; value: string[] },
-  { source: string[]; value: string[] },
-  { source: string[]; value: string | string[] }
-];
-
+const ATTR_REGEX = /^(.*?)::(.*?)$/;
 export const getAttrConfigFromUid = (uid: string) => {
-  const rootAttrs = window.roamAlphaAPI.q(
-    `[:find ?a :where [?b :entity/attrs ?a] [?b :block/uid "${uid}"]]`
-  )?.[0]?.[0] as Attrs[];
-  const childAttrs = window.roamAlphaAPI
+  const allAttrs = window.roamAlphaAPI
     .q(
-      `[:find ?a :where [?c :entity/attrs ?a] [?c :block/parents ?b] [?b :block/uid "${uid}"]]`
+      `[:find ?s :where [?c :block/string ?s] [?c :block/refs] [?c :block/parents ?b] [?b :block/uid "${uid}"]]`
     )
-    .map((attr) => attr[0][0] as Attrs);
-  if (!rootAttrs && !childAttrs) {
-    return {};
-  }
-  const allAttrs = [...(rootAttrs || []), ...(childAttrs || [])];
-
-  const entries = allAttrs.map((r) =>
-    [
-      getPageTitleByPageUid(r[1].value[1]) || "",
-      typeof r[2].value === "string" ? r[2].value : "",
-    ].map(toAttributeValue)
-  );
-  return Object.fromEntries(entries);
+    .map((a) => a[0] as string)
+    .filter((a) => ATTR_REGEX.test(a))
+    .map((r) =>
+      (ATTR_REGEX.exec(r) || ["", "", ""]).slice(1, 3).map(toAttributeValue)
+    )
+    .filter(([k]) => !!k);
+  return Object.fromEntries(allAttrs);
 };
 
 export const getConfigFromPage = (inputPage?: string) => {
