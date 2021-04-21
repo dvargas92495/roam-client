@@ -187,7 +187,7 @@ export const getAttrConfigFromQuery = (query: string) => {
 type Attrs = [
   { source: string[]; value: string[] },
   { source: string[]; value: string[] },
-  { source: string[]; value: string }
+  { source: string[]; value: string | string[] }
 ];
 
 export const getAttrConfigFromUid = (uid: string) => {
@@ -203,9 +203,10 @@ export const getAttrConfigFromUid = (uid: string) => {
   const allAttrs = [...(rootAttrs || []), ...(childAttrs || [])];
 
   const entries = allAttrs.map((r) =>
-    [getPageTitleByPageUid(r[1].value[1]) || "", r[2].value || ""].map(
-      toAttributeValue
-    )
+    [
+      getPageTitleByPageUid(r[1].value[1]) || "",
+      typeof r[2].value === "string" ? r[2].value : "",
+    ].map(toAttributeValue)
   );
   return Object.fromEntries(entries);
 };
