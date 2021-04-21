@@ -1,4 +1,8 @@
-import { getOrderByBlockUid } from "./queries";
+import {
+  getOrderByBlockUid,
+  getPageTitleByPageUid,
+  getPageUidByPageTitle,
+} from "./queries";
 import {
   RoamBlock,
   ClientParams,
@@ -180,6 +184,30 @@ export const getAttrConfigFromQuery = (query: string) => {
   return Object.fromEntries(entries);
 };
 
+type Attrs = [
+  { source: string[]; value: string[] },
+  { source: string[]; value: string[] },
+  { source: string[]; value: string }
+];
+
+export const getAttrConfigFromUid = (uid: string) => {
+  const rootAttrs = window.roamAlphaAPI.q(
+    `[:find ?a :where [?b :entity/attrs ?a] [?b :block/uid "${uid}"]]`
+  )?.[0]?.[0] as Attrs[];
+  const childAttrs = window.roamAlphaAPI.q(
+    `[:find ?a :where [?c :entity/attrs ?a] [?c :block/parents ?b] [?b :block/uid "${uid}"]]`
+  )?.[0]?.[0] as Attrs[];
+  if (!rootAttrs && !childAttrs) {
+    return {};
+  }
+  const allAttrs = [...(rootAttrs || []), ...(childAttrs || [])];
+
+  const entries = allAttrs.map((r) =>
+    [getPageTitleByPageUid(r[1].value[1]), r[2].value].map(toAttributeValue)
+  );
+  return Object.fromEntries(entries);
+};
+
 export const getConfigFromPage = (inputPage?: string) => {
   const page =
     inputPage ||
@@ -187,9 +215,7 @@ export const getConfigFromPage = (inputPage?: string) => {
   if (!page) {
     return {};
   }
-  return getAttrConfigFromQuery(
-    `[:find (pull ?e [*]) :where [?e :node/title "${page}"] ]`
-  );
+  return getAttrConfigFromUid(getPageUidByPageTitle(page));
 };
 
 export const pushBullets = (
