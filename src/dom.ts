@@ -167,7 +167,7 @@ export const createObserver = (
   );
 
 export const createOverlayObserver = (
-  mutationCallback: (mutationList?: MutationRecord[]) => void
+  mutationCallback: (mutationList: MutationRecord[]) => void
 ): void => createDivObserver(mutationCallback, document.body);
 
 const createDivObserver = (
@@ -183,18 +183,20 @@ export const createHTMLObserver = ({
   tag,
   className,
   removeCallback,
+  useBody,
 }: {
   callback: (b: HTMLElement) => void;
   tag: string;
   className: string;
   removeCallback?: (b: HTMLElement) => void;
+  useBody?: boolean;
 }): void => {
   const blocks = document.getElementsByClassName(
     className
   ) as HTMLCollectionOf<HTMLElement>;
   Array.from(blocks).forEach(callback);
 
-  createObserver((ms) => {
+  (useBody ? createOverlayObserver : createObserver)((ms) => {
     const addedNodes = getMutatedNodes({
       ms,
       nodeList: "addedNodes",
