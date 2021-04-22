@@ -241,6 +241,7 @@ export const createButtonObserver = ({
     },
     tag: "BUTTON",
     className: "bp3-button",
+    useBody: true,
   });
 
 export const createHashtagObserver = ({
