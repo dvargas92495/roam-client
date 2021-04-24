@@ -146,6 +146,10 @@ declare global {
           addCommand: (action: { label: string; callback: () => void }) => void;
           removeCommand: (action: { label: string }) => void;
         };
+        blockContextMenu: {
+          addCommand: (action: { label: string; callback: () => void }) => void;
+          removeCommand: (action: { label: string }) => void;
+        };
       };
     };
     roamDatomicAlphaAPI?: (
