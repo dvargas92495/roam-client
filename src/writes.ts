@@ -47,10 +47,10 @@ export const createBlock = ({
 
 export const createPage = ({
   title,
-  tree,
+  tree = [],
 }: {
   title: string;
-  tree: InputTextNode[];
+  tree?: InputTextNode[];
 }): string => {
   const uid = window.roamAlphaAPI.util.generateUID();
   window.roamAlphaAPI.createPage({ page: { title, uid } });
