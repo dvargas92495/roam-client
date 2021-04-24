@@ -147,7 +147,17 @@ declare global {
           removeCommand: (action: { label: string }) => void;
         };
         blockContextMenu: {
-          addCommand: (action: { label: string; callback: () => void }) => void;
+          addCommand: (action: {
+            label: string;
+            callback: (props: {
+              "block-string": string;
+              "block-uid": string;
+              heading: 0 | 1 | 2 | 3 | null;
+              "page-uid": string;
+              "read-only?": boolean;
+              "window-id": string;
+            }) => void;
+          }) => void;
           removeCommand: (action: { label: string }) => void;
         };
       };
