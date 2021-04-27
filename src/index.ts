@@ -80,7 +80,7 @@ export {
 } from "./dom";
 export { watchOnce } from "./events";
 export { RoamBlock, ViewType, getOrderByBlockUid, TextNode, PullBlock };
-export { RoamNode } from "./types";
+export { RoamNode, InputTextNode } from "./types";
 
 declare global {
   interface Window {
