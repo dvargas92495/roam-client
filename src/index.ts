@@ -78,6 +78,7 @@ export {
 export { watchOnce } from "./events";
 export { RoamBlock, ViewType, getOrderByBlockUid, TextNode, PullBlock };
 export { RoamNode, InputTextNode } from "./types";
+export { parseInline } from 'roam-marked';
 
 declare global {
   interface Window {
