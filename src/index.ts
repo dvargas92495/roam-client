@@ -1,7 +1,4 @@
-import {
-  getOrderByBlockUid,
-  getPageUidByPageTitle,
-} from "./queries";
+import { getOrderByBlockUid, getPageUidByPageTitle } from "./queries";
 import {
   RoamBlock,
   ClientParams,
