@@ -1,10 +1,11 @@
 import { AxiosError } from "axios";
-import { getBlockUidsByPageTitle } from "./queries";
-import { RoamError } from "./types";
+import { parseInline, RoamContext } from "roam-marked";
+import { allBlockMapper, getBlockUidsByPageTitle, TreeNode } from "./queries";
+import { RoamError, ViewType } from "./types";
 import { updateActiveBlock } from "./writes";
 
 /**
- * TODO: Replace this paradigm with an attr config instead.
+ * TODO: Replace this paradigm with an tree node config instead.
  */
 const getButtonConfig = (target: HTMLButtonElement, targetCommand: string) => {
   const rawParts = target.innerText
@@ -312,3 +313,81 @@ export const createPageObserver = (
         .forEach(({ blockUid, added }) => callback(blockUid, added));
     }
   });
+
+const VIEW_CONTAINER = {
+  bullet: "ul",
+  document: "div",
+  numbered: "ol",
+};
+const HEADINGS = ["p", "h1", "h2", "h3"];
+export const parseRoamBlocksToHtml = ({
+  content,
+  viewType,
+  level,
+  context,
+}: {
+  level: number;
+  context: Required<RoamContext>;
+  content: TreeNode[];
+  viewType: ViewType;
+}): string => {
+  if (content.length === 0) {
+    return "";
+  }
+  const items = content.map((t) => {
+    const componentsWithChildren = (s: string, ac?: string): string | false => {
+      if (/table/i.test(s)) {
+        const data = t.children;
+        t.children = [];
+        return `<table class="roam-table"><tbody>${data
+          .map(
+            (row) =>
+              `<tr>${allBlockMapper(row)
+                .map(
+                  (td) =>
+                    `<td>${parseInline(td.text, {
+                      ...context,
+                      components: componentsWithChildren,
+                    })}</td>`
+                )
+                .join("")}</tr>`
+          )
+          .join("")}</tbody></table>`;
+      }
+      return false;
+    };
+    const classlist = [];
+    const textToParse = t.text.replace(/#\.([^\s]*)/g, (_, className) => {
+      classlist.push(className);
+      return "";
+    });
+    const inlineMarked = parseInline(textToParse, {
+      ...context,
+      components: componentsWithChildren,
+    });
+    const children = parseRoamBlocksToHtml({
+      content: t.children,
+      viewType: t.viewType,
+      level: level + 1,
+      context,
+    });
+    const innerHtml = `<${HEADINGS[t.heading]}>${inlineMarked}</${
+      HEADINGS[t.heading]
+    }>\n${children}`;
+    if (level > 0 && viewType === "document") {
+      classlist.push("document-bullet");
+    }
+    const attrs = `id="${t.uid}"${
+      classlist.length ? ` class="${classlist.join(" ")}"` : ""
+    }`;
+    const blockHtml =
+      level === 0 && viewType === "document"
+        ? `<div ${attrs}>${innerHtml}</div>`
+        : `<li ${attrs}>${innerHtml}</li>`;
+
+    return blockHtml;
+  });
+  const containerTag =
+    level > 0 && viewType === "document" ? "ul" : VIEW_CONTAINER[viewType];
+  return `<${containerTag}>${items.join("\n")}</${containerTag}>`;
+};

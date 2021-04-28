@@ -3,6 +3,11 @@ import { RoamBlock, UserSettings, ViewType } from "./types";
 const normalizePageTitle = (title: string) =>
   title.replace(/\\/, "\\\\").replace(/"/g, '\\"');
 
+export const allBlockMapper = (t: TreeNode): TreeNode[] => [
+  t,
+  ...t.children.flatMap(allBlockMapper),
+];
+
 export const getLinkedPageReferences = (t: string): RoamBlock[] => {
   const findParentBlock: (b: RoamBlock) => RoamBlock = (b: RoamBlock) =>
     b.title

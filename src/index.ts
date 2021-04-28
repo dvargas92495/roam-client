@@ -1,6 +1,5 @@
 import {
   getOrderByBlockUid,
-  getPageTitleByPageUid,
   getPageUidByPageTitle,
 } from "./queries";
 import {
@@ -77,6 +76,7 @@ export {
   getUids,
   getUidsFromButton,
   getUidsFromId,
+  parseRoamBlocksToHtml,
 } from "./dom";
 export { watchOnce } from "./events";
 export { RoamBlock, ViewType, getOrderByBlockUid, TextNode, PullBlock };
