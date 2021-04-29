@@ -358,11 +358,6 @@ export const parseRoamBlocksToHtml = ({
                 .join("")}</tr>`
           )
           .join("")}</tbody></table>`;
-      } else if (/roam\/render/i.test(s)) {
-        const acCode = ac || "";
-        const uid = BLOCK_REF_REGEX.exec(acCode)?.[1];
-        const code = uid ? context.blockReferences(uid).text : acCode;
-        return `<div>${code}</div>`;
       }
       return false;
     };
