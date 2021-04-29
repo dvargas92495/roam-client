@@ -338,7 +338,7 @@ export const parseRoamBlocksToHtml = ({
     let skipChildren = false;
     const componentsWithChildren = (s: string): string | false => {
       if (/table/i.test(s)) {
-        const skipChildren = true;
+        skipChildren = true;
         return `<table class="roam-table"><tbody>${t.children
           .map(
             (row) =>
