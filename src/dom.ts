@@ -335,11 +335,11 @@ export const parseRoamBlocksToHtml = ({
     return "";
   }
   const items = content.map((t) => {
-    const componentsWithChildren = (s: string, ac?: string): string | false => {
+    let skipChildren = false;
+    const componentsWithChildren = (s: string): string | false => {
       if (/table/i.test(s)) {
-        const data = t.children;
-        t.children = [];
-        return `<table class="roam-table"><tbody>${data
+        const skipChildren = true;
+        return `<table class="roam-table"><tbody>${t.children
           .map(
             (row) =>
               `<tr>${allBlockMapper(row)
@@ -365,15 +365,18 @@ export const parseRoamBlocksToHtml = ({
       ...context,
       components: componentsWithChildren,
     });
-    const children = parseRoamBlocksToHtml({
-      content: t.children,
-      viewType: t.viewType,
-      level: level + 1,
-      context,
-    });
     const innerHtml = `<${HEADINGS[t.heading]}>${inlineMarked}</${
       HEADINGS[t.heading]
-    }>\n${children}`;
+    }>\n${
+      skipChildren
+        ? ""
+        : parseRoamBlocksToHtml({
+            content: t.children,
+            viewType: t.viewType,
+            level: level + 1,
+            context,
+          })
+    }`;
     if (level > 0 && viewType === "document") {
       classlist.push("document-bullet");
     }
