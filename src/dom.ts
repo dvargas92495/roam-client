@@ -4,6 +4,8 @@ import { allBlockMapper, getBlockUidsByPageTitle, TreeNode } from "./queries";
 import { RoamError, ViewType } from "./types";
 import { updateActiveBlock } from "./writes";
 
+const BLOCK_REF_REGEX = new RegExp("\\(\\((..........?)\\)\\)", "g");
+
 /**
  * TODO: Replace this paradigm with an tree node config instead.
  */
@@ -336,8 +338,11 @@ export const parseRoamBlocksToHtml = ({
   }
   const items = content.map((t) => {
     let skipChildren = false;
-    const componentsWithChildren = (s: string): string | false => {
-      if (/table/i.test(s)) {
+    const componentsWithChildren = (s: string, ac?: string): string | false => {
+      const parent = context.components(s, ac);
+      if (parent) {
+        return parent;
+      } else if (/table/i.test(s)) {
         skipChildren = true;
         return `<table class="roam-table"><tbody>${t.children
           .map(
@@ -353,6 +358,11 @@ export const parseRoamBlocksToHtml = ({
                 .join("")}</tr>`
           )
           .join("")}</tbody></table>`;
+      } else if (/roam\/render/i.test(s)) {
+        const acCode = ac || "";
+        const uid = BLOCK_REF_REGEX.exec(acCode)?.[1];
+        const code = uid ? context.blockReferences(uid).text : acCode;
+        return `<div>${code}</div>`;
       }
       return false;
     };
