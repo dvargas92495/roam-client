@@ -298,3 +298,12 @@ export const getNthChildUidByBlockUid = ({
 
 export const getFirstChildUidByBlockUid = (blockUid: string): string =>
   getNthChildUidByBlockUid({ blockUid, order: 0 });
+
+export const getShallowTreeByParentUid = (
+  parentUid: string
+): { uid: string; text: string }[] =>
+  window.roamAlphaAPI
+    .q(
+      `[:find ?u ?s :where [?c :block/uid ?u] [?c :block/string ?s] [?b :block/children ?c] [?b :block/uid "${parentUid}"]]`
+    )
+    .map(([uid, text]) => ({ uid, text }));
