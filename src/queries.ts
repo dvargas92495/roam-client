@@ -304,6 +304,7 @@ export const getShallowTreeByParentUid = (
 ): { uid: string; text: string }[] =>
   window.roamAlphaAPI
     .q(
-      `[:find ?u ?s :where [?c :block/uid ?u] [?c :block/string ?s] [?b :block/children ?c] [?b :block/uid "${parentUid}"]]`
+      `[:find ?u ?s ?o :where [?c :block/order ?o] [?c :block/uid ?u] [?c :block/string ?s] [?b :block/children ?c] [?b :block/uid "${parentUid}"]]`
     )
-    .map(([uid, text]) => ({ uid, text }));
+    .sort((a, b) => a[2] - b[2])
+    .map(([uid, text]: string[]) => ({ uid, text }));
