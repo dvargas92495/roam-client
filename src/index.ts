@@ -250,3 +250,18 @@ export const pushBullets = (
     }
   }
 };
+
+export const getCurrentUserEmail = () => {
+  const globalAppState = JSON.parse(
+    localStorage.getItem("globalAppState") || '["","",[]]'
+  ) as (string | string[])[];
+  const userIndex = globalAppState.findIndex((s) => s === "~:user");
+  if (userIndex > 0) {
+    const userArray = globalAppState[userIndex + 1] as string[];
+    const emailIndex = userArray.findIndex((s) => s === "~:email");
+    if (emailIndex > 0) {
+      return userArray[emailIndex + 1];
+    }
+  }
+  return "";
+};
