@@ -1,10 +1,12 @@
 import { AxiosError } from "axios";
 import { parseInline, RoamContext } from "roam-marked";
+import { toRoamDate } from "./date";
 import {
   allBlockMapper,
   getBlockUidsByPageTitle,
   getChildRefUidsByBlockUid,
   getNthChildUidByBlockUid,
+  getPageUidByPageTitle,
   TreeNode,
 } from "./queries";
 import { RoamError, ViewType } from "./types";
@@ -492,4 +494,18 @@ const openBlockElement = (block: HTMLElement | null): void => {
       }
     }, 50);
   }
+};
+
+export const getRoamUrl = (blockUid?: string): string =>
+  `${window.location.href.replace(/\/page\/.*$/, "")}${
+    blockUid ? `/page/${blockUid}` : ""
+  }`;
+
+export const getCurrentPageUid = (): string =>
+  window.location.hash.match(/\/page\/(.*)$/)?.[1] ||
+  getPageUidByPageTitle(toRoamDate(new Date()));
+
+export const getRoamUrlByPage = (page: string): string => {
+  const uid = getPageUidByPageTitle(page);
+  return uid && getRoamUrl(uid);
 };
