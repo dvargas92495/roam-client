@@ -72,6 +72,7 @@ export {
   createPageObserver,
   genericError,
   getActiveUids,
+  getBlockUidFromTarget,
   getUids,
   getUidsFromButton,
   getUidsFromId,

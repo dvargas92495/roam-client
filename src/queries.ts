@@ -8,6 +8,13 @@ export const allBlockMapper = (t: TreeNode): TreeNode[] => [
   ...t.children.flatMap(allBlockMapper),
 ];
 
+export const getChildRefUidsByBlockUid = (b: string): string[] =>
+  window.roamAlphaAPI
+    .q(
+      `[:find ?u :where [?r :block/uid ?u] [?e :block/refs ?r] [?e :block/uid "${b}"]]`
+    )
+    .map((r) => r[0] as string);
+
 export const getLinkedPageReferences = (t: string): RoamBlock[] => {
   const findParentBlock: (b: RoamBlock) => RoamBlock = (b: RoamBlock) =>
     b.title

@@ -1,6 +1,12 @@
 import { AxiosError } from "axios";
 import { parseInline, RoamContext } from "roam-marked";
-import { allBlockMapper, getBlockUidsByPageTitle, TreeNode } from "./queries";
+import {
+  allBlockMapper,
+  getBlockUidsByPageTitle,
+  getChildRefUidsByBlockUid,
+  getNthChildUidByBlockUid,
+  TreeNode,
+} from "./queries";
 import { RoamError, ViewType } from "./types";
 import { updateActiveBlock } from "./writes";
 
@@ -398,4 +404,73 @@ export const parseRoamBlocksToHtml = ({
   const containerTag =
     level > 0 && viewType === "document" ? "ul" : VIEW_CONTAINER[viewType];
   return `<${containerTag}>${items.join("\n")}</${containerTag}>`;
+};
+
+export const getReferenceBlockUid = (
+  e: HTMLElement,
+  className: "rm-block-ref" | "rm-alias--block"
+): string => {
+  const parent = e.closest(".roam-block") as HTMLDivElement;
+  if (!parent) {
+    return "";
+  }
+  const { blockUid } = getUids(parent);
+  const refs = getChildRefUidsByBlockUid(blockUid);
+  const index = Array.from(parent.getElementsByClassName(className)).findIndex(
+    (el) => el === e || el.contains(e)
+  );
+  return refs[index];
+};
+
+export const getBlockUidFromTarget = (target: HTMLElement): string => {
+  const ref = target.closest(".rm-block-ref") as HTMLSpanElement;
+  if (ref) {
+    return getReferenceBlockUid(ref, "rm-block-ref");
+  }
+
+  const customView = target.closest(".roamjs-block-view") as HTMLDivElement;
+  if (customView) {
+    return getUids(customView).blockUid;
+  }
+
+  const aliasTooltip = target.closest(".rm-alias-tooltip__content");
+  if (aliasTooltip) {
+    const aliasRef = document.querySelector(
+      ".bp3-popover-open .rm-alias--block"
+    ) as HTMLAnchorElement;
+    return getReferenceBlockUid(aliasRef, "rm-alias--block");
+  }
+
+  const { blockUid } = getUids(target.closest(".roam-block") as HTMLDivElement);
+  const kanbanTitle = target.closest(".kanban-title");
+  if (kanbanTitle) {
+    const container = kanbanTitle.closest(".kanban-column-container");
+    if (container) {
+      const column = kanbanTitle.closest(".kanban-column");
+      const order = Array.from(container.children).findIndex(
+        (d) => d === column
+      );
+      return getNthChildUidByBlockUid({ blockUid, order });
+    }
+  }
+  const kanbanCard = target.closest(".kanban-card");
+  if (kanbanCard) {
+    const container = kanbanCard.closest(".kanban-column-container");
+    const column = kanbanCard.closest(".kanban-column");
+    if (container) {
+      const order = Array.from(container.children).findIndex(
+        (d) => d === column
+      );
+      const titleUid = getNthChildUidByBlockUid({ blockUid, order });
+      if (column) {
+        const nestedOrder =
+          Array.from(column.children).findIndex((d) => d === kanbanCard) - 1;
+        return getNthChildUidByBlockUid({
+          blockUid: titleUid,
+          order: nestedOrder,
+        });
+      }
+    }
+  }
+  return blockUid;
 };
