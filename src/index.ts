@@ -76,6 +76,7 @@ export {
   getUids,
   getUidsFromButton,
   getUidsFromId,
+  openBlock,
   parseRoamBlocksToHtml,
 } from "./dom";
 export { watchOnce } from "./events";

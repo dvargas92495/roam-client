@@ -474,3 +474,22 @@ export const getBlockUidFromTarget = (target: HTMLElement): string => {
   }
   return blockUid;
 };
+
+export const openBlock = (blockId?: string): void =>
+  openBlockElement(document.getElementById(blockId || ""));
+
+const openBlockElement = (block: HTMLElement | null): void => {
+  if (block) {
+    block.dispatchEvent(new MouseEvent("mousedown", { bubbles: true }));
+    setTimeout(() => {
+      const textArea = document.getElementById(block.id) as HTMLTextAreaElement;
+      if (textArea?.tagName === "TEXTAREA") {
+        textArea.dispatchEvent(new MouseEvent("mouseup", { bubbles: true }));
+        textArea.setSelectionRange(
+          textArea.value.length,
+          textArea.value.length
+        );
+      }
+    }, 50);
+  }
+};
