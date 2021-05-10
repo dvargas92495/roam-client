@@ -408,6 +408,18 @@ export const parseRoamBlocksToHtml = ({
   return `<${containerTag}>${items.join("\n")}</${containerTag}>`;
 };
 
+const getDomRefs = (blockUid: string) => {
+  const currentlyEditingBlock = document.querySelector(
+    "textarea.rm-block-input"
+  ) as HTMLTextAreaElement;
+  if (getUids(currentlyEditingBlock).blockUid === blockUid) {
+    return (
+      currentlyEditingBlock.value.match(/\(\(([\w\d-]{9})\)\)/g) || []
+    ).map((s) => s.slice(2, -2));
+  }
+  return []
+};
+
 export const getReferenceBlockUid = (
   e: HTMLElement,
   className: "rm-block-ref" | "rm-alias--block"
@@ -417,7 +429,8 @@ export const getReferenceBlockUid = (
     return "";
   }
   const { blockUid } = getUids(parent);
-  const refs = getChildRefUidsByBlockUid(blockUid);
+  const childRefs = getChildRefUidsByBlockUid(blockUid);
+  const refs = childRefs.length ? childRefs : getDomRefs(blockUid);
   const index = Array.from(parent.getElementsByClassName(className)).findIndex(
     (el) => el === e || el.contains(e)
   );
