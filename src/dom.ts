@@ -5,12 +5,16 @@ import {
   allBlockMapper,
   getBlockUidsByPageTitle,
   getChildRefUidsByBlockUid,
+  getChildrenLengthByPageUid,
   getNthChildUidByBlockUid,
+  getOrderByBlockUid,
   getPageUidByPageTitle,
+  getParentUidByBlockUid,
+  getTextByBlockUid,
   TreeNode,
 } from "./queries";
 import { RoamError, ViewType } from "./types";
-import { updateActiveBlock } from "./writes";
+import { createBlock, updateActiveBlock, updateBlock } from "./writes";
 
 const BLOCK_REF_REGEX = new RegExp("\\(\\((..........?)\\)\\)", "g");
 
@@ -521,4 +525,57 @@ export const getCurrentPageUid = (): string =>
 export const getRoamUrlByPage = (page: string): string => {
   const uid = getPageUidByPageTitle(page);
   return uid && getRoamUrl(uid);
+};
+
+export const addBlockCommand = ({
+  label,
+  callback,
+}: {
+  label: string;
+  callback: (uid: string) => void;
+}) => {
+  const textareaRef: { current: HTMLTextAreaElement | null } = {
+    current: null,
+  };
+
+  const loadBlockUid = (pageUid: string) => {
+    if (textareaRef.current) {
+      const uid = getUids(textareaRef.current).blockUid;
+      const parentUid = getParentUidByBlockUid(uid);
+
+      const text = getTextByBlockUid(uid);
+      if (text.length) {
+        return createBlock({
+          node: { text: "Loading..." },
+          parentUid,
+          order: getOrderByBlockUid(uid) + 1,
+        });
+      }
+      return updateBlock({
+        uid,
+        text: "Loading...",
+      });
+    }
+    return createBlock({
+      node: { text: "Loading..." },
+      parentUid: pageUid,
+      order: getChildrenLengthByPageUid(pageUid),
+    });
+  };
+
+  createHTMLObserver({
+    tag: "TEXTAREA",
+    className: "rm-block-input",
+    callback: (t: HTMLElement) =>
+      (textareaRef.current = t as HTMLTextAreaElement),
+  });
+
+  window.roamAlphaAPI.ui.commandPalette.addCommand({
+    label,
+    callback: () => {
+      const parentUid = getCurrentPageUid();
+      const blockUid = loadBlockUid(parentUid);
+      return callback(blockUid);
+    },
+  });
 };

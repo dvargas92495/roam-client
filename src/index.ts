@@ -29,6 +29,7 @@ export {
   getBlockUidAndTextIncludingText,
   getBlockUidByTextOnPage,
   getBlockUidsReferencingPage,
+  getChildrenLengthByPageUid,
   getCreateTimeByBlockUid,
   getDisplayNameByEmail,
   getEditTimeByBlockUid,
@@ -61,6 +62,7 @@ export {
   toRoamDateUid,
 } from "./date";
 export {
+  addBlockCommand,
   addButtonListener,
   createBlockObserver,
   createButtonObserver,

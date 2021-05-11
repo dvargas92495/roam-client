@@ -274,6 +274,11 @@ export const getBlockUidsReferencingPage = (title: string): string[] =>
     )
     .map((s) => s[0]);
 
+export const getChildrenLengthByPageUid = (uid: string): number =>
+  window.roamAlphaAPI.q(
+    `[:find ?c :where [?e :block/children ?c] [?e :block/uid "${uid}"]]`
+  ).length;
+
 export const getPageTitlesReferencingBlockUid = (uid: string): string[] =>
   window.roamAlphaAPI
     .q(
