@@ -279,6 +279,13 @@ export const getChildrenLengthByPageUid = (uid: string): number =>
     `[:find ?c :where [?e :block/children ?c] [?e :block/uid "${uid}"]]`
   ).length;
 
+export const getPageTitlesStartingWithPrefix = (prefix: string): string[] =>
+  window.roamAlphaAPI
+    .q(
+      `[:find ?title :where [?b :node/title ?title][(clojure.string/starts-with? ?title  "${prefix}")]]`
+    )
+    .map((r) => r[0] as string);
+
 export const getPageTitlesReferencingBlockUid = (uid: string): string[] =>
   window.roamAlphaAPI
     .q(

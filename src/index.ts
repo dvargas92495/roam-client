@@ -42,6 +42,7 @@ export {
   getPageTitleReferencesByPageTitle,
   getPageTitlesAndBlockUidsReferencingPage,
   getPageTitlesReferencingBlockUid,
+  getPageTitlesStartingWithPrefix,
   getPageUidByPageTitle,
   getPageViewType,
   getParentTextByBlockUid,
