@@ -16,7 +16,7 @@ import {
 import { RoamError, ViewType } from "./types";
 import { createBlock, updateActiveBlock, updateBlock } from "./writes";
 
-export const BLOCK_REF_REGEX = new RegExp("\\(\\(([wd-]{9})\\)\\)", "g");
+export const BLOCK_REF_REGEX = /\(\(([\w\d-]{9})\)\)/g;
 
 /**
  * TODO: Replace this paradigm with an tree node config instead.
