@@ -206,6 +206,11 @@ export const getDisplayNameByEmail = (email: string) =>
     `[:find ?name :where[?e :user/display-name ?name] [?e :user/email "${email}"]]`
   )?.[0]?.[0] as string) || "";
 
+export const getDisplayNameByUid = (uid: string): string =>
+  window.roamAlphaAPI.q(
+    `[:find ?s :where [?e :user/display-name ?s][?e :user/uid "${uid}"]]`
+  )?.[0]?.[0] || "";
+
 export const getCreateTimeByBlockUid = (uid: string): number =>
   window.roamAlphaAPI.q(
     `[:find ?t :where [?e :create/time ?t] [?e :block/uid "${uid}"]]`

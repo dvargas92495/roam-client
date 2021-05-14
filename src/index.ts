@@ -32,6 +32,7 @@ export {
   getChildrenLengthByPageUid,
   getCreateTimeByBlockUid,
   getDisplayNameByEmail,
+  getDisplayNameByUid,
   getEditTimeByBlockUid,
   getEditedUserEmailByBlockUid,
   getFirstChildUidByBlockUid,
@@ -261,17 +262,31 @@ export const pushBullets = (
   }
 };
 
-export const getCurrentUserEmail = () => {
+const getCurrentUser = (): string[] => {
   const globalAppState = JSON.parse(
     localStorage.getItem("globalAppState") || '["","",[]]'
   ) as (string | string[])[];
   const userIndex = globalAppState.findIndex((s) => s === "~:user");
   if (userIndex > 0) {
-    const userArray = globalAppState[userIndex + 1] as string[];
-    const emailIndex = userArray.findIndex((s) => s === "~:email");
-    if (emailIndex > 0) {
-      return userArray[emailIndex + 1];
-    }
+    return globalAppState[userIndex + 1] as string[];
+  }
+  return [];
+};
+
+export const getCurrentUserEmail = () => {
+  const userArray = getCurrentUser();
+  const emailIndex = userArray.findIndex((s) => s === "~:email");
+  if (emailIndex > 0) {
+    return userArray[emailIndex + 1];
+  }
+  return "";
+};
+
+export const getCurrentUserUid = () => {
+  const userArray = getCurrentUser();
+  const uidIndex = userArray.findIndex((s) => s === "~:uid");
+  if (uidIndex > 0) {
+    return userArray[uidIndex + 1];
   }
   return "";
 };
