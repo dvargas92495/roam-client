@@ -472,25 +472,6 @@ export const getBlockUidFromTarget = (target: HTMLElement): string => {
       return getNthChildUidByBlockUid({ blockUid, order });
     }
   }
-  const kanbanCard = target.closest(".kanban-card");
-  if (kanbanCard) {
-    const container = kanbanCard.closest(".kanban-column-container");
-    const column = kanbanCard.closest(".kanban-column");
-    if (container) {
-      const order = Array.from(container.children).findIndex(
-        (d) => d === column
-      );
-      const titleUid = getNthChildUidByBlockUid({ blockUid, order });
-      if (column) {
-        const nestedOrder =
-          Array.from(column.children).findIndex((d) => d === kanbanCard) - 1;
-        return getNthChildUidByBlockUid({
-          blockUid: titleUid,
-          order: nestedOrder,
-        });
-      }
-    }
-  }
   return blockUid;
 };
 
