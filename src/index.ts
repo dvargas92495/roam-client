@@ -67,6 +67,7 @@ export {
 export {
   addBlockCommand,
   addButtonListener,
+  BLOCK_REF_REGEX,
   createBlockObserver,
   createButtonObserver,
   createHashtagObserver,
