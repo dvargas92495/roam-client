@@ -122,6 +122,22 @@ const getTreeByBlockId = (blockId: number): TreeNode => {
 };
 
 export const getTreeByBlockUid = (blockUid: string): TreeNode => {
+  if (!blockUid) {
+    return {
+      text: "",
+      order: 0,
+      uid: "",
+      children: [],
+      heading: 0,
+      open: true,
+      viewType: "bullet",
+      editTime: new Date(0),
+      props: {
+        imageResize: {},
+        iframe: {},
+      },
+    };
+  }
   const blockId = window.roamAlphaAPI.q(
     `[:find ?e :where [?e :block/uid "${blockUid}"]]`
   )?.[0]?.[0] as number;
