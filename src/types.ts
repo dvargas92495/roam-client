@@ -24,6 +24,7 @@ export type PullBlock = {
   ":block/uid"?: string;
   ":block/heading"?: number;
   ":block/open"?: boolean;
+  ":block/text-align"?: TextAlignment;
   ":children/view-type"?: `:${ViewType}`;
   ":edit/time"?: number;
   ":block/props"?: any;
@@ -32,6 +33,8 @@ export type PullBlock = {
 export type RoamPullResult = RoamPull | null;
 
 export type ViewType = "document" | "bullet" | "numbered";
+
+export type TextAlignment = "left" | "center" | "right";
 
 export type RoamBlock = {
   attrs?: { source: string[] }[][];

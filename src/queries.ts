@@ -1,4 +1,4 @@
-import { RoamBlock, UserSettings, ViewType } from "./types";
+import { RoamBlock, TextAlignment, UserSettings, ViewType } from "./types";
 
 const normalizePageTitle = (title: string) =>
   title.replace(/\\/, "\\\\").replace(/"/g, '\\"');
@@ -64,6 +64,7 @@ export type TreeNode = {
   open: boolean;
   viewType: ViewType;
   editTime: Date;
+  textAlign: TextAlignment;
   props: {
     imageResize: {
       [link: string]: {
@@ -81,10 +82,7 @@ export type TreeNode = {
 };
 
 const getTreeByBlockId = (blockId: number): TreeNode => {
-  const block = window.roamAlphaAPI.pull(
-    "[:block/children, :block/string, :block/order, :block/uid, :block/heading, :block/open, :children/view-type, :block/props, :edit/time]",
-    blockId
-  );
+  const block = window.roamAlphaAPI.pull("[*]", blockId);
   const children = block[":block/children"] || [];
   const props = block[":block/props"] || {};
   return {
@@ -98,6 +96,7 @@ const getTreeByBlockId = (blockId: number): TreeNode => {
     open: block[":block/open"] || true,
     viewType: block[":children/view-type"]?.substring(1) as ViewType,
     editTime: new Date(block[":edit/time"] || 0),
+    textAlign: block[":block/text-align"] || "left",
     props: {
       imageResize: Object.fromEntries(
         Object.keys(props[":image-size"] || {}).map((p) => [
@@ -132,6 +131,7 @@ export const getTreeByBlockUid = (blockUid: string): TreeNode => {
       open: true,
       viewType: "bullet",
       editTime: new Date(0),
+      textAlign: "left",
       props: {
         imageResize: {},
         iframe: {},
