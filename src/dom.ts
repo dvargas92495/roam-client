@@ -267,6 +267,7 @@ export const createHashtagObserver = ({
   attribute: string;
 }): void =>
   createHTMLObserver({
+    useBody: true,
     tag: "SPAN",
     className: "rm-page-ref--tag",
     callback: (s: HTMLSpanElement) => {
