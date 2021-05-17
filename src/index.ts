@@ -28,6 +28,7 @@ export {
   getBlockUidsByPageTitle,
   getBlockUidAndTextIncludingText,
   getBlockUidByTextOnPage,
+  getBlockUidsReferencingBlock,
   getBlockUidsReferencingPage,
   getChildrenLengthByPageUid,
   getCreateTimeByBlockUid,
@@ -59,6 +60,7 @@ export {
   TreeNode,
 } from "./queries";
 export {
+  DAILY_NOTE_PAGE_REGEX,
   parseRoamDate,
   parseRoamDateUid,
   toRoamDate,
