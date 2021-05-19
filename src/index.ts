@@ -36,6 +36,7 @@ export {
   getDisplayNameByUid,
   getEditTimeByBlockUid,
   getEditedUserEmailByBlockUid,
+  getFirstChildTextByBlockUid,
   getFirstChildUidByBlockUid,
   getLinkedPageReferences,
   getLinkedPageTitlesUnderUid,

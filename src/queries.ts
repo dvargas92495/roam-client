@@ -355,6 +355,11 @@ export const getNthChildUidByBlockUid = ({
 export const getFirstChildUidByBlockUid = (blockUid: string): string =>
   getNthChildUidByBlockUid({ blockUid, order: 0 });
 
+export const getFirstChildTextByBlockUid = (blockUid: string): string =>
+  window.roamAlphaAPI.q(
+    `[:find ?s :where [?c :block/string ?s] [?c :block/order 0] [?p :block/children ?c] [?p :block/uid "${blockUid}"]]`
+  )?.[0]?.[0] as string;
+
 export const getShallowTreeByParentUid = (
   parentUid: string
 ): { uid: string; text: string }[] =>
