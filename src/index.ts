@@ -305,3 +305,5 @@ export const extractTag = (tag: string): string =>
     : tag.endsWith("::")
     ? tag.substring(0, tag.length - 2)
     : tag;
+
+export const toConfig = (id: string) => `roam/js/${id}`;
