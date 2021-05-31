@@ -316,3 +316,6 @@ export const localStorageSet = (key: string, val: string) =>
 
 export const localStorageGet = (key: string) =>
   localStorage.getItem(`roamjs:${key}:${getGraph()}`);
+
+export const localStorageRemove = (key: string) =>
+  localStorage.removeItem(`roamjs:${key}:${getGraph()}`);
