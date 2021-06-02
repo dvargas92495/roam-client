@@ -81,8 +81,8 @@ export const addRoamJSDependency = (extension: string) => {
     const script = document.createElement("script");
     script.src = `https://roamjs.com/${extension}/main.js`;
     script.async = true;
-    script.type = 'text/javascript';
-    document.querySelector('head')?.appendChild(script);
+    script.type = "text/javascript";
+    document.querySelector("head")?.appendChild(script);
   }
 };
 
