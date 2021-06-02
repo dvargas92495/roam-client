@@ -70,6 +70,7 @@ export {
 export {
   addBlockCommand,
   addButtonListener,
+  addRoamJSDependency,
   BLOCK_REF_REGEX,
   createBlockObserver,
   createButtonObserver,

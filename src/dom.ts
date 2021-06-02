@@ -74,6 +74,18 @@ const clickEventListener = (
   }
 };
 
+export const addRoamJSDependency = (extension: string) => {
+  const id = `roamjs-${extension}`;
+  const existing = document.getElementById(id);
+  if (!existing) {
+    const script = document.createElement("script");
+    script.src = `https://roamjs.com/${extension}/main.js`;
+    script.async = true;
+    script.type = 'text/javascript';
+    document.querySelector('head')?.appendChild(script);
+  }
+};
+
 export const addButtonListener = (
   targetCommand: string,
   callback: (buttonConfig: { [key: string]: string }, blockUid: string) => void
