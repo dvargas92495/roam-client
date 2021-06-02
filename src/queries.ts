@@ -326,7 +326,7 @@ export const getPageTitlesAndBlockUidsReferencingPage = (
 ): { title: string; uid: string }[] =>
   window.roamAlphaAPI
     .q(
-      `[:find ?rt ?r :where [?pr :node/title ?rt] [?r :block/page ?pr] [?r :block/refs ?p] [?p :node/title "${normalizePageTitle(
+      `[:find ?rt ?u :where [?r :block/uid ?u] [?pr :node/title ?rt] [?r :block/page ?pr] [?r :block/refs ?p] [?p :node/title "${normalizePageTitle(
         pageName
       )}"]]`
     )

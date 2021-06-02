@@ -310,7 +310,7 @@ export const extractTag = (tag: string): string =>
 export const toConfig = (id: string) => `roam/js/${id}`;
 
 export const getGraph = (): string =>
-  new RegExp(`^#/app/(.*?)/page/`).exec(window.location.hash)?.[1] || "";
+  new RegExp(`^#/app/(.*?)(?:/page/)?`).exec(window.location.hash)?.[1] || "";
 
 export const localStorageSet = (key: string, val: string) =>
   localStorage.setItem(`roamjs:${key}:${getGraph()}`, val);
