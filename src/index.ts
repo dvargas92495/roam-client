@@ -84,6 +84,8 @@ export {
   getActiveUids,
   getBlockUidFromTarget,
   getCurrentPageUid,
+  getDropUidOffset,
+  getPageTitleByHtmlElement,
   getRoamUrl,
   getRoamUrlByPage,
   getUids,

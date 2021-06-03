@@ -573,3 +573,53 @@ export const addBlockCommand = ({
     },
   });
 };
+
+export const getPageTitleByHtmlElement = (
+  e: Element
+): ChildNode | undefined => {
+  const container =
+    e.closest(".roam-log-page") ||
+    e.closest(".rm-sidebar-outline") ||
+    e.closest(".roam-article") ||
+    document;
+  const heading =
+    (container.getElementsByClassName(
+      "rm-title-display"
+    )[0] as HTMLHeadingElement) ||
+    (container.getElementsByClassName(
+      "rm-zoom-item-content"
+    )[0] as HTMLSpanElement);
+  return Array.from(heading.childNodes).find(
+    (n) => n.nodeName === "#text" || n.nodeName === "SPAN"
+  );
+};
+
+export const getDropUidOffset = (
+  d: HTMLDivElement
+): { parentUid: string; offset: number } => {
+  const separator = d.parentElement;
+  const childrenContainer = separator?.parentElement;
+  const children = Array.from(childrenContainer?.children || []);
+  const index = children.findIndex((c) => c === separator);
+  const offset = children.reduce(
+    (prev, cur, ind) =>
+      cur.classList.contains("roam-block-container") && ind < index
+        ? prev + 1
+        : prev,
+    0
+  );
+  const parentBlock = childrenContainer?.previousElementSibling?.getElementsByClassName(
+    "roam-block"
+  )?.[0] as HTMLDivElement;
+  const parentUid = parentBlock
+    ? getUids(parentBlock).blockUid
+    : childrenContainer
+    ? getPageUidByPageTitle(
+        getPageTitleByHtmlElement(childrenContainer)?.textContent || ""
+      )
+    : "";
+  return {
+    parentUid,
+    offset,
+  };
+};
