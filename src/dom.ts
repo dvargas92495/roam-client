@@ -341,6 +341,44 @@ export const createPageObserver = (
     }
   });
 
+export const createPageTitleObserver = ({
+  title,
+  callback,
+  log = false,
+}: {
+  title: string;
+  callback: (d: HTMLDivElement) => void;
+  log?: boolean;
+}): void => {
+  const listener = (e?: HashChangeEvent) => {
+    const d = document.getElementsByClassName(
+      "roam-article"
+    )[0] as HTMLDivElement;
+    if (d) {
+      const uid = getPageUidByPageTitle(title);
+      const attribute = `data-roamjs-${uid}`;
+      const url = e?.newURL || window.location.href;
+      if ((uid && url === getRoamUrl(uid)) || (log && url === getRoamUrl())) {
+        // React's rerender crushes the old article/heading
+        setTimeout(() => {
+          if (!d.hasAttribute(attribute)) {
+            d.setAttribute(attribute, "true");
+            callback(
+              document.getElementsByClassName(
+                "roam-article"
+              )[0] as HTMLDivElement
+            );
+          }
+        }, 1);
+      } else {
+        d.removeAttribute(attribute);
+      }
+    }
+  };
+  window.addEventListener("hashchange", listener);
+  listener();
+};
+
 const VIEW_CONTAINER = {
   bullet: "ul",
   document: "div",

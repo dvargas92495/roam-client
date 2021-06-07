@@ -80,6 +80,7 @@ export {
   createObserver,
   createOverlayObserver,
   createPageObserver,
+  createPageTitleObserver,
   genericError,
   getActiveUids,
   getBlockUidFromTarget,
