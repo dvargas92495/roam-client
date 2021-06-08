@@ -4,7 +4,7 @@ import { toRoamDate } from "./date";
 import {
   allBlockMapper,
   getBlockUidsByPageTitle,
-  getChildRefUidsByBlockUid,
+  getBlockUidsReferencingBlock,
   getChildrenLengthByPageUid,
   getNthChildUidByBlockUid,
   getOrderByBlockUid,
@@ -484,7 +484,7 @@ export const getReferenceBlockUid = (
     return "";
   }
   const { blockUid } = getUids(parent);
-  const childRefs = getChildRefUidsByBlockUid(blockUid);
+  const childRefs = getBlockUidsReferencingBlock(blockUid);
   const refs = childRefs.length ? childRefs : getDomRefs(blockUid);
   const index = Array.from(parent.getElementsByClassName(className)).findIndex(
     (el) => el === e || el.contains(e)

@@ -8,6 +8,7 @@ export const allBlockMapper = (t: TreeNode): TreeNode[] => [
   ...t.children.flatMap(allBlockMapper),
 ];
 
+// DEPRECATED - Remove for 2.0.0
 export const getChildRefUidsByBlockUid = (b: string): string[] =>
   window.roamAlphaAPI
     .q(
