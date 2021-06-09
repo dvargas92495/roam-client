@@ -53,6 +53,32 @@ export type RoamError = {
   "status-code": number;
 };
 
+export type TreeNode = {
+  text: string;
+  order: number;
+  children: TreeNode[];
+  uid: string;
+  heading: number;
+  open: boolean;
+  viewType: ViewType;
+  editTime: Date;
+  textAlign: TextAlignment;
+  props: {
+    imageResize: {
+      [link: string]: {
+        height: number;
+        width: number;
+      };
+    };
+    iframe: {
+      [link: string]: {
+        height: number;
+        width: number;
+      };
+    };
+  };
+};
+
 export type TextNode = {
   text: string;
   children: TextNode[];

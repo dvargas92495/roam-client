@@ -1,4 +1,4 @@
-import { RoamBlock, TextAlignment, UserSettings, ViewType } from "./types";
+import { RoamBlock, TextAlignment, TreeNode, UserSettings, ViewType } from "./types";
 
 const normalizePageTitle = (title: string) =>
   title.replace(/\\/, "\\\\").replace(/"/g, '\\"');
@@ -16,6 +16,7 @@ export const getChildRefUidsByBlockUid = (b: string): string[] =>
     )
     .map((r) => r[0] as string);
 
+// DEPRECATED - Remove for 2.0.0
 export const getLinkedPageReferences = (t: string): RoamBlock[] => {
   const findParentBlock: (b: RoamBlock) => RoamBlock = (b: RoamBlock) =>
     b.title
@@ -55,32 +56,6 @@ export const getParentUidByBlockUid = (blockUid: string): string =>
   window.roamAlphaAPI.q(
     `[:find ?u :where [?p :block/uid ?u] [?p :block/children ?e] [?e :block/uid "${blockUid}"]]`
   )?.[0]?.[0] as string;
-
-export type TreeNode = {
-  text: string;
-  order: number;
-  children: TreeNode[];
-  uid: string;
-  heading: number;
-  open: boolean;
-  viewType: ViewType;
-  editTime: Date;
-  textAlign: TextAlignment;
-  props: {
-    imageResize: {
-      [link: string]: {
-        height: number;
-        width: number;
-      };
-    };
-    iframe: {
-      [link: string]: {
-        height: number;
-        width: number;
-      };
-    };
-  };
-};
 
 const getTreeByBlockId = (blockId: number): TreeNode => {
   const block = window.roamAlphaAPI.pull("[*]", blockId);
@@ -163,6 +138,7 @@ export const getTreeByPageName = (name: string): TreeNode[] => {
     .map((c) => fixViewType({ c, v: viewType }));
 };
 
+// DEPRECATED - Remove for 2.0.0
 export const fixViewType = ({
   c,
   v,

@@ -11,9 +11,8 @@ import {
   getPageUidByPageTitle,
   getParentUidByBlockUid,
   getTextByBlockUid,
-  TreeNode,
 } from "./queries";
-import { RoamError, ViewType } from "./types";
+import { RoamError, TreeNode, ViewType } from "./types";
 import { createBlock, updateActiveBlock, updateBlock } from "./writes";
 
 export const BLOCK_REF_REGEX = /\(\(([\w\d-]{9})\)\)/g;
@@ -495,7 +494,7 @@ export const getReferenceBlockUid = (
 export const getBlockUidFromTarget = (target: HTMLElement): string => {
   const ref = target.closest(".rm-block-ref") as HTMLSpanElement;
   if (ref) {
-    return getReferenceBlockUid(ref, "rm-block-ref");
+    return ref.getAttribute("data-uid") || "";
   }
 
   const customView = target.closest(".roamjs-block-view") as HTMLDivElement;

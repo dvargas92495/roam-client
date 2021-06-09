@@ -58,7 +58,6 @@ export {
   getTreeByBlockUid,
   getTreeByPageName,
   fixViewType,
-  TreeNode,
 } from "./queries";
 export {
   DAILY_NOTE_PAGE_REGEX,
@@ -98,7 +97,7 @@ export {
 } from "./dom";
 export { watchOnce } from "./events";
 export { RoamBlock, ViewType, getOrderByBlockUid, TextNode, PullBlock };
-export { RoamNode, InputTextNode } from "./types";
+export { RoamNode, InputTextNode, TreeNode } from "./types";
 export { parseInline } from "roam-marked";
 
 declare global {
