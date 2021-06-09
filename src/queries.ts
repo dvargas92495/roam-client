@@ -1,4 +1,10 @@
-import { RoamBlock, TextAlignment, TreeNode, UserSettings, ViewType } from "./types";
+import {
+  RoamBlock,
+  TextAlignment,
+  TreeNode,
+  UserSettings,
+  ViewType,
+} from "./types";
 
 const normalizePageTitle = (title: string) =>
   title.replace(/\\/, "\\\\").replace(/"/g, '\\"');
