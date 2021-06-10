@@ -70,6 +70,7 @@ export {
   addBlockCommand,
   addButtonListener,
   addRoamJSDependency,
+  addStyle,
   BLOCK_REF_REGEX,
   createBlockObserver,
   createButtonObserver,
@@ -97,7 +98,7 @@ export {
 } from "./dom";
 export { watchOnce } from "./events";
 export { RoamBlock, ViewType, getOrderByBlockUid, TextNode, PullBlock };
-export { RoamNode, InputTextNode, TreeNode } from "./types";
+export { RoamNode, InputTextNode, TreeNode, UserSettings } from "./types";
 export { parseInline } from "roam-marked";
 
 declare global {

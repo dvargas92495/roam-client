@@ -17,6 +17,13 @@ import { createBlock, updateActiveBlock, updateBlock } from "./writes";
 
 export const BLOCK_REF_REGEX = /\(\(([\w\d-]{9})\)\)/g;
 
+export const addStyle = (content: string): HTMLStyleElement => {
+  const css = document.createElement("style");
+  css.textContent = content;
+  document.getElementsByTagName("head")[0].appendChild(css);
+  return css;
+};
+
 /**
  * TODO: Replace this paradigm with an tree node config instead.
  */
