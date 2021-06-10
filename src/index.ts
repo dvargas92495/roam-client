@@ -69,6 +69,7 @@ export {
 export {
   addBlockCommand,
   addButtonListener,
+  addOldRoamJSDependency,
   addRoamJSDependency,
   addStyle,
   BLOCK_REF_REGEX,

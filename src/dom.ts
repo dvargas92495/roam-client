@@ -80,16 +80,21 @@ const clickEventListener = (
   }
 };
 
-export const addRoamJSDependency = (extension: string) => {
-  const id = `roamjs-${extension}`;
+export const addOldRoamJSDependency = (extension: string) => {
+  const id = `roamjs-${extension.replace(/\/main$/, "")}`;
   const existing = document.getElementById(id);
   if (!existing) {
     const script = document.createElement("script");
-    script.src = `https://roamjs.com/${extension}/main.js`;
+    script.src = `https://roamjs.com/${extension}.js`;
     script.async = true;
     script.type = "text/javascript";
+    script.id = id;
     document.querySelector("head")?.appendChild(script);
   }
+};
+
+export const addRoamJSDependency = (extension: string) => {
+  addOldRoamJSDependency(`${extension}/main`);
 };
 
 export const addButtonListener = (
