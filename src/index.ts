@@ -1,3 +1,4 @@
+import axios from "axios";
 import { getOrderByBlockUid, getPageUidByPageTitle } from "./queries";
 import {
   RoamBlock,
@@ -185,6 +186,28 @@ declare global {
     roamDatomicAlphaAPI?: (
       params: ClientParams
     ) => Promise<RoamBlock & { success?: boolean }>;
+    // roamjs namespace should only be used for methods that must be accessed across extension scripts
+    roamjs?: {
+      loaded: Set<string>;
+      extension: {
+        [id: string]: {
+          [method: string]: (args?: unknown) => void;
+        };
+      };
+    };
+    roam42?: {
+      smartBlocks?: {
+        customCommands: {
+          key: string; // `<% ${string} %> (SmartBlock function)`, sad - https://github.com/microsoft/TypeScript/issues/13969
+          icon: "gear";
+          value: string;
+          processor: (match: string) => Promise<string | void>;
+        }[];
+        activeWorkflow: {
+          outputAdditionalBlock: (text: string) => void;
+        };
+      };
+    };
   }
 }
 
@@ -326,3 +349,55 @@ export const localStorageGet = (key: string) =>
 
 export const localStorageRemove = (key: string) =>
   localStorage.removeItem(`roamjs:${key}:${getGraph()}`);
+
+export const runExtension = async (
+  extensionId: string,
+  run: () => void
+): Promise<void> => {
+  if (!window.roamjs) {
+    window.roamjs = {
+      loaded: new Set(),
+      extension: {},
+    };
+  }
+  if (window.roamjs.loaded.has(extensionId)) {
+    return;
+  }
+  window.roamjs.loaded.add(extensionId);
+
+  axios.post(`https://api.roamjs.com/mixpanel`, {
+    eventName: "Load Extension",
+    properties: { extensionId },
+  });
+  run();
+};
+
+export const createCustomSmartBlockCommand = ({
+  command,
+  processor,
+}: {
+  command: string;
+  processor: (afterColon?: string) => Promise<string>;
+}): void => {
+  const inputListener = () => {
+    if (window.roam42 && window.roam42.smartBlocks) {
+      const value = `<%${command.toUpperCase()}(:.*)?%>`;
+      window.roam42.smartBlocks.customCommands.push({
+        key: `<% ${command.toUpperCase()} %> (SmartBlock function)`,
+        icon: "gear",
+        processor: (match: string) => {
+          const colonPrefix = `<%${command.toUpperCase()}:`;
+          if (match.startsWith(colonPrefix)) {
+            const afterColon = match.replace("<%${}:", "").replace("%>", "");
+            return processor(afterColon);
+          } else {
+            return processor();
+          }
+        },
+        value,
+      });
+      document.removeEventListener("input", inputListener);
+    }
+  };
+  document.addEventListener("input", inputListener);
+};
