@@ -1,4 +1,8 @@
-import { DAILY_NOTE_PAGE_TITLE_REGEX, parseRoamDate, toRoamDateUid } from "./date";
+import {
+  DAILY_NOTE_PAGE_TITLE_REGEX,
+  parseRoamDate,
+  toRoamDateUid,
+} from "./date";
 import { getActiveUids, getUidsFromId } from "./dom";
 import { InputTextNode } from "./types";
 
