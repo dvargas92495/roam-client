@@ -195,6 +195,8 @@ declare global {
           [method: string]: (args?: unknown) => void;
         };
       };
+      // DEPRECATED remove in 2.0
+      dynamicElements: Set<HTMLElement>;
     };
     roam42?: {
       smartBlocks?: {
@@ -359,6 +361,7 @@ export const runExtension = async (
     window.roamjs = {
       loaded: new Set(),
       extension: {},
+      dynamicElements: new Set(),
     };
   }
   if (window.roamjs.loaded.has(extensionId)) {
