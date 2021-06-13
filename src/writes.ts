@@ -1,6 +1,6 @@
-import { DAILY_NOTE_PAGE_REGEX, parseRoamDate, toRoamDateUid } from "./date";
+import { DAILY_NOTE_PAGE_TITLE_REGEX, parseRoamDate, toRoamDateUid } from "./date";
 import { getActiveUids, getUidsFromId } from "./dom";
-import { InputTextNode, TextNode } from "./types";
+import { InputTextNode } from "./types";
 
 export const updateActiveBlock = (text: string) =>
   window.roamAlphaAPI.updateBlock({
@@ -53,7 +53,7 @@ export const createPage = ({
   title: string;
   tree?: InputTextNode[];
 }): string => {
-  const uid = DAILY_NOTE_PAGE_REGEX.test(title)
+  const uid = DAILY_NOTE_PAGE_TITLE_REGEX.test(title)
     ? toRoamDateUid(parseRoamDate(title))
     : window.roamAlphaAPI.util.generateUID();
   window.roamAlphaAPI.createPage({ page: { title, uid } });
