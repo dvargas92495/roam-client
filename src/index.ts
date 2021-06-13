@@ -402,3 +402,6 @@ export const createCustomSmartBlockCommand = ({
   };
   document.addEventListener("input", inputListener);
 };
+
+export const createTagRegex = (tag: string) =>
+  new RegExp(`#?\\[\\[${tag}\\]\\]|#${tag}`);
