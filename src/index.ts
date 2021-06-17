@@ -183,7 +183,10 @@ declare global {
           }) => void;
           removeCommand: (action: { label: string }) => void;
         };
-        getFocusedBlock: () => null | { "window-id": string; "block-uid": string };
+        getFocusedBlock: () => null | {
+          "window-id": string;
+          "block-uid": string;
+        };
       };
     };
     roamDatomicAlphaAPI?: (
