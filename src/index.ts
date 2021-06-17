@@ -47,6 +47,7 @@ export {
   getPageTitleByPageUid,
   getPageTitleReferencesByPageTitle,
   getPageTitlesAndBlockUidsReferencingPage,
+  getPageTitlesAndUidsDirectlyReferencingPage,
   getPageTitlesReferencingBlockUid,
   getPageTitlesStartingWithPrefix,
   getPageUidByPageTitle,
@@ -182,7 +183,7 @@ declare global {
           }) => void;
           removeCommand: (action: { label: string }) => void;
         };
-        getFocusedBlock: () => { "window-id": string; "block-uid": string };
+        getFocusedBlock: () => null | { "window-id": string; "block-uid": string };
       };
     };
     roamDatomicAlphaAPI?: (
