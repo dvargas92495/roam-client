@@ -19,6 +19,7 @@ export {
   createBlock,
   updateBlock,
   deleteBlock,
+  openBlockInSidebar,
 } from "./writes";
 export { default as RestClient } from "./rest-client";
 export { default as WindowClient } from "./window-client";
