@@ -28,7 +28,7 @@ export {
   getAllBlockUidsAndTexts,
   getAllPageNames,
   getBlockUidsByPageTitle,
-  getBlockUidsWithParentUid as getBlockUidsWithParent,
+  getBlockUidsWithParentUid,
   getBlockUidAndTextIncludingText,
   getBlockUidsAndTextsReferencingPage,
   getBlockUidByTextOnPage,
