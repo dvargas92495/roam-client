@@ -255,11 +255,11 @@ export const createHTMLObserver = ({
 };
 
 export const createButtonObserver = ({
-  shortcut,
   attribute,
   render,
+  shortcut = attribute,
 }: {
-  shortcut: string;
+  shortcut?: string;
   attribute: string;
   render: (b: HTMLButtonElement) => void;
 }): void =>

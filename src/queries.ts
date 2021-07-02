@@ -381,3 +381,10 @@ export const getLinkedPageTitlesUnderUid = (uid: string): string[] =>
       `[:find ?t :where [?r :node/title ?t] [?c :block/refs ?r] [?c :block/parents ?b] [?b :block/uid "${uid}"]]`
     )
     .map((r) => r[0] as string);
+
+export const getBlockUidsWithParentUid = (uid: string): string[] =>
+  window.roamAlphaAPI
+    .q(
+      `[:find ?u :where [?c :block/uid ?u] [?c :block/parents ?b] [?b :block/uid "${uid}"]]`
+    )
+    .map((r) => r[0] as string);
