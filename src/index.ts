@@ -123,6 +123,9 @@ export {
 } from "./types";
 export { parseInline, RoamContext as RoamMarkedContext } from "roam-marked";
 
+export * from './raw-types'
+export * from './l2'
+
 declare global {
   interface Window {
     roamAlphaAPI: {
