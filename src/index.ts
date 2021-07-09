@@ -189,6 +189,9 @@ declare global {
           "window-id": string;
           "block-uid": string;
         };
+        components: {
+          renderBlock: (args: { uid: string; el: HTMLElement }) => null;
+        };
       };
     };
     roamDatomicAlphaAPI?: (
