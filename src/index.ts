@@ -10,6 +10,7 @@ import {
   SidebarWindow,
   SidebarAction,
   PullBlock,
+  InputTextNode,
 } from "./types";
 export {
   updateActiveBlock,
@@ -386,6 +387,7 @@ export const runExtension = async (
   run();
 };
 
+// @DEPRECATED - PART OF SMARTBLOCKS V1, USE BELOW
 export const createCustomSmartBlockCommand = ({
   command,
   processor,
@@ -414,6 +416,24 @@ export const createCustomSmartBlockCommand = ({
     }
   };
   document.addEventListener("input", inputListener);
+};
+
+type CommandOutput = string | string[] | InputTextNode[];
+export const registerSmartBlocksCommand = ({
+  text,
+  handler,
+}: {
+  text: string;
+  handler: (...args: string[]) => CommandOutput | Promise<CommandOutput>;
+}) => {
+  const register = () =>
+    window.roamjs?.extension?.smartblocks?.registerCommand
+      ? window.roamjs.extension.smartblocks.registerCommand({
+          text,
+          handler,
+        })
+      : setTimeout(register, 1000);
+  register();
 };
 
 export const createTagRegex = (tag: string) =>
