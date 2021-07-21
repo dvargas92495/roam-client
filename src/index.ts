@@ -339,6 +339,15 @@ export const getCurrentUserUid = () => {
   return "";
 };
 
+export const getCurrentUserDisplayName = () => {
+  const userArray = getCurrentUser();
+  const uidIndex = userArray.findIndex((s) => s === "~:display-name");
+  if (uidIndex > 0) {
+    return userArray[uidIndex + 1] || "";
+  }
+  return "";
+};
+
 export const extractTag = (tag: string): string =>
   tag.startsWith("#[[") && tag.endsWith("]]")
     ? tag.substring(3, tag.length - 2)
