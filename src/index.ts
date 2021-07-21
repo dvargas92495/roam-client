@@ -58,6 +58,7 @@ export {
   getParentTextByBlockUid,
   getParentTextByBlockUidAndTag,
   getParentUidByBlockUid,
+  getParentUidsOfBlockUid,
   getSettingsByEmail,
   getShallowTreeByParentUid,
   getTextByBlockUid,

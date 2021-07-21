@@ -388,3 +388,10 @@ export const getBlockUidsWithParentUid = (uid: string): string[] =>
       `[:find ?u :where [?c :block/uid ?u] [?c :block/parents ?b] [?b :block/uid "${uid}"]]`
     )
     .map((r) => r[0] as string);
+
+export const getParentUidsOfBlockUid = (uid: string): string[] =>
+  window.roamAlphaAPI
+    .q(
+      `[:find ?u :where [?p :block/uid ?u] [?b :block/parents ?p] [?b :block/uid "${uid}"]]`
+    )
+    .map((r) => r[0] as string);
