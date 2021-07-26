@@ -68,6 +68,7 @@ export {
 } from "./queries";
 export {
   DAILY_NOTE_PAGE_REGEX,
+  DAILY_NOTE_PAGE_TITLE_REGEX,
   parseRoamDate,
   parseRoamDateUid,
   toRoamDate,
