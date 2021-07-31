@@ -432,6 +432,10 @@ export const parseRoamBlocksToHtml = ({
                 .join("")}</tr>`
           )
           .join("")}</tbody></table>`;
+      } else if (/roam\/render/i.test(s)) {
+        skipChildren = true;
+        const acCode = ac || "";
+        return `<div class="roam-render">${acCode}</div>`;
       }
       return false;
     };
