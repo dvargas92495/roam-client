@@ -31,11 +31,7 @@ export const clearBlockByUid = (uid: string) =>
   });
 
 export const createBlock = ({
-  node: {
-    text,
-    children = [],
-    uid = window.roamAlphaAPI.util.generateUID(),
-  },
+  node: { text, children = [], uid = window.roamAlphaAPI.util.generateUID() },
   parentUid,
   order = 0,
 }: {
