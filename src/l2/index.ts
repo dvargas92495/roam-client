@@ -64,8 +64,8 @@ export abstract class RoamEntity {
         return children?.sort((a, b) => a[":block/order"]! - b[":block/order"]!)
     }
 
-    get children(): RoamBlock[] | undefined {
-        return this.rawChildren?.map(it => new RoamBlock(it))
+    get children(): Block[] | undefined {
+        return this.rawChildren?.map(it => new Block(it))
     }
 
     get uid(): string {
@@ -88,14 +88,14 @@ export abstract class RoamEntity {
     }
 }
 
-export class RoamPage extends RoamEntity {
+export class Page extends RoamEntity {
     constructor(readonly rawPage: RawRoamPage) {
         super(rawPage)
     }
 
     static fromName(name: string) {
         const rawPage = Roam.queryFirst("[:find ?e :in $ ?a :where [?e :node/title ?a]]", name)
-        return rawPage ? new RoamPage(rawPage) : null
+        return rawPage ? new Page(rawPage) : null
     }
 
     get text(): string {
@@ -103,7 +103,7 @@ export class RoamPage extends RoamEntity {
     }
 }
 
-export class RoamBlock extends RoamEntity {
+export class Block extends RoamEntity {
     constructor(readonly rawBlock: RawRoamBlock) {
         super(rawBlock)
     }
@@ -111,7 +111,7 @@ export class RoamBlock extends RoamEntity {
     static fromUid(uid: string) {
         //todo support things wrapped in parens
         const rawBlock = Roam.queryFirst('[:find ?e :in $ ?a :where [?e :block/uid ?a]]', uid)
-        return rawBlock ? new RoamBlock(rawBlock as RawRoamBlock) : null
+        return rawBlock ? new Block(rawBlock as RawRoamBlock) : null
     }
 
     get text(): string {
