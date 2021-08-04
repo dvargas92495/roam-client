@@ -42,14 +42,22 @@ export abstract class RoamEntity {
              * block.content or block["content"] would give you a child by content
              *
              * Todo potentially allow accessing the roam attributes without having to specify `::` at the end
+             * Todo can i support regex selectors? - maybe. would require custom parsing though, everythign I get is a string =\
              */
             get: (origin, property: keyof RoamEntity | string) => {
 
                 const idx = parseInt(property)
                 if (Number.isInteger(idx)) return this.children?.[idx]
 
-                return property in origin ?
-                    origin[property as keyof RoamEntity] : this.child(property);
+                if (property in origin) {
+                    return origin[property as keyof RoamEntity]
+                } else {
+                    //todo check for regex stuff explicitly
+                    return this.child(property) ||
+                        this.childrenMatching(new RegExp(`^${property}::`))?.[0] ||
+                        this.childrenMatching(new RegExp(property))
+
+                }
             }
         })
     }
@@ -78,6 +86,10 @@ export abstract class RoamEntity {
 
     child(content: string) {
         return this.children?.find(it => it.text === content)
+    }
+
+    childrenMatching(regex: RegExp) {
+        return this.children?.filter(it => regex.test(it.text))
     }
 
     get linkedEntities(): (RawRoamPage | RawRoamBlock | null)[] | undefined  {
