@@ -13,6 +13,7 @@ import {
 } from "./queries";
 import { RoamError, TreeNode, ViewType } from "./types";
 import { createBlock, updateActiveBlock, updateBlock } from "./writes";
+import {isCharNumber} from "./utils"
 
 export const BLOCK_REF_REGEX = /\(\(([\w\d-]{9,10})\)\)/;
 const aliasRefRegex = new RegExp(
@@ -733,3 +734,13 @@ export const getDropUidOffset = (
     offset,
   };
 };
+
+export const getHtmlElementFromUid = (uid: string) => {
+  // Need to escape things if the first character is a digit 🙈
+  // https://stackoverflow.com/questions/20306204/using-queryselector-with-ids-that-are-numbers
+  let id = uid
+  if (isCharNumber(uid[0])) {
+    id = `\\3${uid[0]} ` + uid.slice(1)
+  }
+  return document.querySelector(`[id$=${id}]`)
+}
