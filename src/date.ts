@@ -17,3 +17,7 @@ export const DAILY_NOTE_PAGE_REGEX = /(January|February|March|April|May|June|Jul
 export const DAILY_NOTE_PAGE_TITLE_REGEX = new RegExp(
   `^${DAILY_NOTE_PAGE_REGEX.source}$`
 );
+
+export const RoamDate = {
+    parse: parseRoamDate
+}

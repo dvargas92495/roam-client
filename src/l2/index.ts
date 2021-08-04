@@ -117,4 +117,11 @@ export class Block extends RoamEntity {
     get text(): string {
         return this.rawBlock[":block/string"]
     }
+
+    /**
+     * Attribute value is weird - can be any of the children or the same-line value
+     */
+    get attributeValue(): string|undefined {
+        return this.text.split("::")[1]?.trim()
+    }
 }

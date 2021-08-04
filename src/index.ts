@@ -125,6 +125,8 @@ export { parseInline, RoamContext as RoamMarkedContext } from "roam-marked";
 
 export * from './raw-types'
 export * from './l2'
+export * as parsing from './parsing'
+export {RoamDate as Date} from './date'
 
 declare global {
   interface Window {
