@@ -87,6 +87,7 @@ export type TextNode = {
 export type InputTextNode = {
   text: string;
   children?: InputTextNode[];
+  uid?: string;
 };
 
 type PlusType = [number, string];
