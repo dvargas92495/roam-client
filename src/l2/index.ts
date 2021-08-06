@@ -56,9 +56,8 @@ export abstract class RoamEntity {
                     return this.child(property) ||
                         this.childrenMatching(new RegExp(`^${property}::`))?.[0] ||
                         this.childrenMatching(new RegExp(property))
-
                 }
-            }
+            },
         })
     }
 
@@ -89,14 +88,15 @@ export abstract class RoamEntity {
     }
 
     childrenMatching(regex: RegExp) {
-        return this.children?.filter(it => regex.test(it.text))
+        const result = this.children?.filter(it => regex.test(it.text))
+        return result?.length ? result : null
     }
 
-    get linkedEntities(): (RawRoamPage | RawRoamBlock | null)[] | undefined  {
+    get linkedEntities(): (RawRoamPage | RawRoamBlock | null)[] | undefined {
         // todo this has a mix of entities, it's not clear what this should return 🤔
         // either figure out if it's a page or block and create & return a mixed array
         // or have to 2 separate methods - one for block and one for pages
-        return this.rawEntity[":block/refs"]?.map(it => Roam.pull(it[":db/id"]) )
+        return this.rawEntity[":block/refs"]?.map(it => Roam.pull(it[":db/id"]))
     }
 }
 
@@ -133,7 +133,7 @@ export class Block extends RoamEntity {
     /**
      * Attribute value is weird - can be any of the children or the same-line value
      */
-    get attributeValue(): string|undefined {
+    get attributeValue(): string | undefined {
         return this.text.split("::")[1]?.trim()
     }
 }
