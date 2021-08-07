@@ -113,6 +113,15 @@ export class Page extends RoamEntity {
     get text(): string {
         return this.rawPage[":node/title"]
     }
+
+    set text(value: string) {
+        window.roamAlphaAPI.updatePage({
+            page: {
+                uid: this.uid,
+                title: value
+            }
+        })
+    }
 }
 
 export class Block extends RoamEntity {
@@ -128,6 +137,15 @@ export class Block extends RoamEntity {
 
     get text(): string {
         return this.rawBlock[":block/string"]
+    }
+
+    set text(value: string) {
+        window.roamAlphaAPI.updateBlock({
+            block: {
+                uid: this.uid,
+                string: value
+            }
+        })
     }
 
     /**
