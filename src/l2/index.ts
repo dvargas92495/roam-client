@@ -101,8 +101,12 @@ export abstract class RoamEntity {
 }
 
 export class Page extends RoamEntity {
-    constructor(readonly rawPage: RawRoamPage) {
+    constructor(rawPage: RawRoamPage) {
         super(rawPage)
+    }
+
+    get rawPage(): RawRoamPage {
+        return this.rawEntity as RawRoamPage
     }
 
     static fromName(name: string) {
@@ -118,21 +122,25 @@ export class Page extends RoamEntity {
         window.roamAlphaAPI.updatePage({
             page: {
                 uid: this.uid,
-                title: value
-            }
+                title: value,
+            },
         })
     }
 }
 
 export class Block extends RoamEntity {
-    constructor(readonly rawBlock: RawRoamBlock) {
+    constructor(rawBlock: RawRoamBlock) {
         super(rawBlock)
+    }
+
+    get rawBlock(): RawRoamBlock {
+        return this.rawEntity as RawRoamBlock
     }
 
     static fromUid(uid: string) {
         //todo support things wrapped in parens
         const rawBlock = Roam.queryFirst('[:find ?e :in $ ?a :where [?e :block/uid ?a]]', uid)
-        return rawBlock ? new Block(rawBlock as RawRoamBlock) : null
+        return rawBlock ? new Block(rawBlock as RawRoamBlock) : undefined
     }
 
     get text(): string {
@@ -143,8 +151,8 @@ export class Block extends RoamEntity {
         window.roamAlphaAPI.updateBlock({
             block: {
                 uid: this.uid,
-                string: value
-            }
+                string: value,
+            },
         })
     }
 
