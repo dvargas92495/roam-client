@@ -430,12 +430,13 @@ export const createCustomSmartBlockCommand = ({
 };
 
 type CommandOutput = string | string[] | InputTextNode[];
+type CommandHandler = (...args: string[]) => CommandOutput | Promise<CommandOutput>;
 export const registerSmartBlocksCommand = ({
   text: inputText,
   handler,
 }: {
   text: string;
-  handler: (...args: string[]) => CommandOutput | Promise<CommandOutput>;
+  handler: (u: unknown) => CommandHandler;
 }) => {
   const text = inputText.toUpperCase();
   const register = (retry: number): void | number | false =>
