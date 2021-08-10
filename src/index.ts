@@ -430,7 +430,9 @@ export const createCustomSmartBlockCommand = ({
 };
 
 type CommandOutput = string | string[] | InputTextNode[];
-type CommandHandler = (...args: string[]) => CommandOutput | Promise<CommandOutput>;
+type CommandHandler = (
+  ...args: string[]
+) => CommandOutput | Promise<CommandOutput>;
 export const registerSmartBlocksCommand = ({
   text: inputText,
   handler,
