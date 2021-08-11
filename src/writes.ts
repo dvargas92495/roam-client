@@ -37,7 +37,7 @@ export const createBlock = ({
     uid = window.roamAlphaAPI.util.generateUID(),
     heading,
     viewType,
-    alignment,
+    textAlign,
   },
   parentUid,
   order = 0,
@@ -52,7 +52,7 @@ export const createBlock = ({
       uid,
       string: text,
       heading,
-      alignment,
+      alignment:textAlign,
       "children-view-type": viewType,
     },
   });
@@ -81,7 +81,7 @@ export const updateBlock = ({
   text,
   uid,
   heading,
-  alignment,
+  textAlign,
   viewType,
 }: { uid: string } & Omit<InputTextNode, "children">) => {
   window.roamAlphaAPI.updateBlock({
@@ -89,7 +89,7 @@ export const updateBlock = ({
       string: text,
       uid,
       heading,
-      alignment,
+      alignment: textAlign,
       "children-view-type": viewType,
     },
   });

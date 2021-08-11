@@ -88,8 +88,8 @@ export type InputTextNode = {
   text: string;
   children?: InputTextNode[];
   uid?: string;
-  heading?: 0 | 1 | 2 | 3;
-  alignment?: TextAlignment;
+  heading?: number;
+  textAlign?: TextAlignment;
   viewType?: ViewType;
 };
 
@@ -134,7 +134,7 @@ type ActionParams = {
     string?: string;
     uid?: string;
     open?: boolean;
-    heading?: 0 | 1 | 2 | 3;
+    heading?: number;
     alignment?: TextAlignment;
     "children-view-type"?: ViewType;
   };
