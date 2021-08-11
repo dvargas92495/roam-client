@@ -31,7 +31,14 @@ export const clearBlockByUid = (uid: string) =>
   });
 
 export const createBlock = ({
-  node: { text, children = [], uid = window.roamAlphaAPI.util.generateUID() },
+  node: {
+    text,
+    children = [],
+    uid = window.roamAlphaAPI.util.generateUID(),
+    heading,
+    viewType,
+    alignment,
+  },
   parentUid,
   order = 0,
 }: {
@@ -41,7 +48,13 @@ export const createBlock = ({
 }) => {
   window.roamAlphaAPI.createBlock({
     location: { "parent-uid": parentUid, order },
-    block: { uid, string: text },
+    block: {
+      uid,
+      string: text,
+      heading,
+      alignment,
+      "children-view-type": viewType,
+    },
   });
   children.forEach((n, o) =>
     createBlock({ node: n, parentUid: uid, order: o })
@@ -64,8 +77,22 @@ export const createPage = ({
   return uid;
 };
 
-export const updateBlock = ({ text, uid }: { text: string; uid: string }) => {
-  window.roamAlphaAPI.updateBlock({ block: { string: text, uid } });
+export const updateBlock = ({
+  text,
+  uid,
+  heading,
+  alignment,
+  viewType,
+}: { uid: string } & Omit<InputTextNode, "children">) => {
+  window.roamAlphaAPI.updateBlock({
+    block: {
+      string: text,
+      uid,
+      heading,
+      alignment,
+      "children-view-type": viewType,
+    },
+  });
   return uid;
 };
 
