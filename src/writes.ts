@@ -52,7 +52,7 @@ export const createBlock = ({
       uid,
       string: text,
       heading,
-      alignment: textAlign,
+      'text-align': textAlign,
       "children-view-type": viewType,
     },
   });
@@ -89,7 +89,7 @@ export const updateBlock = ({
       string: text,
       uid,
       heading,
-      alignment: textAlign,
+      'text-align': textAlign,
       "children-view-type": viewType,
     },
   });

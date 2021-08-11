@@ -135,7 +135,7 @@ type ActionParams = {
     uid?: string;
     open?: boolean;
     heading?: number;
-    alignment?: TextAlignment;
+    'text-align'?: TextAlignment;
     "children-view-type"?: ViewType;
   };
   page?: {
