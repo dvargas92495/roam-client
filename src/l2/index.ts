@@ -63,16 +63,16 @@ export abstract class RoamEntity {
 
     abstract get text(): string
 
-    get rawChildren(): RawRoamBlock[] | undefined {
+    get rawChildren(): RawRoamBlock[] {
         const children = this.rawEntity[":block/children"]?.map(it => Roam.pull(it[":db/id"])) as RawRoamBlock[]
         /**
          * Sorted because the order of the children returned is ~arbitrary
          */
-        return children?.sort((a, b) => a[":block/order"]! - b[":block/order"]!)
+        return children?.sort((a, b) => a[":block/order"]! - b[":block/order"]!) || []
     }
 
-    get children(): Block[] | undefined {
-        return this.rawChildren?.map(it => new Block(it))
+    get children(): Block[] {
+        return this.rawChildren.map(it => new Block(it))
     }
 
     get uid(): string {
