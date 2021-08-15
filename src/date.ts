@@ -19,5 +19,6 @@ export const DAILY_NOTE_PAGE_TITLE_REGEX = new RegExp(
 );
 
 export const RoamDate = {
-    parse: parseRoamDate
+    parse: parseRoamDate,
+    toRoam: toRoamDate,
 }
