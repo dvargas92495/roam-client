@@ -423,22 +423,19 @@ export const parseRoamBlocksToHtml = ({
             .map((c) => flatten(c))
             .flatMap((c) => c.map((cc) => [n, ...cc]));
         const rows = flatten(t).map((row) =>
-          row
-            .slice(1)
-            .map(
-              (td) =>
-                `<td>${parseInline(td.text, {
-                  ...context,
-                  components: componentsWithChildren,
-                })}</td>`
-            )
+          row.slice(1).map(
+            (td) =>
+              `<td>${parseInline(td.text, {
+                ...context,
+                components: componentsWithChildren,
+              })}</td>`
+          )
         );
         const columns = Math.max(...rows.map((row) => row.length));
         const fill = Array<string>(columns).fill("<td></td>");
-        const normalizedRows = rows.map((row) => [
-          ...row,
-          ...fill.slice(columns - rows.length),
-        ].join(''));
+        const normalizedRows = rows.map((row) =>
+          [...row, ...fill.slice(columns - rows.length)].join("")
+        );
         return `<table class="roam-table"><tbody>${normalizedRows
           .map((row) => `<tr>${row}</tr>`)
           .join("")}</tbody></table>`;
