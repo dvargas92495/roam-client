@@ -419,9 +419,11 @@ export const parseRoamBlocksToHtml = ({
       } else if (/table/i.test(s)) {
         skipChildren = true;
         const flatten = (n: TreeNode): TreeNode[][] =>
-          n.children
-            .map((c) => flatten(c))
-            .flatMap((c) => c.map((cc) => [n, ...cc]));
+          n.children.length
+            ? n.children
+                .map((c) => flatten(c))
+                .flatMap((c) => c.map((cc) => [n, ...cc]))
+            : [[n]];
         const rows = flatten(t).map((row) =>
           row.slice(1).map(
             (td) =>
@@ -431,7 +433,7 @@ export const parseRoamBlocksToHtml = ({
               })}</td>`
           )
         );
-        const columns = Math.max(...rows.map((row) => row.length));
+        const columns = Math.max(...rows.map((row) => row.length), 0);
         const fill = Array<string>(columns).fill("<td></td>");
         const normalizedRows = rows.map((row) =>
           [...row, ...fill.slice(columns - rows.length)].join("")
