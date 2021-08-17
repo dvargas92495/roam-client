@@ -1,6 +1,6 @@
 {
   "name": "roam-client",
-  "version": "1.82.3",
+  "version": "1.82.4",
   "description": "Utilities and UI components to help developers write their own Roam extensions.",
   "main": "lib/index.js",
   "types": "lib/index.d.ts",
