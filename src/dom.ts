@@ -436,7 +436,7 @@ export const parseRoamBlocksToHtml = ({
         const columns = Math.max(...rows.map((row) => row.length), 0);
         const fill = Array<string>(columns).fill("<td></td>");
         const normalizedRows = rows.map((row) =>
-          [...row, ...fill.slice(columns - row.length)].join("")
+          [...row, ...fill.slice(0, columns - row.length)].join("")
         );
         return `<table class="roam-table"><tbody>${normalizedRows
           .map((row) => `<tr>${row}</tr>`)
