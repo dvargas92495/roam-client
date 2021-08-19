@@ -207,7 +207,7 @@ export const getDisplayNameByEmail = (email: string) =>
 
 export const getDisplayNameByUid = (uid: string): string =>
   window.roamAlphaAPI.q(
-    `[:find ?s :where [?p :node-title ?s] [?e :user/display-page ?p] [?e :user/uid "${uid}"]]`
+    `[:find ?s :where [?p :node/title ?s] [?e :user/display-page ?p] [?e :user/uid "${uid}"]]`
   )?.[0]?.[0] || "";
 
 export const getCreateTimeByBlockUid = (uid: string): number =>
