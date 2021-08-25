@@ -108,7 +108,7 @@ export {
 export { watchOnce } from "./events";
 export { RoamBlock, ViewType, getOrderByBlockUid, TextNode, PullBlock };
 export { RoamNode, InputTextNode, TreeNode, UserSettings } from "./types";
-export { parseInline } from "roam-marked";
+export { parseInline, RoamContext as RoamMarkedContext } from "roam-marked";
 
 declare global {
   interface Window {
