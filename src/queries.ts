@@ -397,6 +397,8 @@ export const getParentUidsOfBlockUid = (uid: string): string[] =>
     .map((r) => r[0] as string);
 
 export const getBasicTreeByParentUid = (uid: string): RoamBasicNode[] =>
-  window.roamAlphaAPI.q(
-    `[:find (pull ?c [:block/string :as "text" :block/uid {:block/children ...}]) :where [?b :block/uid "${uid}"] [?b :block/children ?c]]`
-  ).map(a => a[0] as RoamBasicNode);
+  window.roamAlphaAPI
+    .q(
+      `[:find (pull ?c [:block/string :as "text" :block/uid {:block/children ...}]) :where [?b :block/uid "${uid}"] [?b :block/children ?c]]`
+    )
+    .map((a) => a[0] as RoamBasicNode);
