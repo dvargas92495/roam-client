@@ -1,4 +1,5 @@
 import axios from "axios";
+import { BLOCK_REF_REGEX } from "./dom";
 import { getOrderByBlockUid, getPageUidByPageTitle } from "./queries";
 import {
   RoamBlock,
@@ -366,6 +367,9 @@ export const extractTag = (tag: string): string =>
     : tag.endsWith("::")
     ? tag.substring(0, tag.length - 2)
     : tag;
+
+export const extractRef = (ref: string): string =>
+  BLOCK_REF_REGEX.exec(ref)?.[1] || ref;
 
 export const toConfig = (id: string) => `roam/js/${id}`;
 

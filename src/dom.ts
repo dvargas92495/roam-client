@@ -2,7 +2,6 @@ import { AxiosError } from "axios";
 import { parseInline, RoamContext } from "roam-marked";
 import { toRoamDate } from "./date";
 import {
-  allBlockMapper,
   getBlockUidsByPageTitle,
   getBlockUidsReferencingBlock,
   getChildrenLengthByPageUid,
@@ -15,7 +14,7 @@ import {
 import { RoamError, TreeNode, ViewType } from "./types";
 import { createBlock, updateActiveBlock, updateBlock } from "./writes";
 
-export const BLOCK_REF_REGEX = /\(\(([\w\d-]{9})\)\)/g;
+export const BLOCK_REF_REGEX = /\(\(([\w\d-]{9,10})\)\)/;
 
 export const addStyle = (content: string): HTMLStyleElement => {
   const css = document.createElement("style");
