@@ -28,6 +28,7 @@ export {
   getAllBlockUids,
   getAllBlockUidsAndTexts,
   getAllPageNames,
+  getBasicTreeByParentUid,
   getBlockUidsByPageTitle,
   getBlockUidsWithParentUid,
   getBlockUidAndTextIncludingText,
@@ -107,7 +108,13 @@ export {
 } from "./dom";
 export { watchOnce } from "./events";
 export { RoamBlock, ViewType, getOrderByBlockUid, TextNode, PullBlock };
-export { RoamNode, InputTextNode, TreeNode, UserSettings } from "./types";
+export {
+  RoamNode,
+  InputTextNode,
+  TreeNode,
+  UserSettings,
+  RoamBasicNode,
+} from "./types";
 export { parseInline, RoamContext as RoamMarkedContext } from "roam-marked";
 
 declare global {

@@ -1,6 +1,6 @@
 import {
+  RoamBasicNode,
   RoamBlock,
-  TextAlignment,
   TreeNode,
   UserSettings,
   ViewType,
@@ -395,3 +395,8 @@ export const getParentUidsOfBlockUid = (uid: string): string[] =>
       `[:find ?u :where [?p :block/uid ?u] [?b :block/parents ?p] [?b :block/uid "${uid}"]]`
     )
     .map((r) => r[0] as string);
+
+export const getBasicTreeByParentUid = (uid: string): RoamBasicNode[] =>
+  window.roamAlphaAPI.q(
+    `[:find (pull ?c [:block/string :as "text" :block/uid {:block/children ...}]) :where [?b :block/uid "${uid}"] [?b :block/children ?c]]`
+  ).map(a => a[0] as RoamBasicNode);

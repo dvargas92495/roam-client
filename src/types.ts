@@ -5,6 +5,12 @@ export type RoamBasicBlock = {
 
 export type RoamBasicPage = { title: string; uid: string };
 
+export type RoamBasicNode = {
+  text: string;
+  uid: string;
+  children?: RoamBasicNode[];
+};
+
 export type RoamPull = {
   "create/time"?: number;
   "node/title"?: string;
