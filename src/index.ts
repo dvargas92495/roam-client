@@ -369,7 +369,9 @@ export const extractTag = (tag: string): string =>
     : tag;
 
 export const extractRef = (ref: string): string =>
-  BLOCK_REF_REGEX.exec(ref)?.[1] || ref;
+  new RegExp(
+    `(?:\\(\\()?${BLOCK_REF_REGEX.source.slice(4, -4)}(?:\\)\\))?`
+  ).exec(ref)?.[1] || ref;
 
 export const toConfig = (id: string) => `roam/js/${id}`;
 
