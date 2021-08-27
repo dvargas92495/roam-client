@@ -425,7 +425,7 @@ type RoamRawBlock = {
   textAlign?: TextAlignment;
   editTime: number;
   props?: {};
-  children: RoamRawBlock[];
+  children?: RoamRawBlock[];
 };
 
 const formatRoamNode = (n: RoamRawBlock, v: ViewType): TreeNode => ({
@@ -435,7 +435,7 @@ const formatRoamNode = (n: RoamRawBlock, v: ViewType): TreeNode => ({
   editTime: new Date(n.editTime),
   props: { imageResize: {}, iframe: {} },
   textAlign: n.textAlign || "left",
-  children: n.children
+  children: (n.children || [])
     .sort(({ order: a }, { order: b }) => a - b)
     .map((r) => formatRoamNode(r, n.viewType || v)),
 });
