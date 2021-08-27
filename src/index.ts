@@ -45,6 +45,7 @@ export {
   getEditedUserEmailByBlockUid,
   getFirstChildTextByBlockUid,
   getFirstChildUidByBlockUid,
+  getFullTreeByParentUid,
   getLinkedPageReferences,
   getLinkedPageTitlesUnderUid,
   getNthChildUidByBlockUid,

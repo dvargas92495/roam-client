@@ -2,6 +2,7 @@ import {
   RoamBasicNode,
   RoamBlock,
   RoamUnorderedBasicNode,
+  TextAlignment,
   TreeNode,
   UserSettings,
   ViewType,
@@ -412,4 +413,49 @@ export const getBasicTreeByParentUid = (uid: string): RoamBasicNode[] =>
         `[:find (pull ?c [[:block/string :as "text"] :block/uid :block/order {:block/children ...}]) :where [?b :block/uid "${uid}"] [?b :block/children ?c]]`
       )
       .map((a) => a[0] as RoamUnorderedBasicNode)
+  );
+
+type RoamRawBlock = {
+  text: string;
+  uid: string;
+  order: number;
+  heading?: number;
+  open: boolean;
+  viewType?: ViewType;
+  textAlign?: TextAlignment;
+  editTime: number;
+  props?: {};
+  children: RoamRawBlock[];
+};
+
+const formatRoamNode = (n: RoamRawBlock, v: ViewType): TreeNode => ({
+  ...n,
+  heading: n.heading || 0,
+  viewType: n.viewType || v,
+  editTime: new Date(n.editTime),
+  props: { imageResize: {}, iframe: {} },
+  textAlign: n.textAlign || "left",
+  children: n.children
+    .sort(({ order: a }, { order: b }) => a - b)
+    .map((r) => formatRoamNode(r, n.viewType || v)),
+});
+
+export const getFullTreeByParentUid = (uid: string): TreeNode =>
+  formatRoamNode(
+    window.roamAlphaAPI.q(
+      `[:find (pull ?b [
+      [:block/string :as "text"] 
+      [:node/title :as "text"] 
+      :block/uid 
+      :block/order 
+      :block/heading 
+      :block/open 
+      [:children/view-type :as "viewType"] 
+      [:block/text-align :as "textAlign"] 
+      [:edit/time :as "editTime"] 
+      :block/props 
+      {:block/children ...}
+    ]) :where [?b :block/uid "${uid}"]]`
+    )[0][0] as RoamRawBlock,
+    "bullet"
   );
