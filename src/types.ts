@@ -8,7 +8,14 @@ export type RoamBasicPage = { title: string; uid: string };
 export type RoamBasicNode = {
   text: string;
   uid: string;
-  children?: RoamBasicNode[];
+  children: RoamBasicNode[];
+};
+
+export type RoamUnorderedBasicNode = {
+  text: string;
+  uid: string;
+  order: number;
+  children?: RoamUnorderedBasicNode[];
 };
 
 export type RoamPull = {

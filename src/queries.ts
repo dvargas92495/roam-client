@@ -1,6 +1,7 @@
 import {
   RoamBasicNode,
   RoamBlock,
+  RoamUnorderedBasicNode,
   TreeNode,
   UserSettings,
   ViewType,
@@ -396,9 +397,19 @@ export const getParentUidsOfBlockUid = (uid: string): string[] =>
     )
     .map((r) => r[0] as string);
 
+const sortBasicNodes = (c: RoamUnorderedBasicNode[]): RoamBasicNode[] =>
+  c
+    .sort(({ order: a }, { order: b }) => a - b)
+    .map(({ order, children = [], ...node }) => ({
+      children: sortBasicNodes(children),
+      ...node,
+    }));
+
 export const getBasicTreeByParentUid = (uid: string): RoamBasicNode[] =>
-  window.roamAlphaAPI
-    .q(
-      `[:find (pull ?c [[:block/string :as "text"] :block/uid {:block/children ...}]) :where [?b :block/uid "${uid}"] [?b :block/children ?c]]`
-    )
-    .map((a) => a[0] as RoamBasicNode);
+  sortBasicNodes(
+    window.roamAlphaAPI
+      .q(
+        `[:find (pull ?c [[:block/string :as "text"] :block/uid :block/order {:block/children ...}]) :where [?b :block/uid "${uid}"] [?b :block/children ?c]]`
+      )
+      .map((a) => a[0] as RoamUnorderedBasicNode)
+  );
