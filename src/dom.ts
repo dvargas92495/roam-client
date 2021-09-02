@@ -33,7 +33,7 @@ export const resolveRefs = (text: string): string => {
     .replace(aliasRefRegex, (alias, del, blockUid) => {
       return alias.replace(del, `${getRoamUrl(blockUid)}`);
     })
-    .replace(new RegExp(BLOCK_REF_REGEX, 'g'), (_, blockUid) => {
+    .replace(new RegExp(BLOCK_REF_REGEX, "g"), (_, blockUid) => {
       const reference = getTextByBlockUid(blockUid);
       return reference || blockUid;
     });
