@@ -68,6 +68,7 @@ export {
   getTreeByBlockUid,
   getTreeByPageName,
   fixViewType,
+  isTagOnPage,
 } from "./queries";
 export {
   DAILY_NOTE_PAGE_REGEX,
