@@ -108,6 +108,7 @@ export {
   getUidsFromId,
   openBlock,
   parseRoamBlocksToHtml,
+  resolveRefs,
 } from "./dom";
 export { watchOnce } from "./events";
 export { RoamBlock, ViewType, getOrderByBlockUid, TextNode, PullBlock };

@@ -15,6 +15,29 @@ import { RoamError, TreeNode, ViewType } from "./types";
 import { createBlock, updateActiveBlock, updateBlock } from "./writes";
 
 export const BLOCK_REF_REGEX = /\(\(([\w\d-]{9,10})\)\)/;
+const aliasRefRegex = new RegExp(
+  `\\[[^\\]]*\\]\\((${BLOCK_REF_REGEX.source})\\)`,
+  "g"
+);
+const aliasTagRegex = new RegExp(
+  `\\[[^\\]]*\\]\\((\\[\\[([^\\]]*)\\]\\])\\)`,
+  "g"
+);
+
+export const resolveRefs = (text: string): string => {
+  return text
+    .replace(aliasTagRegex, (alias, del, pageName) => {
+      const blockUid = getPageUidByPageTitle(pageName);
+      return alias.replace(del, `${getRoamUrl(blockUid)}`);
+    })
+    .replace(aliasRefRegex, (alias, del, blockUid) => {
+      return alias.replace(del, `${getRoamUrl(blockUid)}`);
+    })
+    .replace(new RegExp(BLOCK_REF_REGEX, 'g'), (_, blockUid) => {
+      const reference = getTextByBlockUid(blockUid);
+      return reference || blockUid;
+    });
+};
 
 export const addStyle = (content: string): HTMLStyleElement => {
   const css = document.createElement("style");
