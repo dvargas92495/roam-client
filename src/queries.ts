@@ -372,10 +372,13 @@ export const getShallowTreeByParentUid = (
 ): { uid: string; text: string }[] =>
   window.roamAlphaAPI
     .q(
-      `[:find ?u ?s ?o :where [?c :block/order ?o] [?c :block/uid ?u] [?c :block/string ?s] [?b :block/children ?c] [?b :block/uid "${parentUid}"]]`
+      `[:find (pull ?c [:block/uid :block/string :block/order]) :where [?b :block/uid "${parentUid}"] [?b :block/children ?c]]`
     )
-    .sort((a, b) => a[2] - b[2])
-    .map(([uid, text]: string[]) => ({ uid, text }));
+    .sort((a, b) => a[0].order - b[0].order)
+    .map(([a]: { uid: string; string: string }[]) => ({
+      uid: a.uid,
+      text: a.string,
+    }));
 
 export const getLinkedPageTitlesUnderUid = (uid: string): string[] =>
   window.roamAlphaAPI
