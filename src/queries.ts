@@ -246,10 +246,10 @@ export const getPageViewType = (title: string): ViewType =>
 
 export const getPageUidByPageTitle = (title: string): string =>
   (window.roamAlphaAPI.q(
-    `[:find ?u :where [?e :block/uid ?u] [?e :node/title "${normalizePageTitle(
+    `[:find (pull ?e [:block/uid]) :where [?e :node/title "${normalizePageTitle(
       title
     )}"]]`
-  )?.[0]?.[0] as string) || "";
+  )?.[0]?.[0]?.uid as string) || "";
 
 export const getBlockUidAndTextIncludingText = (
   t: string
