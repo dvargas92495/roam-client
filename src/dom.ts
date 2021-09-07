@@ -1,6 +1,6 @@
 import { AxiosError } from "axios";
 import { parseInline, RoamContext } from "roam-marked";
-import { toRoamDate } from "./date";
+import { toRoamDate, toRoamDateUid } from "./date";
 import {
   getBlockUidsByPageTitle,
   getBlockUidsReferencingBlock,
@@ -599,8 +599,7 @@ export const getRoamUrl = (blockUid?: string): string =>
   }`;
 
 export const getCurrentPageUid = (): string =>
-  window.location.hash.match(/\/page\/(.*)$/)?.[1] ||
-  getPageUidByPageTitle(toRoamDate(new Date()));
+  window.location.hash.match(/\/page\/(.*)$/)?.[1] || toRoamDateUid(new Date());
 
 export const getRoamUrlByPage = (page: string): string => {
   const uid = getPageUidByPageTitle(page);
