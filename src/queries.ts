@@ -173,13 +173,13 @@ export const getTextByBlockUid = (uid: string): string =>
 
 export const getPageTitleByBlockUid = (blockUid: string): string =>
   window.roamAlphaAPI.q(
-    `[:find ?t :where [?p :node/title ?t] [?e :block/page ?p] [?e :block/uid "${blockUid}"]]`
-  )?.[0]?.[0] || "";
+    `[:find (pull ?p [:node/title]) :where [?e :block/uid "${blockUid}"] [?e :block/page ?p]]`
+  )?.[0]?.[0]?.title || "";
 
 export const getPageTitleByPageUid = (blockUid: string): string =>
   window.roamAlphaAPI.q(
-    `[:find ?t :where [?p :node/title ?t] [?p :block/uid "${blockUid}"]]`
-  )?.[0]?.[0] || "";
+    `[:find (pull ?p [:node/title]) :where [?p :block/uid "${blockUid}"]]`
+  )?.[0]?.[0]?.title || "";
 
 export const getParentTextByBlockUid = (blockUid: string): string =>
   window.roamAlphaAPI.q(
