@@ -712,6 +712,9 @@ export const getDropUidOffset = (
   };
 };
 
-addStyle(`.bp3-button:focus {
+addStyle(
+  `.bp3-button:focus {
   outline-width: 2px;
-}`, 'roamjs-default');
+}`,
+  "roamjs-default"
+);
