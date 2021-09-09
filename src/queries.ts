@@ -168,8 +168,8 @@ export const getEditedUserEmailByBlockUid = (blockUid: string) =>
 
 export const getTextByBlockUid = (uid: string): string =>
   window.roamAlphaAPI.q(
-    `[:find ?s :where [?e :block/string ?s] [?e :block/uid "${uid}"]]`
-  )?.[0]?.[0] || "";
+    `[:find (pull ?e [:block/string]) :where [?e :block/uid "${uid}"]]`
+  )?.[0]?.[0]?.string || "";
 
 export const getPageTitleByBlockUid = (blockUid: string): string =>
   window.roamAlphaAPI.q(

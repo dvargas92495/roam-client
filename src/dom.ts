@@ -1,6 +1,6 @@
 import { AxiosError } from "axios";
 import { parseInline, RoamContext } from "roam-marked";
-import { toRoamDate, toRoamDateUid } from "./date";
+import { toRoamDateUid } from "./date";
 import {
   getBlockUidsByPageTitle,
   getBlockUidsReferencingBlock,
@@ -39,9 +39,12 @@ export const resolveRefs = (text: string): string => {
     });
 };
 
-export const addStyle = (content: string): HTMLStyleElement => {
+export const addStyle = (content: string, id?: string): HTMLStyleElement => {
+  const existing = document.getElementById(id || "") as HTMLStyleElement;
+  if (existing) return existing;
   const css = document.createElement("style");
   css.textContent = content;
+  if (id) css.id = id;
   document.getElementsByTagName("head")[0].appendChild(css);
   return css;
 };
@@ -708,3 +711,7 @@ export const getDropUidOffset = (
     offset,
   };
 };
+
+addStyle(`.bp3-button:focus {
+  outline-width: 2px;
+}`, 'roamjs-default');
