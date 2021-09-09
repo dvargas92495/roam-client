@@ -417,7 +417,7 @@ export const runExtension = async (
 }`,
     "roamjs-default"
   );
-  
+
   run();
 };
 
