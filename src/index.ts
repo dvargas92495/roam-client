@@ -1,5 +1,5 @@
 import axios from "axios";
-import { BLOCK_REF_REGEX } from "./dom";
+import { addStyle, BLOCK_REF_REGEX } from "./dom";
 import { getOrderByBlockUid, getPageUidByPageTitle } from "./queries";
 import {
   RoamBlock,
@@ -411,6 +411,13 @@ export const runExtension = async (
     eventName: "Load Extension",
     properties: { extensionId },
   });
+  addStyle(
+    `.bp3-button:focus {
+  outline-width: 2px;
+}`,
+    "roamjs-default"
+  );
+  
   run();
 };
 

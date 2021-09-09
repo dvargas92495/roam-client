@@ -711,10 +711,3 @@ export const getDropUidOffset = (
     offset,
   };
 };
-
-addStyle(
-  `.bp3-button:focus {
-  outline-width: 2px;
-}`,
-  "roamjs-default"
-);
