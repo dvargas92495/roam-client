@@ -322,11 +322,11 @@ export const getPageTitlesAndBlockUidsReferencingPage = (
 ): { title: string; uid: string }[] =>
   window.roamAlphaAPI
     .q(
-      `[:find ?rt ?u :where [?r :block/uid ?u] [?pr :node/title ?rt] [?r :block/page ?pr] [?r :block/refs ?p] [?p :node/title "${normalizePageTitle(
+      `[:find (pull ?pr [:node/title]) (pull ?r [:block/uid]) :where [?p :node/title "${normalizePageTitle(
         pageName
-      )}"]]`
+      )}"]] [?r :block/refs ?p] [?r :block/page ?pr]`
     )
-    .map(([title, uid]: string[]) => ({ title, uid }));
+    .map(([{ title }, { uid }]: Record<string, string>[]) => ({ title, uid }));
 
 export const getPageTitlesAndUidsDirectlyReferencingPage = (
   pageName: string
