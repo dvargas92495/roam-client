@@ -219,6 +219,7 @@ declare global {
           [method: string]: (args?: unknown) => void;
         };
       };
+      version: { [id: string]: string };
       // DEPRECATED remove in 2.0
       dynamicElements: Set<HTMLElement>;
     };
@@ -399,6 +400,7 @@ export const runExtension = async (
     window.roamjs = {
       loaded: new Set(),
       extension: {},
+      version: {},
       dynamicElements: new Set(),
     };
   }
@@ -406,6 +408,7 @@ export const runExtension = async (
     return;
   }
   window.roamjs.loaded.add(extensionId);
+  window.roamjs.version[extensionId] = process.env.ROAMJS_VERSION || "";
 
   axios.post(`https://api.roamjs.com/mixpanel`, {
     eventName: "Load Extension",
