@@ -431,11 +431,14 @@ type RoamRawBlock = {
   children?: RoamRawBlock[];
 };
 
-const formatRoamNode = (n: RoamRawBlock, v: ViewType): TreeNode => ({
-  ...n,
+const formatRoamNode = (n: Partial<RoamRawBlock>, v: ViewType): TreeNode => ({
+  text: n.text || "",
+  open: n.open || true,
+  order: n.order || 0,
+  uid: n.uid || "",
   heading: n.heading || 0,
   viewType: n.viewType || v,
-  editTime: new Date(n.editTime),
+  editTime: new Date(n.editTime || 0),
   props: { imageResize: {}, iframe: {} },
   textAlign: n.textAlign || "left",
   children: (n.children || [])
@@ -459,7 +462,7 @@ export const getFullTreeByParentUid = (uid: string): TreeNode =>
       :block/props 
       {:block/children ...}
     ]) :where [?b :block/uid "${uid}"]]`
-    )[0][0] as RoamRawBlock,
+    )?.[0]?.[0] || ({} as RoamRawBlock),
     "bullet"
   );
 
