@@ -386,14 +386,13 @@ export const createPageTitleObserver = ({
   callback: (d: HTMLDivElement) => void;
   log?: boolean;
 }): void => {
-  const listener = (e?: HashChangeEvent) => {
+  const listener = (url: string) => {
     const d = document.getElementsByClassName(
       "roam-article"
     )[0] as HTMLDivElement;
     if (d) {
       const uid = getPageUidByPageTitle(title);
       const attribute = `data-roamjs-${uid}`;
-      const url = e?.newURL || window.location.href;
       if ((uid && url === getRoamUrl(uid)) || (log && url === getRoamUrl())) {
         // React's rerender crushes the old article/heading
         setTimeout(() => {
@@ -411,8 +410,8 @@ export const createPageTitleObserver = ({
       }
     }
   };
-  window.addEventListener("hashchange", listener);
-  listener();
+  window.addEventListener("hashchange", (e) => listener(e.newURL));
+  listener(window.location.href);
 };
 
 const VIEW_CONTAINER = {
