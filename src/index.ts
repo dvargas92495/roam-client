@@ -396,16 +396,14 @@ export const runExtension = async (
   extensionId: string,
   run: () => void
 ): Promise<void> => {
-  if (!window.roamjs) {
-    window.roamjs = {
-      loaded: new Set(),
-      extension: {},
-      version: {},
-      dynamicElements: new Set(),
-    };
-  }
-  if (window.roamjs.loaded.has(extensionId)) {
+  if (window.roamjs?.loaded?.has?.(extensionId)) {
     return;
+  }
+  window.roamjs = {
+    loaded: window.roamjs?.loaded || new Set(),
+    extension: window.roamjs?.extension || {},
+    version: window.roamjs?.version || {},
+    dynamicElements: window.roamjs?.dynamicElements || new Set(),
   }
   window.roamjs.loaded.add(extensionId);
   window.roamjs.version[extensionId] = process.env.ROAMJS_VERSION || "";
