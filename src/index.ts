@@ -404,7 +404,7 @@ export const runExtension = async (
     extension: window.roamjs?.extension || {},
     version: window.roamjs?.version || {},
     dynamicElements: window.roamjs?.dynamicElements || new Set(),
-  }
+  };
   window.roamjs.loaded.add(extensionId);
   window.roamjs.version[extensionId] = process.env.ROAMJS_VERSION || "";
 
