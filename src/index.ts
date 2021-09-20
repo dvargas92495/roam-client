@@ -261,8 +261,8 @@ export const getAttrConfigFromQuery = (query: string) => {
   const entries = configurationAttrRefs.map(
     (r: string) =>
       (window.roamAlphaAPI.q(
-        `[:find ?s :where [?e :block/string ?s] [?e :block/uid "${r}"] ]`
-      )[0][0] as string)
+        `[:find (pull ?e [:block/string]) :where [?e :block/uid "${r}"] ]`
+      )[0]?.[0]?.string as string)
         ?.split("::")
         .map(toAttributeValue) || [r, "undefined"]
   );
@@ -273,9 +273,9 @@ const ATTR_REGEX = /^(.*?)::(.*?)$/;
 export const getAttrConfigFromUid = (uid: string) => {
   const allAttrs = window.roamAlphaAPI
     .q(
-      `[:find ?s :where [?c :block/string ?s] [?c :block/refs] [?c :block/parents ?b] [?b :block/uid "${uid}"]]`
+      `[:find (pull ?c [:block/string]) :where [?b :block/uid "${uid}"] [?c :block/parents ?b] [?c :block/refs]]`
     )
-    .map((a) => a[0] as string)
+    .map((a) => a?.[0]?.string as string)
     .filter((a) => ATTR_REGEX.test(a))
     .map((r) =>
       (ATTR_REGEX.exec(r) || ["", "", ""]).slice(1, 3).map(toAttributeValue)
