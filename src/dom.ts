@@ -292,7 +292,7 @@ export const createButtonObserver = ({
     callback: (b) => {
       if (
         b.innerText.toUpperCase() ===
-          attribute.toUpperCase().replace("-", " ") ||
+          attribute.toUpperCase().replace(/-/g, " ") ||
         b.innerText.toUpperCase() === shortcut.toUpperCase()
       ) {
         const dataAttribute = `data-roamjs-${attribute}`;

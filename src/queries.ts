@@ -8,7 +8,7 @@ import {
   ViewType,
 } from "./types";
 
-const normalizePageTitle = (title: string) =>
+export const normalizePageTitle = (title: string) =>
   title.replace(/\\/, "\\\\").replace(/"/g, '\\"');
 
 export const allBlockMapper = (t: TreeNode): TreeNode[] => [

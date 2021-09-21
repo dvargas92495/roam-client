@@ -69,6 +69,7 @@ export {
   getTreeByPageName,
   fixViewType,
   isTagOnPage,
+  normalizePageTitle,
 } from "./queries";
 export {
   DAILY_NOTE_PAGE_REGEX,
