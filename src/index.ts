@@ -101,6 +101,7 @@ export {
   getCurrentPageUid,
   getDropUidOffset,
   getPageTitleByHtmlElement,
+  getPageTitleValueByHtmlElement,
   getReferenceBlockUid,
   getRoamUrl,
   getRoamUrlByPage,
