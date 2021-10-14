@@ -38,6 +38,7 @@ export const createBlock = ({
     heading,
     viewType,
     textAlign,
+    open = true,
   },
   parentUid,
   order = 0,
@@ -54,6 +55,7 @@ export const createBlock = ({
       heading,
       "text-align": textAlign,
       "children-view-type": viewType,
+      open,
     },
   });
   children.forEach((n, o) =>
@@ -83,6 +85,7 @@ export const updateBlock = ({
   heading,
   textAlign,
   viewType,
+  open,
 }: { uid: string } & Omit<InputTextNode, "children">) => {
   window.roamAlphaAPI.updateBlock({
     block: {
@@ -91,6 +94,7 @@ export const updateBlock = ({
       heading,
       "text-align": textAlign,
       "children-view-type": viewType,
+      open,
     },
   });
   return uid;

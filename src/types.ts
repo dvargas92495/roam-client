@@ -104,6 +104,7 @@ export type InputTextNode = {
   heading?: number;
   textAlign?: TextAlignment;
   viewType?: ViewType;
+  open?: boolean;
 };
 
 type PlusType = [number, string];
