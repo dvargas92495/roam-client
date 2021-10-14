@@ -433,7 +433,7 @@ type RoamRawBlock = {
 
 const formatRoamNode = (n: Partial<RoamRawBlock>, v: ViewType): TreeNode => ({
   text: n.text || "",
-  open: n.open || true,
+  open: typeof n.open === 'undefined' ? true : n.open,
   order: n.order || 0,
   uid: n.uid || "",
   heading: n.heading || 0,
