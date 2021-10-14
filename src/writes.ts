@@ -61,6 +61,7 @@ export const createBlock = ({
   children.forEach((n, o) =>
     createBlock({ node: n, parentUid: uid, order: o })
   );
+  if (!open) window.roamAlphaAPI.updateBlock({ block: { uid, open: false } }); // Roam doesn't do this for us yet
   return uid;
 };
 
