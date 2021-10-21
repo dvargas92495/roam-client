@@ -396,7 +396,8 @@ export const localStorageRemove = (key: string) =>
 
 export const runExtension = async (
   extensionId: string,
-  run: () => void
+  run: () => void,
+  options: { skipAnalytics?: boolean } = {}
 ): Promise<void> => {
   if (window.roamjs?.loaded?.has?.(extensionId)) {
     return;
@@ -410,10 +411,12 @@ export const runExtension = async (
   window.roamjs.loaded.add(extensionId);
   window.roamjs.version[extensionId] = process.env.ROAMJS_VERSION || "";
 
-  axios.post(`https://api.roamjs.com/mixpanel`, {
-    eventName: "Load Extension",
-    properties: { extensionId },
-  });
+  if (!options.skipAnalytics) {
+    axios.post(`https://api.roamjs.com/mixpanel`, {
+      eventName: "Load Extension",
+      properties: { extensionId },
+    });
+  }
   addStyle(
     `.bp3-button:focus {
   outline-width: 2px;
