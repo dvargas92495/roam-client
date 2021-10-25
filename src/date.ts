@@ -19,6 +19,14 @@ export const DAILY_NOTE_PAGE_TITLE_REGEX = new RegExp(
 );
 
 export const RoamDate = {
+    regex: DAILY_NOTE_PAGE_REGEX,
+    referenceRegex: new RegExp(`\\[\\[${DAILY_NOTE_PAGE_REGEX.source}]]`),
     parse: parseRoamDate,
     toRoam: toRoamDate,
+    toDatePage(d: Date) {
+        return "[[" + this.toRoam(d) + "]]"
+    },
+    parseFromReference(name: string): Date {
+        return this.parse(name.slice(2).slice(0, -2))
+    },
 }
