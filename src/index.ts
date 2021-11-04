@@ -209,6 +209,10 @@ declare global {
           renderBlock: (args: { uid: string; el: HTMLElement }) => null;
         };
       };
+      mainWindow: {
+        openBlock: (p: { block: { uid: string } }) => true;
+        openPage: (p: { page: { uid: string } | { title: string } }) => true;
+      };
     };
     roamDatomicAlphaAPI?: (
       params: ClientParams
