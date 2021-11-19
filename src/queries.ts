@@ -463,7 +463,16 @@ export const getFullTreeByParentUid = (uid: string): TreeNode =>
       {:block/children ...}
     ]) :where [?b :block/uid "${uid}"]]`
     )?.[0]?.[0] || ({} as RoamRawBlock),
-    "bullet"
+    window.roamAlphaAPI
+      .q(
+        `[:find
+      (pull ?p [:children/view-type]) :where
+      [?c :block/uid "${uid}"] [?c :block/parents ?p]]`
+      )
+      .reverse()
+      .map((a) => a[0])
+      .map((a) => a && a["view-type"])
+      .find((a) => !!a) || "bullet"
   );
 
 export const isTagOnPage = ({
