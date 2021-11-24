@@ -472,7 +472,14 @@ export const parseRoamBlocksToHtml = ({
       }
       return false;
     };
-    const classlist = [];
+    const classlist =
+      t.textAlign === "left"
+        ? ["text-align-left"]
+        : t.textAlign === "center"
+        ? ["text-align-center"]
+        : t.textAlign === "right"
+        ? ["text-align-right"]
+        : [];
     const textToParse = t.text.replace(/#\.([^\s]*)/g, (_, className) => {
       classlist.push(className);
       return "";
