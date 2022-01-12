@@ -109,7 +109,6 @@ export {
   getUidsFromButton,
   getUidsFromId,
   openBlock,
-  parseRoamBlocksToHtml,
   resolveRefs,
 } from "./dom";
 export { watchOnce } from "./events";
@@ -121,7 +120,6 @@ export {
   UserSettings,
   RoamBasicNode,
 } from "./types";
-export { parseInline, RoamContext as RoamMarkedContext } from "roam-marked";
 
 declare global {
   interface Window {
